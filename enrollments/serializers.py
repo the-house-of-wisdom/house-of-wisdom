@@ -1,25 +1,25 @@
-""" Serializers for learn.accomplishments """
+""" Serializers for learn.enrollments """
 
 
 from rest_framework.serializers import ModelSerializer
-from learn.accomplishments.models import Accomplishment
+from learn.enrollments.models import Enrollment
 
 
 # Create your serializers here.
-class AccomplishmentSerializer(ModelSerializer):
-    """Accomplishment serializer"""
+class EnrollmentSerializer(ModelSerializer):
+    """Enrollment serializer"""
 
     class Meta:
         """Meta data"""
 
-        model = Accomplishment
-        read_only_fields = ["specialization", "course", "item"]
+        model = Enrollment
+        read_only_fields = ["specialization", "course", "is_approved"]
         fields = [
             "id",
             "url",
             "specialization",
             "course",
-            "item",
+            "is_approved",
             "created_at",
             "updated_at",
         ]

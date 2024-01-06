@@ -1,41 +1,40 @@
-""" Data Models for learn.specializations """
+""" Data Models for learn.instructors """
 
 
 from django.db import models
+from django.contrib.auth import get_user_model
 
 
 # Create your models here.
-class Specialization(models.Model):
-    """Specializations, collections of related courses"""
+User = get_user_model()
 
-    instructor = models.ForeignKey(
-        "instructors.Instructor",
+
+class Instructor(models.Model):
+    """Instructors"""
+
+    user = models.ForeignKey(
+        User,
         on_delete=models.CASCADE,
-        help_text="Specialization Instructor",
+        help_text="Owner",
     )
     image = models.ImageField(
-        help_text="Specialization image",
-        upload_to="images/specializations/",
+        help_text="Profile image",
+        upload_to="images/instructors",
     )
     name = models.CharField(
         max_length=64,
         unique=True,
         db_index=True,
-        help_text="Specialization name",
-    )
-    headline = models.CharField(
-        max_length=128,
-        db_index=True,
-        help_text="Specialization headline",
+        help_text="Instructor name",
     )
     description = models.CharField(
         max_length=256,
         db_index=True,
-        help_text="Specialization description",
+        help_text="Instructor description",
     )
     is_approved = models.BooleanField(
         default=False,
-        help_text="Designates if the specialization is approved by LearnLMS",
+        help_text="Designates if the instructor is approved by LearnLMS",
     )
     created_at = models.DateTimeField(
         auto_now_add=True,

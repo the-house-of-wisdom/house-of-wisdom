@@ -5,7 +5,7 @@ from django.apps import AppConfig
 
 
 # Create your config here.
-class ProjectConfig(AppConfig):
+class ProjectsConfig(AppConfig):
     """App configuration for learn.projects"""
 
     name = "learn.projects"

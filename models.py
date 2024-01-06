@@ -1,4 +1,4 @@
-""" Data Models """
+""" Data Models for learn """
 
 
 from django.db import models
@@ -9,4 +9,23 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     """Learn Users"""
 
-    pass
+    image = models.ImageField(
+        help_text="Profile image",
+        upload_to="images/users/",
+    )
+    bio = models.CharField(
+        max_length=256,
+        null=True,
+        blank=True,
+        help_text="Tell us about yourself",
+    )
+    specializations = models.ManyToManyField(
+        "specialization.Specialization",
+        through="enrollments.Enrollment",
+        help_text="Enrolled specializations",
+    )
+    courses = models.ManyToManyField(
+        "course.Course",
+        through="enrollments.Enrollment",
+        help_text="Enrolled courses",
+    )

@@ -53,7 +53,7 @@ class ProjectViewSet(OwnerMixin, ModelViewSet):
     def get_permissions(self):
         if self.action in ["update", "partial_update", "destroy"]:
             self.permission_classes += [IsOwner]
-        elif self.action in ["approve", "list"]:
+        elif self.action in ["approve"]:
             self.permission_classes += [IsAdminUser]
 
         return super().get_permissions()

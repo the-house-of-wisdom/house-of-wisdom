@@ -3,17 +3,13 @@
 
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from learn.accomplishments.views import AccomplishmentViewSet
 
 
 # Create your patterns here.
 router = DefaultRouter(trailing_slash=False)
-
-sub_router = DefaultRouter()
+router.register("accomplishments", AccomplishmentViewSet, "accomplishment")
 
 urlpatterns = [
     path("", include(router.urls)),
-    path(
-        "/<int:id>/",
-        include((sub_router.urls, ""), namespace=""),
-    ),
 ]

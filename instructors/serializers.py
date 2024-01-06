@@ -1,26 +1,25 @@
-""" Serializers for learn.specializations """
+""" Serializers for learn.instructors """
 
 
 from rest_framework.serializers import ModelSerializer
-from learn.specializations.models import Specialization
+from learn.instructors.models import Instructor
 
 
 # Create your serializers here.
-class SpecializationSerializer(ModelSerializer):
-    """Specialization serializer"""
+class InstructorSerializer(ModelSerializer):
+    """Instructor serializer"""
 
     class Meta:
         """Meta data"""
 
-        model = Specialization
-        read_only_fields = ["instructor"]
+        model = Instructor
+        read_only_fields = ["user"]
         fields = [
             "id",
             "url",
-            "instructor",
+            "user",
             "image",
             "name",
-            "headline",
             "description",
             "is_approved",
             "created_at",

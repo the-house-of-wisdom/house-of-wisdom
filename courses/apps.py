@@ -5,7 +5,7 @@ from django.apps import AppConfig
 
 
 # Create your config here.
-class CourseConfig(AppConfig):
+class CoursesConfig(AppConfig):
     """App configuration for learn.courses"""
 
     name = "learn.courses"

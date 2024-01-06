@@ -5,7 +5,7 @@ from django.apps import AppConfig
 
 
 # Create your config here.
-class AccomplishmentConfig(AppConfig):
+class AccomplishmentsConfig(AppConfig):
     """App configuration for learn.accomplishments"""
 
     name = "learn.accomplishments"
