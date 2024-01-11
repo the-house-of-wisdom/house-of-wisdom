@@ -20,12 +20,12 @@ class User(AbstractUser):
         help_text="Tell us about yourself",
     )
     specializations = models.ManyToManyField(
-        "specialization.Specialization",
+        "specializations.Specialization",
         through="enrollments.Enrollment",
         help_text="Enrolled specializations",
     )
     courses = models.ManyToManyField(
-        "course.Course",
+        "courses.Course",
         through="enrollments.Enrollment",
         help_text="Enrolled courses",
     )

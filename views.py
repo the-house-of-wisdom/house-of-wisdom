@@ -1,4 +1,4 @@
-""" API endpoints for learn.accomplishments """
+""" API endpoints for learn """
 
 
 from django.contrib.auth import get_user_model

@@ -1,1 +1,1 @@
-""" Instructors """
+""" LearnLMS Instructors """

@@ -1,1 +1,1 @@
-""" Learn, Open source learning management system """
+""" LearnLMS, Open source learning management system """

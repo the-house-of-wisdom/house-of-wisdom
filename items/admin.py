@@ -1,4 +1,4 @@
-""" Admin Site """
+""" Admin Site for learn.items """
 
 
 from django.contrib import admin

@@ -9,7 +9,7 @@ class Course(models.Model):
     """Courses"""
 
     specialization = models.ForeignKey(
-        "specialization.Specialization",
+        "specializations.Specialization",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,

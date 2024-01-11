@@ -1,1 +1,1 @@
-""" Specializations """
+""" LearnLMS Specializations """

@@ -1,4 +1,4 @@
-""" Admin Site """
+""" Admin Site for learn.accomplishments """
 
 
 from django.contrib import admin
