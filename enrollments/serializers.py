@@ -1,6 +1,5 @@
 """ Serializers for learn.enrollments """
 
-
 from rest_framework.serializers import ModelSerializer
 from learn.enrollments.models import Enrollment
 

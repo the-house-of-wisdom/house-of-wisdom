@@ -1,1 +1,1 @@
-""" LearnLMS Instructors """
+""" Learn.ai Instructors """

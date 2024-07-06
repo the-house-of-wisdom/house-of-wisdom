@@ -1,6 +1,5 @@
 """ URLConf for learn.items """
 
-
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from learn.items.views import ItemViewSet

@@ -1,6 +1,5 @@
 """ Data Models for learn.accomplishments """
 
-
 from django.db import models
 from django.contrib.auth import get_user_model
 
@@ -69,8 +68,6 @@ class Accomplishment(models.Model):
         completed = (
             self.specialization
             if self.specialization is not None
-            else self.course
-            if self.course is not None
-            else self.item
+            else self.course if self.course is not None else self.item
         )
         return f"{self.user}, {completed}"

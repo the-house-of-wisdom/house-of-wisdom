@@ -1,6 +1,5 @@
 """ AppConf for learn.modules """
 
-
 from django.apps import AppConfig
 
 

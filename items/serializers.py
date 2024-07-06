@@ -1,6 +1,5 @@
 """ Serializers for learn.items """
 
-
 from rest_framework.serializers import ModelSerializer
 from learn.items.models import Item
 

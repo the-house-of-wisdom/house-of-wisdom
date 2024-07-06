@@ -1,1 +1,1 @@
-""" LearnLMS Course Modules """
+""" Learn.ai Course Modules """

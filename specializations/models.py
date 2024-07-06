@@ -1,6 +1,5 @@
 """ Data Models for learn.specializations """
 
-
 from django.db import models
 
 
@@ -35,7 +34,7 @@ class Specialization(models.Model):
     )
     is_approved = models.BooleanField(
         default=False,
-        help_text="Designates if the specialization is approved by LearnLMS",
+        help_text="Designates if the specialization is approved by Learn.ai",
     )
     created_at = models.DateTimeField(
         auto_now_add=True,

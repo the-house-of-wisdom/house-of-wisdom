@@ -1,6 +1,5 @@
 """ Serializers for learn.projects """
 
-
 from rest_framework.serializers import ModelSerializer
 from learn.projects.models import Project
 

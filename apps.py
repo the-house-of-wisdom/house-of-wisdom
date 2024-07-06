@@ -1,6 +1,5 @@
 """ AppConf for learn """
 
-
 from django.apps import AppConfig
 
 

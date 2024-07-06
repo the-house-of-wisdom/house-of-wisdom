@@ -1,6 +1,5 @@
 """ URLConf for learn """
 
-
 from django.urls import path, include
 
 

@@ -1,6 +1,5 @@
 """ AppConf for learn.enrollments """
 
-
 from django.apps import AppConfig
 
 

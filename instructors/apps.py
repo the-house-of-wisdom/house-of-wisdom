@@ -1,6 +1,5 @@
 """ AppConf for learn.instructors """
 
-
 from django.apps import AppConfig
 
 

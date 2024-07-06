@@ -1,6 +1,5 @@
 """ Data Models for learn.items """
 
-
 from django.db import models
 from django.core.serializers.json import DjangoJSONEncoder
 

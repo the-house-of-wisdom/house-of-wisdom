@@ -1,1 +1,1 @@
-""" LearnLMS Specializations """
+""" Learn.ai Specializations """

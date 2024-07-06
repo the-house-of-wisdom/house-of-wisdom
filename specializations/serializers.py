@@ -1,6 +1,5 @@
 """ Serializers for learn.specializations """
 
-
 from rest_framework.serializers import ModelSerializer
 from learn.specializations.models import Specialization
 

@@ -1,6 +1,5 @@
 """ URLConf for learn.instructors """
 
-
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from learn.instructors.views import InstructorViewSet, InstructorImageView

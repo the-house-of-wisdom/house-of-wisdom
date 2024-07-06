@@ -1,6 +1,5 @@
 """ Data Models for learn.modules """
 
-
 from django.db import models
 
 

@@ -1,6 +1,5 @@
 """ Data Models for learn.enrollments """
 
-
 from django.db import models
 from django.contrib.auth import get_user_model
 
@@ -33,7 +32,7 @@ class Enrollment(models.Model):
     )
     is_approved = models.BooleanField(
         default=False,
-        help_text="Designate if the enrollment is approved by LearnLMS",
+        help_text="Designate if the enrollment is approved by Learn.ai",
     )
     created_at = models.DateTimeField(
         auto_now_add=True,

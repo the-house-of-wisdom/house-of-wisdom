@@ -1,1 +1,1 @@
-""" LearnLMS Courses """
+""" Learn.ai Courses """

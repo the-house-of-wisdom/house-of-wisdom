@@ -1,6 +1,5 @@
 """ API endpoints for learn.specializations """
 
-
 from typing import Any
 from django.http import FileResponse, HttpRequest
 from django.views.generic import DetailView

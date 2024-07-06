@@ -1,1 +1,1 @@
-""" LearnLMS Enrollments """
+""" Learn.ai Enrollments """

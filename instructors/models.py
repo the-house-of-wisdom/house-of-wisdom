@@ -1,6 +1,5 @@
 """ Data Models for learn.instructors """
 
-
 from django.db import models
 from django.contrib.auth import get_user_model
 
@@ -34,7 +33,7 @@ class Instructor(models.Model):
     )
     is_approved = models.BooleanField(
         default=False,
-        help_text="Designates if the instructor is approved by LearnLMS",
+        help_text="Designates if the instructor is approved by Learn.ai",
     )
     created_at = models.DateTimeField(
         auto_now_add=True,

@@ -1,1 +1,1 @@
-""" LearnLMS Projects """
+""" Learn.ai Projects """

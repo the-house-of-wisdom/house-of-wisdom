@@ -1,6 +1,5 @@
 """ AppConf for learn.accomplishments """
 
-
 from django.apps import AppConfig
 
 

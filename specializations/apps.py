@@ -1,6 +1,5 @@
 """ AppConf for learn.specializations """
 
-
 from django.apps import AppConfig
 
 

@@ -1,6 +1,5 @@
 """ Serializers for learn.instructors """
 
-
 from rest_framework.serializers import ModelSerializer
 from learn.instructors.models import Instructor
 

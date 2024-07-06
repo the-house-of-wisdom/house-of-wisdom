@@ -1,6 +1,5 @@
 """ Data Models for learn.courses """
 
-
 from django.db import models
 
 
@@ -37,7 +36,7 @@ class Course(models.Model):
     )
     is_approved = models.BooleanField(
         default=False,
-        help_text="Designates if the course is approved by LearnLMS",
+        help_text="Designates if the course is approved by Learn.ai",
     )
     created_at = models.DateTimeField(
         auto_now_add=True,

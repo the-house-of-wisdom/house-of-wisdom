@@ -1,6 +1,5 @@
 """ Serializers for learn.accomplishments """
 
-
 from rest_framework.serializers import ModelSerializer
 from learn.accomplishments.models import Accomplishment
 

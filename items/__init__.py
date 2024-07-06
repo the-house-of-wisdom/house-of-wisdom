@@ -1,1 +1,1 @@
-""" LearnLMS Module Items """
+""" Learn.ai Module Items """
