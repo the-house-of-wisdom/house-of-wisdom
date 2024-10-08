@@ -23,35 +23,16 @@ jobs:
       - name: Create Django Project
         run: |
           python -m django startproject mysite
-
-      - name: Copy blog to mysite
-        run: |
+          mv bayt_al_hikmah
           cd mysite
-          git clone https://github.com/youzarsiph/blog
-
-      - name: Add blog to INSTALLED_APPS
-        run: |
-          cd mysite
-          echo "INSTALLED_APPS += ['learn', 'learn.accomplishments', 'learn.courses', 'learn.enrollments', 'learn.instructors', 'learn.items', 'learn.modules', 'learn.projects', 'learn.specializations', 'learn.users', 'drf_redesign', 'rest_framework']" >> mysite/settings.py
+          echo "INSTALLED_APPS += ['learn', 'bayt_al_hikmah.courses', 'bayt_al_hikmah.items', 'bayt_al_hikmah.modules', 'bayt_al_hikmah.paths', 'bayt_al_hikmah.users', 'drf_redesign', 'rest_framework']" >> mysite/settings.py
           echo "AUTH_USER_MODEL = 'users.User'" >> mysite/settings.py
-
-      - name: Add blog to mysite URLConf
-        run: |
-          cd mysite
           echo "from django.urls import include" >> mysite/urls.py
-          echo "urlpatterns += [path('', include('learn.urls'))]" >> mysite/urls.py
+          echo "urlpatterns += [path('', include('bayt_al_hikmah.urls'))]" >> mysite/urls.py
 
       - name: Run Migrations
         run: |
           cd mysite
           python manage.py migrate
-
-      - name: Run Check
-        run: |
-          cd mysite
           python manage.py check
-
-      - name: Run Tests
-        run: |
-          cd mysite
           python manage.py test

@@ -1,0 +1,28 @@
+[tool.poetry]
+package-mode = false
+name = "bayt-al-hikmah"
+version = "0.1.0"
+description = "TaskFlow is your ultimate task management companion designed to help individuals navigate their daily responsibilities with ease and efficiency."
+authors = ["Yousef Abu Shanab <josephyousef249@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{ include = "bayt_al_hikmah" }]
+
+[tool.poetry.dependencies]
+python = "3.10"
+django = "^5.1.1"
+django-cors-headers = "^4.4.0"
+django-filter = "^24.3"
+djangorestframework = "^3.15.2"
+drf-redesign = "^0.4.0"
+huggingface-hub = "^0.25.1"
+pillow = "^10.4.0"
+python-dotenv = "^1.0.1"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.8.0"
+ruff = "^0.6.8"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
