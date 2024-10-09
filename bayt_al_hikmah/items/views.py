@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from bayt_al_hikmah.items.models import Item
 from bayt_al_hikmah.items.serializers import ItemSerializer
+from bayt_al_hikmah.permissions import IsCourseOwner
 
 
 # Create your views here.
@@ -16,7 +17,18 @@ class ItemViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     search_fields = ["title", "content"]
     ordering_fields = ["title", "created_at", "updated_at"]
-    filterset_fields = ["module", "title"]
+    filterset_fields = ["course", "module", "type"]
+
+    def get_permissions(self):
+        if self.action not in ["list", "retrieve"]:
+            self.permission_classes = [IsAuthenticated, IsCourseOwner]
+
+        return super().get_permissions()
+
+    def get_queryset(self):
+        """Filter queryset by user"""
+
+        return super().get_queryset().filter(course__user=self.request.user)
 
 
 class ModuleItemsViewSet(ItemViewSet):

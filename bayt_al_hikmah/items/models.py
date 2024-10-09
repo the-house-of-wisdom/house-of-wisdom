@@ -7,6 +7,11 @@ from django.db import models
 class Item(models.Model):
     """Course Items"""
 
+    course = models.ForeignKey(
+        "courses.Course",
+        on_delete=models.CASCADE,
+        help_text="Course",
+    )
     module = models.ForeignKey(
         "modules.Module",
         on_delete=models.CASCADE,
