@@ -20,10 +20,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Create Django Project
+      - name: Create Django Project and configure settings
         run: |
           python -m django startproject mysite
-          mv bayt_al_hikmah
+          mv bayt_al_hikmah mysite
           cd mysite
           echo "INSTALLED_APPS += ['learn', 'bayt_al_hikmah.courses', 'bayt_al_hikmah.items', 'bayt_al_hikmah.modules', 'bayt_al_hikmah.paths', 'bayt_al_hikmah.users', 'drf_redesign', 'rest_framework']" >> mysite/settings.py
           echo "AUTH_USER_MODEL = 'users.User'" >> mysite/settings.py
