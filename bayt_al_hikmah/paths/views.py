@@ -16,5 +16,5 @@ class PathViewSet(OwnerMixin, ModelViewSet):
     serializer_class = PathSerializer
     permission_classes = [IsAuthenticated]
     search_fields = ["name", "headline", "description"]
-    ordering_fields = ["id", "name", "created_at", "updated_at"]
+    ordering_fields = ["name", "created_at", "updated_at"]
     filterset_fields = ["name", "is_approved"]

@@ -17,4 +17,18 @@ class CourseViewSet(OwnerMixin, ModelViewSet):
     permission_classes = [IsAuthenticated]
     search_fields = ["name", "headline", "description"]
     ordering_fields = ["name", "created_at", "updated_at"]
-    filterset_fields = ["path", "name", "is_approved"]
+    filterset_fields = ["path", "user", "name", "is_approved"]
+
+
+class PathCoursesViewSet(CourseViewSet):
+    """Courses of a learning path"""
+
+    def get_queryset(self):
+        """Filter queryset by learning path"""
+
+        return super().get_queryset().filter(path_id=self.kwargs["id"])
+
+    def perform_create(self, serializer):
+        """Add learning path to course"""
+
+        serializer.save(path_id=self.kwargs["id"])

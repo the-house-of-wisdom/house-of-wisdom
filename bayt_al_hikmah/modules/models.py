@@ -5,24 +5,30 @@ from django.db import models
 
 # Create your models here.
 class Module(models.Model):
-    """Modules"""
+    """Course Modules"""
 
     course = models.ForeignKey(
         "courses.Course",
         on_delete=models.CASCADE,
-        help_text="Module course",
+        help_text="Course",
     )
     title = models.CharField(
         max_length=64,
-        help_text="Module title",
+        db_index=True,
+        help_text="Title",
     )
     description = models.CharField(
         max_length=256,
-        help_text="Module description",
+        db_index=True,
+        help_text="Description",
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
         help_text="Date created",
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        help_text="Last update",
     )
 
     def __str__(self) -> str:

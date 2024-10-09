@@ -1,6 +1,7 @@
 """ Serializers for bayt_al_hikmah.items """
 
 from rest_framework.serializers import ModelSerializer
+
 from bayt_al_hikmah.items.models import Item
 
 
@@ -17,8 +18,11 @@ class ItemSerializer(ModelSerializer):
             "id",
             "url",
             "module",
+            "type",
             "title",
+            "description",
             "content",
+            "file",
             "created_at",
             "updated_at",
         ]

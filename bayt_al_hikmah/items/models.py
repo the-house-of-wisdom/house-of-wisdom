@@ -1,7 +1,6 @@
 """ Data Models for bayt_al_hikmah.items """
 
 from django.db import models
-from django.core.serializers.json import DjangoJSONEncoder
 
 
 # Create your models here.
@@ -11,15 +10,37 @@ class Item(models.Model):
     module = models.ForeignKey(
         "modules.Module",
         on_delete=models.CASCADE,
-        help_text="Item modules",
+        help_text="Module",
     )
     title = models.CharField(
         max_length=64,
-        help_text="Item title",
+        db_index=True,
+        help_text="Title",
     )
-    content = models.JSONField(
-        encoder=DjangoJSONEncoder,
-        help_text="Item content",
+    description = models.CharField(
+        max_length=256,
+        db_index=True,
+        help_text="Description",
+    )
+    content = models.TextField(
+        null=True,
+        blank=True,
+        help_text="Content",
+    )
+    file = models.FileField(
+        null=True,
+        blank=True,
+        help_text="Upload a file",
+        upload_to="files/items/",
+    )
+    type = models.PositiveSmallIntegerField(
+        help_text="Type",
+        choices=[
+            (1, "Video"),
+            (2, "Article"),
+            (3, "Quiz"),
+            (4, "Assignment"),
+        ],
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
@@ -27,5 +48,8 @@ class Item(models.Model):
     )
     updated_at = models.DateTimeField(
         auto_now=True,
-        help_text="Date created",
+        help_text="Last update",
     )
+
+    def __str__(self) -> str:
+        return super().__str__()

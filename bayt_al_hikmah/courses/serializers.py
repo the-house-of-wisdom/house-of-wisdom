@@ -1,6 +1,7 @@
 """ Serializers for bayt_al_hikmah.courses """
 
 from rest_framework.serializers import ModelSerializer
+
 from bayt_al_hikmah.courses.models import Course
 
 
@@ -12,9 +13,11 @@ class CourseSerializer(ModelSerializer):
         """Meta data"""
 
         model = Course
+        read_only_fields = ["user", "is_approved"]
         fields = [
             "id",
             "url",
+            "user",
             "image",
             "name",
             "headline",

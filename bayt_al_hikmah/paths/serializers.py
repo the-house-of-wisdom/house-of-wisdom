@@ -1,6 +1,7 @@
 """ Serializers for bayt_al_hikmah.specializations """
 
 from rest_framework.serializers import ModelSerializer
+
 from bayt_al_hikmah.paths.models import Path
 
 
@@ -12,7 +13,7 @@ class PathSerializer(ModelSerializer):
         """Meta data"""
 
         model = Path
-        read_only_fields = ["user"]
+        read_only_fields = ["user", "is_approved"]
         fields = [
             "id",
             "url",
