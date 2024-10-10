@@ -1,6 +1,7 @@
 """ Data Models for bayt_al_hikmah.items """
 
 from django.db import models
+from django.core.validators import FileExtensionValidator
 
 
 # Create your models here.
@@ -37,12 +38,17 @@ class Item(models.Model):
         blank=True,
         help_text="Upload a file",
         upload_to="files/items/",
+        validators=[
+            FileExtensionValidator(
+                allowed_extensions=["zip", "mp4", "pdf", "docx", "ppt"]
+            )
+        ],
     )
     type = models.PositiveSmallIntegerField(
         help_text="Type",
         choices=[
             (1, "Video"),
-            (2, "Article"),
+            (2, "Reading"),
             (3, "Quiz"),
             (4, "Assignment"),
         ],

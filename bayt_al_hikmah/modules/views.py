@@ -37,9 +37,9 @@ class CourseModuleViewSet(ModuleViewSet):
     def get_queryset(self):
         """Filter queryset by course"""
 
-        return super().get_queryset().filter(course_id=self.kwargs["id"])
+        return super().get_queryset().filter(course_id=self.kwargs["course_id"])
 
     def perform_create(self, serializer):
         """Add course to module"""
 
-        serializer.save(course_id=self.kwargs["id"])
+        serializer.save(course_id=self.kwargs["course_id"])

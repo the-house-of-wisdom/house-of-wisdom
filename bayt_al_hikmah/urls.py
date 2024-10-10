@@ -32,17 +32,17 @@ urlpatterns = [
     path("", include(router.urls)),
     # Course router
     path(
-        "courses/<int:id>/",
+        "courses/<int:course_id>/",
         include((course_router.urls, "modules"), namespace="modules"),
     ),
     # Module router
     path(
-        "modules/<int:id>/",
+        "courses/<int:course_id>/modules/<int:module_id>/",
         include((module_router.urls, "items"), namespace="items"),
     ),
     # Path router
     path(
-        "paths/<int:id>/",
+        "paths/<int:path_id>/",
         include((path_router.urls, "courses"), namespace="courses"),
     ),
 ]

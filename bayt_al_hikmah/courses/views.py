@@ -33,9 +33,9 @@ class PathCoursesViewSet(CourseViewSet):
     def get_queryset(self):
         """Filter queryset by learning path"""
 
-        return super().get_queryset().filter(path_id=self.kwargs["id"])
+        return super().get_queryset().filter(path_id=self.kwargs["path_id"])
 
     def perform_create(self, serializer):
         """Add learning path to course"""
 
-        serializer.save(path_id=self.kwargs["id"])
+        serializer.save(path_id=self.kwargs["path_id"])
