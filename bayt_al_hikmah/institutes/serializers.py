@@ -1,24 +1,23 @@
-""" Serializers for bayt_al_hikmah.paths """
+""" Serializers for bayt_al_hikmah.institutes """
 
 from rest_framework.serializers import ModelSerializer
 
-from bayt_al_hikmah.paths.models import Path
+from bayt_al_hikmah.institutes.models import Institute
 
 
 # Create your serializers here.
-class PathSerializer(ModelSerializer):
+class InstituteSerializer(ModelSerializer):
     """Specialization serializer"""
 
     class Meta:
         """Meta data"""
 
-        model = Path
-        read_only_fields = ["institute", "is_approved"]
+        model = Institute
+        read_only_fields = ["user", "is_approved"]
         fields = [
             "id",
             "url",
-            "institute",
-            "instructors",
+            "user",
             "image",
             "name",
             "headline",

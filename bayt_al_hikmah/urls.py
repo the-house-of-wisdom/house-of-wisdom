@@ -4,6 +4,8 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 from bayt_al_hikmah.courses.views import CourseViewSet, PathCoursesViewSet
+from bayt_al_hikmah.institutes.views import InstituteViewSet
+from bayt_al_hikmah.instructors.views import InstructorViewSet
 from bayt_al_hikmah.items.views import ItemViewSet, ModuleItemsViewSet
 from bayt_al_hikmah.modules.views import CourseModuleViewSet, ModuleViewSet
 from bayt_al_hikmah.paths.views import PathViewSet
@@ -12,6 +14,8 @@ from bayt_al_hikmah.paths.views import PathViewSet
 # Create your URLConf here.
 router = DefaultRouter(trailing_slash=False)
 router.register("courses", CourseViewSet, "course")
+router.register("institutes", InstituteViewSet, "institute")
+router.register("instructors", InstructorViewSet, "instructor")
 router.register("items", ItemViewSet, "item")
 router.register("modules", ModuleViewSet, "module")
 router.register("paths", PathViewSet, "path")

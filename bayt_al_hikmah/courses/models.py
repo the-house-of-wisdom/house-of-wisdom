@@ -1,20 +1,21 @@
 """ Data Models for bayt_al_hikmah.courses """
 
 from django.db import models
-from django.contrib.auth import get_user_model
 
 
 # Create your models here.
-User = get_user_model()
-
-
 class Course(models.Model):
     """Courses"""
 
-    user = models.ForeignKey(
-        User,
+    institute = models.ForeignKey(
+        "institutes.Institute",
         on_delete=models.CASCADE,
+        related_name="courses",
         help_text="Instructor",
+    )
+    instructors = models.ManyToManyField(
+        "instructors.Instructor",
+        help_text="Instructors",
     )
     path = models.ForeignKey(
         "paths.Path",

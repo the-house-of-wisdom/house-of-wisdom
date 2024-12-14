@@ -18,7 +18,7 @@ class CourseViewSet(OwnerMixin, ModelViewSet):
     permission_classes = [IsAuthenticated]
     search_fields = ["name", "headline", "description"]
     ordering_fields = ["name", "created_at", "updated_at"]
-    filterset_fields = ["path", "user", "name"]
+    filterset_fields = ["path", "institute", "instructors"]
 
     def get_permissions(self):
         if self.action not in ["list", "retrieve"]:

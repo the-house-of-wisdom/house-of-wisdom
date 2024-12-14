@@ -13,11 +13,12 @@ class CourseSerializer(ModelSerializer):
         """Meta data"""
 
         model = Course
-        read_only_fields = ["user", "is_approved"]
+        read_only_fields = ["institute", "is_approved"]
         fields = [
             "id",
             "url",
-            "user",
+            "institute",
+            "instructors",
             "image",
             "name",
             "headline",
