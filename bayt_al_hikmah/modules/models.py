@@ -10,17 +10,16 @@ class Module(models.Model):
     course = models.ForeignKey(
         "courses.Course",
         on_delete=models.CASCADE,
-        help_text="Course",
+        related_name="modules",
+        help_text="Module course",
     )
     title = models.CharField(
         max_length=64,
         db_index=True,
-        help_text="Title",
+        help_text="Module title",
     )
-    description = models.CharField(
-        max_length=256,
-        db_index=True,
-        help_text="Description",
+    description = models.TextField(
+        help_text="Module description",
     )
     created_at = models.DateTimeField(
         auto_now_add=True,

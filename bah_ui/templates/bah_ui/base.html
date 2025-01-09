@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+{% load static %}
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %}</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@latest/font/bootstrap-icons.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.1/daisyui.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  {% block head %}{% endblock %}
+</head>
+
+<body>
+  <div class="drawer">
+    <input id="my-drawer-3" type="checkbox" class="drawer-toggle sr-only" />
+
+    <div class="drawer-content flex flex-col">
+      <!-- Navbar -->
+      <div class="navbar bg-base-300 w-full">
+        <div class="flex-none lg:hidden">
+          <label for="my-drawer-3" aria-label="open sidebar" class="btn btn-square btn-ghost">
+            <i class="bi bi-list text-3xl"></i>
+          </label>
+        </div>
+
+        <div class="mx-2 flex-1 px-2">
+          <a href="{% url 'bah-ui:index' %}">
+            {% include 'bah_ui/components/logo.html' %}
+          </a>
+        </div>
+
+        <div class="hidden flex-none lg:block">
+          <ul class="menu menu-horizontal gap-4">
+            <!-- Navbar menu content here -->
+            <li><a href="{% url 'bah-ui:index' %}">Home</a></li>
+            <li><a href="{% url 'bah-ui:index' %}">About</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <main class="grid gap-4 p-4 md:px-12 lg:px-32">
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+
+    <aside class="drawer-side">
+      <label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay"></label>
+      <ul class="menu bg-base-200 min-h-full w-80 p-4 gap-4">
+        <!-- Sidebar content here -->
+        <li>
+          <a href="{% url 'bah-ui:index' %}" class="flex items-center gap-4">
+            {% include 'bah_ui/components/logo.html' %}
+            Bayt Al-Hikmah
+          </a>
+        </li>
+        <li><a href="{% url 'bah-ui:index' %}">Home</a></li>
+        <li><a href="{% url 'bah-ui:index' %}">About</a></li>
+      </ul>
+    </aside>
+  </div>
+</body>
+
+</html>

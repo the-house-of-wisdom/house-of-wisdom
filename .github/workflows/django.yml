@@ -30,7 +30,7 @@ jobs:
           mv bayt_al_hikmah mysite
           cd mysite
           echo "AUTH_USER_MODEL = 'users.User'" >> mysite/settings.py
-          echo "INSTALLED_APPS += ['bayt_al_hikmah', 'bayt_al_hikmah.courses', 'bayt_al_hikmah.institutes', 'bayt_al_hikmah.instructors', 'bayt_al_hikmah.items', 'bayt_al_hikmah.modules', 'bayt_al_hikmah.paths', 'bayt_al_hikmah.users', 'drf_redesign', 'rest_framework']" >> mysite/settings.py
+          echo "INSTALLED_APPS += ['bayt_al_hikmah', 'bayt_al_hikmah.courses', 'bayt_al_hikmah.institutes', 'bayt_al_hikmah.items', 'bayt_al_hikmah.modules', 'bayt_al_hikmah.specializations', 'bayt_al_hikmah.users', 'drf_redesign', 'rest_framework']" >> mysite/settings.py
           echo "from django.urls import include" >> mysite/urls.py
           echo "urlpatterns += [path('', include('bayt_al_hikmah.urls'))]" >> mysite/urls.py
 

@@ -13,12 +13,10 @@ class ItemSerializer(ModelSerializer):
         """Meta data"""
 
         model = Item
-        read_only_fields = ["course", "module"]
         fields = [
             "id",
             "url",
-            "course",
-            "module",
+            "lesson",
             "type",
             "title",
             "description",

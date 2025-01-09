@@ -1,0 +1,68 @@
+{% csrf_token %}
+
+{% for field in form %}
+  {% if field.widget_type == 'checkbox' %}
+    <fieldset class="fieldset p-4 bg-base-100 border border-base-300 rounded-box">
+      <legend class="fieldset-legend">{{ field.label }}</legend>
+      <label class="fieldset-label">
+        {{ field }}
+        {{ field.help_text }}
+      </label>
+    </fieldset>
+
+  {% elif field.widget_type == 'select' %}
+    <fieldset class="fieldset">
+      <legend class="fieldset-legend">
+        {{ field.label }}
+        {% if field.field.required %}
+          <span class="font-bold text-red-500">*</span>
+        {% endif %}
+      </legend>
+      {{ field }}
+      <label class="fieldset-label" for="{{ field.id_for_label }}">
+        {{ field.help_text }}
+      </label>
+    </fieldset>
+
+  {% else %}
+    <fieldset class="fieldset">
+      <legend class="fieldset-legend">
+        {{ field.label }}
+        {% if field.field.required %}
+          <span class="font-bold text-red-500">*</span>
+        {% endif %}
+      </legend>
+      {{ field }}
+      <div class="flex items-center justify-between">
+        <label class="fieldset-label" for="{{ field.id_for_label }}">
+          {{ field.help_text }}
+        </label>
+        {% if field.field.max_length %}
+          <span class="label-text-alt">Max {{ field.field.max_length }} chars</span>
+        {% endif %}
+      </div>
+    </fieldset>
+  {% endif %}
+{% endfor %}
+
+<script>
+  document.querySelectorAll('input').forEach(e => e.classList.add('input', 'w-full'))
+  document.querySelectorAll('input[type=checkbox]').forEach(e => {
+    e.classList.remove('input', 'w-full')
+    e.classList.add('checkbox')
+  })
+  document.querySelectorAll('input[type=file]').forEach(e => {
+    e.classList.remove('input')
+    e.classList.add('file-input')
+  })
+  document.querySelectorAll('textarea').forEach(e => e.classList.add('textarea', 'w-full'))
+  document.querySelectorAll('select').forEach(e => e.classList.add('select', 'w-full'))
+
+  const searchOptions = (v, id) => document.querySelector('select' + id + ' > option').forEach(e => {
+    if (e.innerText.includes(v)) {
+      e.classList.remove('hidden')
+    } else {
+      e.classList.add('hidden')
+    }
+  })
+</script>

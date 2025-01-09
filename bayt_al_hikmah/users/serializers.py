@@ -13,9 +13,15 @@ class UserSerializer(ModelSerializer):
         """Meta data"""
 
         model = User
+        read_only_fields = ["is_active", "is_staff", "is_superuser", "is_instructor"]
         fields = [
             "id",
             "url",
+            "department",
+            "is_active",
+            "is_staff",
+            "is_superuser",
+            "is_instructor",
             "image",
             "username",
             "first_name",

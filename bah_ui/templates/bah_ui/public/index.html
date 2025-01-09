@@ -1,0 +1,62 @@
+{% extends 'bah_ui/base.html' %}
+
+{% load i18n %}
+
+{% block title %}{% translate 'Bayt Al-Hikmah' %}{% endblock %}
+
+{% block content %}
+<h1 class="text-4xl">
+  Bayt Al-Hikmah
+</h1>
+
+<div class="dock dock-xl">
+  <button>
+    <i class="bi bi-house-fill text-xl"></i>
+    <span class="dock-label">Home</span>
+  </button>
+
+  <button class="dock-active">
+    <i class="bi bi-person-square text-xl"></i>
+    <span class="dock-label">Profile</span>
+  </button>
+
+  <button>
+    <i class="bi bi-gear-fill text-xl"></i>
+    <span class="dock-label">Settings</span>
+  </button>
+</div>
+
+<footer class="footer sm:footer-horizontal bg-base-200 text-base-content p-10">
+  <nav>
+    <h6 class="footer-title">Services</h6>
+    <a class="link link-hover">Branding</a>
+    <a class="link link-hover">Design</a>
+    <a class="link link-hover">Marketing</a>
+    <a class="link link-hover">Advertisement</a>
+  </nav>
+  <nav>
+    <h6 class="footer-title">Company</h6>
+    <a class="link link-hover">About us</a>
+    <a class="link link-hover">Contact</a>
+    <a class="link link-hover">Jobs</a>
+    <a class="link link-hover">Press kit</a>
+  </nav>
+  <nav>
+    <h6 class="footer-title">Legal</h6>
+    <a class="link link-hover">Terms of use</a>
+    <a class="link link-hover">Privacy policy</a>
+    <a class="link link-hover">Cookie policy</a>
+  </nav>
+</footer>
+
+<footer class="footer bg-base-200 text-base-content border-base-300 border-t px-10 py-4">
+  <aside class="grid-flow-col items-center gap-4">
+    {% include 'bah_ui/components/logo.html' %}
+    <p>
+      Bayt Al-Hikmah
+      <br />
+      Modern Learning Management Systems
+    </p>
+  </aside>
+</footer>
+{% endblock %}

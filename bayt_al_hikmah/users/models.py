@@ -6,8 +6,20 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class User(AbstractUser):
-    """bayt_al_hikmah.ai Users"""
+    """Users"""
 
+    department = models.ForeignKey(
+        "departments.Department",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="users",
+        help_text="Department",
+    )
+    is_instructor = models.BooleanField(
+        default=False,
+        help_text="Designates weather the user is an instructor",
+    )
     image = models.ImageField(
         null=True,
         blank=True,

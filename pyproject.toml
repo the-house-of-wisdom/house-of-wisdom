@@ -2,7 +2,7 @@
 package-mode = false
 name = "bayt-al-hikmah"
 version = "0.1.0"
-description = "TaskFlow is your ultimate task management companion designed to help individuals navigate their daily responsibilities with ease and efficiency."
+description = "Bayt al-Hikmah, an innovative Learning Management System (LMS)."
 authors = ["Yousef Abu Shanab <josephyousef249@gmail.com>"]
 license = "MIT"
 readme = "README.md"

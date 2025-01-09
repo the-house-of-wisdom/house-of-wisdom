@@ -3,40 +3,36 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
 
+from bayt_al_hikmah.items import ITEM_TYPES
+
 
 # Create your models here.
 class Item(models.Model):
-    """Course Items"""
+    """Lesson Items"""
 
-    course = models.ForeignKey(
-        "courses.Course",
+    lesson = models.ForeignKey(
+        "lessons.Lesson",
         on_delete=models.CASCADE,
-        help_text="Course",
-    )
-    module = models.ForeignKey(
-        "modules.Module",
-        on_delete=models.CASCADE,
-        help_text="Module",
+        related_name="items",
+        help_text="Item lesson",
     )
     title = models.CharField(
         max_length=64,
         db_index=True,
-        help_text="Title",
+        help_text="Item title",
     )
-    description = models.CharField(
-        max_length=256,
-        db_index=True,
-        help_text="Description",
+    description = models.TextField(
+        help_text="Item description",
     )
     content = models.TextField(
         null=True,
         blank=True,
-        help_text="Content",
+        help_text="Item content",
     )
     file = models.FileField(
         null=True,
         blank=True,
-        help_text="Upload a file",
+        help_text="Item file",
         upload_to="files/items/",
         validators=[
             FileExtensionValidator(
@@ -45,13 +41,9 @@ class Item(models.Model):
         ],
     )
     type = models.PositiveSmallIntegerField(
-        help_text="Type",
-        choices=[
-            (1, "Video"),
-            (2, "Reading"),
-            (3, "Quiz"),
-            (4, "Assignment"),
-        ],
+        default=0,
+        help_text="Item type",
+        choices=ITEM_TYPES,
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
@@ -63,4 +55,4 @@ class Item(models.Model):
     )
 
     def __str__(self) -> str:
-        return super().__str__()
+        return self.title
