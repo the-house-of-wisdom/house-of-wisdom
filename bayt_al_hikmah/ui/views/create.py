@@ -1,10 +1,9 @@
-""" Update views """
+""" Create views """
 
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import UpdateView
+from django.views.generic import CreateView
 
-from bah_ui.views.mixins import AdminUserMixin, ExtraContextMixin
 from bayt_al_hikmah.categories.models import Category
 from bayt_al_hikmah.courses.models import Course
 from bayt_al_hikmah.departments.models import Department
@@ -15,31 +14,31 @@ from bayt_al_hikmah.reviews.models import Review
 from bayt_al_hikmah.lessons.models import Lesson
 from bayt_al_hikmah.specializations.models import Specialization
 from bayt_al_hikmah.tags.models import Tag
+from bayt_al_hikmah.ui.views.mixins import AdminUserMixin, ExtraContextMixin
 
 
-# Create your update views here.
-class ModelUpdateView(ExtraContextMixin, LoginRequiredMixin, UpdateView):
-    """Update a Model"""
+# Create your create views here.
+class ModelCreateView(ExtraContextMixin, LoginRequiredMixin, CreateView):
+    """Create a Model"""
 
-    pk_url_kwarg = "id"
-    extra_context = {"title": "Update Model"}
+    extra_context = {"title ": "New Model"}
     template_name = "bah_ui/shared/form.html"
 
 
-class CategoryUpdateView(AdminUserMixin, ModelUpdateView):
-    """Update a Category"""
+class CategoryCreateView(AdminUserMixin, ModelCreateView):
+    """Create a Category"""
 
     model = Category
-    extra_context = {"title": "Update Category"}
+    extra_context = {"title ": "New Category"}
     fields = ["name", "description"]
     success_url = reverse_lazy("bah-ui:categories")
 
 
-class CourseUpdateView(ModelUpdateView):
-    """Update a Course"""
+class CourseCreateView(ModelCreateView):
+    """Create a Course"""
 
     model = Course
-    extra_context = {"title": "Update Course"}
+    extra_context = {"title ": "New Course"}
     fields = [
         "category",
         "department",
@@ -52,64 +51,64 @@ class CourseUpdateView(ModelUpdateView):
     success_url = reverse_lazy("bah-ui:courses")
 
 
-class DepartmentUpdateView(AdminUserMixin, ModelUpdateView):
-    """Update a Department"""
+class DepartmentCreateView(AdminUserMixin, ModelCreateView):
+    """Create a Department"""
 
     model = Department
-    extra_context = {"title": "Update Department"}
+    extra_context = {"title ": "New Department"}
     fields = ["faculty", "image", "name", "headline", "description"]
     success_url = reverse_lazy("bah-ui:departments")
 
 
-class FacultyUpdateView(AdminUserMixin, ModelUpdateView):
-    """Update a Faculty"""
+class FacultyCreateView(AdminUserMixin, ModelCreateView):
+    """Create a Faculty"""
 
     model = Faculty
-    extra_context = {"title": "Update Faculty"}
+    extra_context = {"title ": "New Faculty"}
     fields = ["image", "name", "headline", "description"]
     success_url = reverse_lazy("bah-ui:faculties")
 
 
-class ItemUpdateView(ModelUpdateView):
-    """Update an Item"""
+class ItemCreateView(ModelCreateView):
+    """Create an Item"""
 
     model = Item
     fields = ["lesson", "title", "description", "content", "type"]
     success_url = reverse_lazy("bah-ui:items")
 
 
-class ModuleUpdateView(ModelUpdateView):
-    """Update a Module"""
+class ModuleCreateView(ModelCreateView):
+    """Create a Module"""
 
     model = Module
-    extra_context = {"title": "Update Module"}
+    extra_context = {"title ": "New Module"}
     fields = ["course", "title", "description"]
     success_url = reverse_lazy("bah-ui:modules")
 
 
-class ReviewUpdateView(ModelUpdateView):
-    """Update a Review"""
+class ReviewCreateView(ModelCreateView):
+    """Create a Review"""
 
     model = Review
-    extra_context = {"title": "Update Review"}
+    extra_context = {"title ": "New Review"}
     fields = ["rating", "comment"]
     success_url = reverse_lazy("bah-ui:reviews")
 
 
-class LessonUpdateView(ModelUpdateView):
-    """Update a Lesson"""
+class LessonCreateView(ModelCreateView):
+    """Create a Lesson"""
 
     model = Lesson
-    extra_context = {"title": "Update Lesson"}
+    extra_context = {"title ": "New Lesson"}
     fields = ["module", "title", "description"]
     success_url = reverse_lazy("bah-ui:lessons")
 
 
-class SpecializationUpdateView(ModelUpdateView):
-    """Update a Specialization"""
+class SpecializationCreateView(ModelCreateView):
+    """Create a Specialization"""
 
     model = Specialization
-    extra_context = {"title": "Update Specialization"}
+    extra_context = {"title ": "New Specialization"}
     fields = [
         "category",
         "department",
@@ -122,10 +121,10 @@ class SpecializationUpdateView(ModelUpdateView):
     success_url = reverse_lazy("bah-ui:specializations")
 
 
-class TagUpdateView(AdminUserMixin, ModelUpdateView):
-    """Update a Tag"""
+class TagCreateView(AdminUserMixin, ModelCreateView):
+    """Create a Tag"""
 
     model = Tag
-    extra_context = {"title": "Update Tag"}
+    extra_context = {"title ": "New Tag"}
     fields = ["name", "description"]
     success_url = reverse_lazy("bah-ui:tags")

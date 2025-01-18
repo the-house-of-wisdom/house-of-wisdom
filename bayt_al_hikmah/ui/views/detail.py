@@ -2,13 +2,13 @@
 
 from django.views.generic import DetailView
 
-from bah_ui.views.mixins import AdminUserMixin, ExtraContextMixin
 from bayt_al_hikmah.categories.models import Category
 from bayt_al_hikmah.courses.models import Course
 from bayt_al_hikmah.departments.models import Department
 from bayt_al_hikmah.faculties.models import Faculty
 from bayt_al_hikmah.specializations.models import Specialization
 from bayt_al_hikmah.tags.models import Tag
+from bayt_al_hikmah.ui.views.mixins import AdminUserMixin, ExtraContextMixin
 
 
 # Create your detail views here.

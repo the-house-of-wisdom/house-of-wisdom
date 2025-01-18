@@ -1,4 +1,4 @@
-{% extends 'bah_ui/base.html' %}
+{% extends 'ui/base.html' %}
 
 {% load i18n %}
 
@@ -8,7 +8,7 @@
 <h1 class="display-1">{{ title }}</h1>
 
 <form method="post" style="display: grid; gap: 1rem;" enctype="multipart/form-data">
-  {% include 'bah_ui/components/form.html' %}
+  {% include 'ui/components/form.html' %}
 
   <button type="submit" class="btn btn-lg btn-primary">Submit</button>
 </form>

@@ -1,25 +1,17 @@
-""" URLConf for BAH UI """
+""" URLConf for bayt_al_hikmah.ui """
 
 from django.urls import path, include
 
-from bah_ui.views import (
-    AboutView,
-    IndexView,
-    ProfileView,
-    create,
-    delete,
-    detail,
-    list,
-    update,
-)
+from bayt_al_hikmah.ui import views
+from bayt_al_hikmah.ui.views import create, list, detail, update, delete
 
 
 # Create your URLConf here.
-app_name = "bah-ui"
+app_name = "ui"
 
 account_urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
-    path("accounts/profile/", ProfileView.as_view(), name="profile"),
+    path("accounts/profile/", views.ProfileView.as_view(), name="profile"),
 ]
 
 admin_urlpatterns = [
@@ -225,8 +217,8 @@ instructor_urlpatterns = [  # Courses
 
 urlpatterns = (
     [
-        path("", IndexView.as_view(), name="index"),
-        path("about/", AboutView.as_view(), name="about"),
+        path("", views.IndexView.as_view(), name="index"),
+        path("about/", views.AboutView.as_view(), name="about"),
     ]
     + account_urlpatterns
     + admin_urlpatterns

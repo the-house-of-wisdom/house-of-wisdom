@@ -1,4 +1,4 @@
-""" AppConf for bah_ui """
+""" AppConf for bayt_al_hikmah.ui """
 
 from django.apps import AppConfig
 
@@ -7,5 +7,5 @@ from django.apps import AppConfig
 class BaytAlHikamhUIConfig(AppConfig):
     """App configuration for bayt_al_hikmah_ui"""
 
-    name = "bah_ui"
+    name = "bayt_al_hikmah.ui"
     default_auto_field = "django.db.models.BigAutoField"

@@ -4,7 +4,6 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DeleteView
 
-from bah_ui.views.mixins import AdminUserMixin, ExtraContextMixin
 from bayt_al_hikmah.categories.models import Category
 from bayt_al_hikmah.courses.models import Course
 from bayt_al_hikmah.departments.models import Department
@@ -17,6 +16,7 @@ from bayt_al_hikmah.reviews.models import Review
 from bayt_al_hikmah.lessons.models import Lesson
 from bayt_al_hikmah.specializations.models import Specialization
 from bayt_al_hikmah.tags.models import Tag
+from bayt_al_hikmah.ui.views.mixins import AdminUserMixin, ExtraContextMixin
 
 
 # Create your delete views here.
