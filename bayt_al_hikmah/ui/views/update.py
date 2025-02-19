@@ -1,4 +1,4 @@
-""" Update views """
+"""Update views"""
 
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -23,7 +23,7 @@ class ModelUpdateView(ExtraContextMixin, LoginRequiredMixin, UpdateView):
 
     pk_url_kwarg = "id"
     extra_context = {"title": "Update Model"}
-    template_name = "bah_ui/shared/form.html"
+    template_name = "ui/shared/form.html"
 
 
 class CategoryUpdateView(AdminUserMixin, ModelUpdateView):
@@ -32,7 +32,7 @@ class CategoryUpdateView(AdminUserMixin, ModelUpdateView):
     model = Category
     extra_context = {"title": "Update Category"}
     fields = ["name", "description"]
-    success_url = reverse_lazy("bah-ui:categories")
+    success_url = reverse_lazy("ui:categories")
 
 
 class CourseUpdateView(ModelUpdateView):
@@ -49,7 +49,7 @@ class CourseUpdateView(ModelUpdateView):
         "headline",
         "description",
     ]
-    success_url = reverse_lazy("bah-ui:courses")
+    success_url = reverse_lazy("ui:courses")
 
 
 class DepartmentUpdateView(AdminUserMixin, ModelUpdateView):
@@ -58,7 +58,7 @@ class DepartmentUpdateView(AdminUserMixin, ModelUpdateView):
     model = Department
     extra_context = {"title": "Update Department"}
     fields = ["faculty", "image", "name", "headline", "description"]
-    success_url = reverse_lazy("bah-ui:departments")
+    success_url = reverse_lazy("ui:departments")
 
 
 class FacultyUpdateView(AdminUserMixin, ModelUpdateView):
@@ -67,7 +67,7 @@ class FacultyUpdateView(AdminUserMixin, ModelUpdateView):
     model = Faculty
     extra_context = {"title": "Update Faculty"}
     fields = ["image", "name", "headline", "description"]
-    success_url = reverse_lazy("bah-ui:faculties")
+    success_url = reverse_lazy("ui:faculties")
 
 
 class ItemUpdateView(ModelUpdateView):
@@ -75,7 +75,7 @@ class ItemUpdateView(ModelUpdateView):
 
     model = Item
     fields = ["lesson", "title", "description", "content", "type"]
-    success_url = reverse_lazy("bah-ui:items")
+    success_url = reverse_lazy("ui:items")
 
 
 class ModuleUpdateView(ModelUpdateView):
@@ -84,7 +84,7 @@ class ModuleUpdateView(ModelUpdateView):
     model = Module
     extra_context = {"title": "Update Module"}
     fields = ["course", "title", "description"]
-    success_url = reverse_lazy("bah-ui:modules")
+    success_url = reverse_lazy("ui:modules")
 
 
 class ReviewUpdateView(ModelUpdateView):
@@ -93,7 +93,7 @@ class ReviewUpdateView(ModelUpdateView):
     model = Review
     extra_context = {"title": "Update Review"}
     fields = ["rating", "comment"]
-    success_url = reverse_lazy("bah-ui:reviews")
+    success_url = reverse_lazy("ui:reviews")
 
 
 class LessonUpdateView(ModelUpdateView):
@@ -102,7 +102,7 @@ class LessonUpdateView(ModelUpdateView):
     model = Lesson
     extra_context = {"title": "Update Lesson"}
     fields = ["module", "title", "description"]
-    success_url = reverse_lazy("bah-ui:lessons")
+    success_url = reverse_lazy("ui:lessons")
 
 
 class SpecializationUpdateView(ModelUpdateView):
@@ -119,7 +119,7 @@ class SpecializationUpdateView(ModelUpdateView):
         "headline",
         "description",
     ]
-    success_url = reverse_lazy("bah-ui:specializations")
+    success_url = reverse_lazy("ui:specializations")
 
 
 class TagUpdateView(AdminUserMixin, ModelUpdateView):
@@ -128,4 +128,4 @@ class TagUpdateView(AdminUserMixin, ModelUpdateView):
     model = Tag
     extra_context = {"title": "Update Tag"}
     fields = ["name", "description"]
-    success_url = reverse_lazy("bah-ui:tags")
+    success_url = reverse_lazy("ui:tags")

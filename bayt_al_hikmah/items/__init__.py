@@ -1,4 +1,4 @@
-""" Lesson Items """
+"""Lesson Items"""
 
 # Constants
 ITEM_TYPES = [

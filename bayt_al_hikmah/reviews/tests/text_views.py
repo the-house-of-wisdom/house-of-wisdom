@@ -1,4 +1,4 @@
-""" Tests for bayt_al_hikmah.reviews.views """
+"""Tests for bayt_al_hikmah.reviews.views"""
 
 from rest_framework.test import APITestCase
 

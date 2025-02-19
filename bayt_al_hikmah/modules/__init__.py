@@ -1,1 +1,1 @@
-""" Course Modules """
+"""Course Modules"""

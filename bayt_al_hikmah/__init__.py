@@ -1,4 +1,4 @@
-""" Bayt al Hikmah """
+"""Bayt al Hikmah"""
 
 from dotenv import load_dotenv
 

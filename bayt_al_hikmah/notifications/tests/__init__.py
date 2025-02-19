@@ -1,1 +1,1 @@
-""" Tests for bayt_al_hikmah.notifications """
+"""Tests for bayt_al_hikmah.notifications"""

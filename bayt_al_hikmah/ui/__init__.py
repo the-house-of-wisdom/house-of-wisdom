@@ -1,1 +1,1 @@
-""" Bayt Al-Hikmah UI """
+"""Bayt Al-Hikmah UI"""

@@ -1,4 +1,4 @@
-""" Detail views """
+"""Detail views"""
 
 from django.views.generic import DetailView
 
@@ -24,7 +24,7 @@ class CategoryDetailView(AdminUserMixin, ModelDetailView):
 
     model = Category
     extra_context = {"title": "Category details"}
-    template_name = "bah_ui/detail/category.html"
+    template_name = "ui/detail/category.html"
 
 
 class CourseDetailView(ModelDetailView):
@@ -32,7 +32,7 @@ class CourseDetailView(ModelDetailView):
 
     model = Course
     extra_context = {"title": "Course details"}
-    template_name = "bah_ui/detail/course.html"
+    template_name = "ui/detail/course.html"
 
 
 class DepartmentDetailView(ModelDetailView):
@@ -40,7 +40,7 @@ class DepartmentDetailView(ModelDetailView):
 
     model = Department
     extra_context = {"title": "Department details"}
-    template_name = "bah_ui/detail/department.html"
+    template_name = "ui/detail/department.html"
 
 
 class FacultyDetailView(ModelDetailView):
@@ -48,7 +48,7 @@ class FacultyDetailView(ModelDetailView):
 
     model = Faculty
     extra_context = {"title": "Faculty details"}
-    template_name = "bah_ui/detail/faculty.html"
+    template_name = "ui/detail/faculty.html"
 
 
 class SpecializationDetailView(ModelDetailView):
@@ -56,7 +56,7 @@ class SpecializationDetailView(ModelDetailView):
 
     model = Specialization
     extra_context = {"title": "Specialization details"}
-    template_name = "bah_ui/detail/specialization.html"
+    template_name = "ui/detail/specialization.html"
 
 
 class TagDetailView(AdminUserMixin, ModelDetailView):
@@ -64,4 +64,4 @@ class TagDetailView(AdminUserMixin, ModelDetailView):
 
     model = Tag
     extra_context = {"title": "Tag details"}
-    template_name = "bah_ui/detail/tag.html"
+    template_name = "ui/detail/tag.html"

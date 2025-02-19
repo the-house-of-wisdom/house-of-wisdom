@@ -1,1 +1,1 @@
-""" Tests for bayt_al_hikmah.departments """
+"""Tests for bayt_al_hikmah.departments"""

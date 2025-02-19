@@ -1,4 +1,4 @@
-""" URLConf for bayt_al_hikmah """
+"""URLConf for bayt_al_hikmah"""
 
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter

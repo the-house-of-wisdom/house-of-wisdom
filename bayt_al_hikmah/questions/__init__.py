@@ -1,4 +1,4 @@
-""" Assignment Questions """
+"""Assignment Questions"""
 
 # Constants
 QUESTION_TYPES = [

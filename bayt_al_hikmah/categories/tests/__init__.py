@@ -1,1 +1,1 @@
-""" Tests for bayt_al_hikmah.categories """
+"""Tests for bayt_al_hikmah.categories"""

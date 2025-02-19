@@ -1,4 +1,4 @@
-""" Create views """
+"""Create views"""
 
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -22,7 +22,7 @@ class ModelCreateView(ExtraContextMixin, LoginRequiredMixin, CreateView):
     """Create a Model"""
 
     extra_context = {"title ": "New Model"}
-    template_name = "bah_ui/shared/form.html"
+    template_name = "ui/shared/form.html"
 
 
 class CategoryCreateView(AdminUserMixin, ModelCreateView):
@@ -31,7 +31,7 @@ class CategoryCreateView(AdminUserMixin, ModelCreateView):
     model = Category
     extra_context = {"title ": "New Category"}
     fields = ["name", "description"]
-    success_url = reverse_lazy("bah-ui:categories")
+    success_url = reverse_lazy("ui:categories")
 
 
 class CourseCreateView(ModelCreateView):
@@ -48,7 +48,7 @@ class CourseCreateView(ModelCreateView):
         "headline",
         "description",
     ]
-    success_url = reverse_lazy("bah-ui:courses")
+    success_url = reverse_lazy("ui:courses")
 
 
 class DepartmentCreateView(AdminUserMixin, ModelCreateView):
@@ -57,7 +57,7 @@ class DepartmentCreateView(AdminUserMixin, ModelCreateView):
     model = Department
     extra_context = {"title ": "New Department"}
     fields = ["faculty", "image", "name", "headline", "description"]
-    success_url = reverse_lazy("bah-ui:departments")
+    success_url = reverse_lazy("ui:departments")
 
 
 class FacultyCreateView(AdminUserMixin, ModelCreateView):
@@ -66,7 +66,7 @@ class FacultyCreateView(AdminUserMixin, ModelCreateView):
     model = Faculty
     extra_context = {"title ": "New Faculty"}
     fields = ["image", "name", "headline", "description"]
-    success_url = reverse_lazy("bah-ui:faculties")
+    success_url = reverse_lazy("ui:faculties")
 
 
 class ItemCreateView(ModelCreateView):
@@ -74,7 +74,7 @@ class ItemCreateView(ModelCreateView):
 
     model = Item
     fields = ["lesson", "title", "description", "content", "type"]
-    success_url = reverse_lazy("bah-ui:items")
+    success_url = reverse_lazy("ui:items")
 
 
 class ModuleCreateView(ModelCreateView):
@@ -83,7 +83,7 @@ class ModuleCreateView(ModelCreateView):
     model = Module
     extra_context = {"title ": "New Module"}
     fields = ["course", "title", "description"]
-    success_url = reverse_lazy("bah-ui:modules")
+    success_url = reverse_lazy("ui:modules")
 
 
 class ReviewCreateView(ModelCreateView):
@@ -92,7 +92,7 @@ class ReviewCreateView(ModelCreateView):
     model = Review
     extra_context = {"title ": "New Review"}
     fields = ["rating", "comment"]
-    success_url = reverse_lazy("bah-ui:reviews")
+    success_url = reverse_lazy("ui:reviews")
 
 
 class LessonCreateView(ModelCreateView):
@@ -101,7 +101,7 @@ class LessonCreateView(ModelCreateView):
     model = Lesson
     extra_context = {"title ": "New Lesson"}
     fields = ["module", "title", "description"]
-    success_url = reverse_lazy("bah-ui:lessons")
+    success_url = reverse_lazy("ui:lessons")
 
 
 class SpecializationCreateView(ModelCreateView):
@@ -118,7 +118,7 @@ class SpecializationCreateView(ModelCreateView):
         "headline",
         "description",
     ]
-    success_url = reverse_lazy("bah-ui:specializations")
+    success_url = reverse_lazy("ui:specializations")
 
 
 class TagCreateView(AdminUserMixin, ModelCreateView):
@@ -127,4 +127,4 @@ class TagCreateView(AdminUserMixin, ModelCreateView):
     model = Tag
     extra_context = {"title ": "New Tag"}
     fields = ["name", "description"]
-    success_url = reverse_lazy("bah-ui:tags")
+    success_url = reverse_lazy("ui:tags")

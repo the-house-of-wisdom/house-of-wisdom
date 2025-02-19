@@ -1,1 +1,1 @@
-""" Assignment Submissions """
+"""Assignment Submissions"""

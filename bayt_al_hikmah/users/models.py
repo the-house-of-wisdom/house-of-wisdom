@@ -1,4 +1,4 @@
-""" Data Models for bayt_al_hikmah.users """
+"""Data Models for bayt_al_hikmah.users"""
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser

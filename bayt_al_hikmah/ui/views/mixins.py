@@ -1,4 +1,4 @@
-""" View mixins """
+"""View mixins"""
 
 from typing import Any
 from django.contrib.auth.mixins import UserPassesTestMixin

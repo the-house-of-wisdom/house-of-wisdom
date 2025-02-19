@@ -1,1 +1,1 @@
-""" Specializations """
+"""Specializations"""

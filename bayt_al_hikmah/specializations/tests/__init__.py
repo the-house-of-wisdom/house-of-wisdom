@@ -1,1 +1,1 @@
-""" Tests for bayt_al_hikmah.specializations """
+"""Tests for bayt_al_hikmah.specializations"""

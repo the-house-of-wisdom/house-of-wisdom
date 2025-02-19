@@ -1,4 +1,4 @@
-""" Data Models for bayt_al_hikmah.tags """
+"""Data Models for bayt_al_hikmah.tags"""
 
 from django.db import models
 

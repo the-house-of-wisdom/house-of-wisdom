@@ -1,4 +1,4 @@
-""" Data Models for bayt_al_hikmah.enrollments """
+"""Data Models for bayt_al_hikmah.enrollments"""
 
 from django.db import models
 from django.contrib.auth import get_user_model

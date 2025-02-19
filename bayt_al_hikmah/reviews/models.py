@@ -1,4 +1,4 @@
-""" Data Models for bayt_al_hikmah.reviews """
+"""Data Models for bayt_al_hikmah.reviews"""
 
 from django.db import models
 from django.contrib.auth import get_user_model
@@ -49,9 +49,7 @@ class Review(models.Model):
     )
 
     class Meta:
-        """
-        Meta data
-        """
+        """Meta data"""
 
         constraints = [
             models.UniqueConstraint(name="unique_review", fields=["user", "course"])

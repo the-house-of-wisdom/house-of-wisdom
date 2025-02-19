@@ -1,72 +1,202 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
 
-{% load static %}
+<html lang="en" data-theme="dim">
 
 <head>
+  {% load i18n %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}{% endblock %}</title>
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@latest/font/bootstrap-icons.min.css">
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.1/daisyui.css" rel="stylesheet" type="text/css" />
-  <script src="https://cdn.tailwindcss.com"></script>
-
+  <title>{% block title %}{% translate 'ui' %}{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.7/daisyui.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.7/themes.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet">
   {% block head %}{% endblock %}
 </head>
 
-<body>
-  <div class="drawer">
-    <input id="my-drawer-3" type="checkbox" class="drawer-toggle sr-only" />
+<body style="font-family: 'Noto Sans';"
+  class="flex h-screen {% block body_styles %}overflow-hidden{% endblock %} flex-col gap-4 lg:flex-row">
+  <!-- Nav -->
+  <section class="w-full lg:h-full lg:w-auto{% block nav_styles %}{% endblock %}">
+    <header class="w-full p-4 pb-0 lg:h-full lg:w-auto lg:pr-0 lg:pb-4">
+      <nav
+        class="menu menu-horizontal z-50 w-full items-center justify-between gap-4 rounded-box bg-base-200 lg:menu-vertical lg:h-full lg:w-auto">
+        <ul class="menu menu-horizontal items-center gap-2 p-0 lg:menu-vertical">
+          <li class="tooltip tooltip-bottom tooltip-primary" data-tip="{% translate 'House Of The Wisdom' %}">
+            <a href="{% url 'ui:index' %}" class="btn btn-square btn-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-school">
+                <path d="M14 22v-4a2 2 0 1 0-4 0v4" />
+                <path
+                  d="m18 10 3.447 1.724a1 1 0 0 1 .553.894V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7.382a1 1 0 0 1 .553-.894L6 10" />
+                <path d="M18 5v17" />
+                <path d="m4 6 7.106-3.553a2 2 0 0 1 1.788 0L20 6" />
+                <path d="M6 5v17" />
+                <circle cx="12" cy="9" r="2" />
+              </svg>
 
-    <div class="drawer-content flex flex-col">
-      <!-- Navbar -->
-      <div class="navbar bg-base-300 w-full">
-        <div class="flex-none lg:hidden">
-          <label for="my-drawer-3" aria-label="open sidebar" class="btn btn-square btn-ghost">
-            <i class="bi bi-list text-3xl"></i>
-          </label>
-        </div>
+              <span class="sr-only">{% translate 'House Of The Wisdom' %}</span>
+            </a>
+          </li>
+          <li class="tooltip tooltip-bottom tooltip-secondary" data-tip="{% translate 'Home' %}">
+            <a href="{% url 'ui:index' %}" class="btn btn-square btn-ghost">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-house size-5">
+                <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+                <path
+                  d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              </svg>
 
-        <div class="mx-2 flex-1 px-2">
-          <a href="{% url 'bah-ui:index' %}">
-            {% include 'ui/components/logo.html' %}
-          </a>
-        </div>
+              <span class="sr-only">{% translate 'Home' %}</span>
+            </a>
+          </li>
+          <li class="tooltip tooltip-bottom tooltip-secondary" data-tip="{% translate 'About' %}">
+            <a href="{% url 'ui:about' %}" class="btn btn-square btn-ghost">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-badge-info">
+                <path
+                  d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+                <line x1="12" x2="12" y1="16" y2="12" />
+                <line x1="12" x2="12.01" y1="8" y2="8" />
+              </svg>
 
-        <div class="hidden flex-none lg:block">
-          <ul class="menu menu-horizontal gap-4">
-            <!-- Navbar menu content here -->
-            <li><a href="{% url 'bah-ui:index' %}">Home</a></li>
-            <li><a href="{% url 'bah-ui:index' %}">About</a></li>
-          </ul>
-        </div>
-      </div>
+              <span class="sr-only">{% translate 'About' %}</span>
+            </a>
+          </li>
+          <li class="tooltip tooltip-bottom tooltip-secondary" data-tip="{% translate 'Courses' %}">
+            <a href="{% url 'ui:index' %}" class="btn btn-square btn-ghost">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-book-open-text size-5">
+                <path d="M12 7v14" />
+                <path d="M16 12h2" />
+                <path d="M16 8h2" />
+                <path
+                  d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
+                <path d="M6 12h2" />
+                <path d="M6 8h2" />
+              </svg>
 
-      <main class="grid gap-4 p-4 md:px-12 lg:px-32">
+              <span class="sr-only">{% translate 'Courses' %}</span>
+            </a>
+          </li>
+          <li class="tooltip tooltip-bottom tooltip-secondary" data-tip="{% translate 'Specializations' %}">
+            <a href="{% url 'ui:index' %}" class="btn btn-square btn-ghost">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-library size-5">
+                <path d="m16 6 4 14" />
+                <path d="M12 6v14" />
+                <path d="M8 8v12" />
+                <path d="M4 4v16" />
+              </svg>
+
+              <span class="sr-only">{% translate 'Specializations' %}</span>
+            </a>
+          </li>
+          <li class="tooltip tooltip-bottom tooltip-secondary" data-tip="{% translate 'Search' %}">
+            <a href="{% url 'ui:index' %}" class="btn btn-square btn-ghost">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-search size-5">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+
+              <span class="sr-only">{% translate 'Search' %}</span>
+            </a>
+          </li>
+        </ul>
+
+        <ul class="menu menu-horizontal items-center gap-2 p-0 lg:menu-vertical">
+          <li class="tooltip tooltip-bottom tooltip-accent lg:tooltip-top" data-tip="{% translate 'Profile' %}">
+            <button class="btn btn-square btn-ghost" popovertarget="profile" style="anchor-name:--profile-anchor">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-user size-5">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+
+              <span class="sr-only">{% translate 'Profile' %}</span>
+            </button>
+
+            <ul
+              class="menu dropdown dropdown-left dropdown-bottom w-32 rounded-box bg-base-100 shadow-sm lg:dropdown-right lg:dropdown-top"
+              popover id="profile" style="position-anchor:--profile-anchor">
+              <li class="menu-title">Profile</li>
+              <li>
+                <a href="{% url 'ui:index' %}" class="flex items-center gap-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-circle-user size-4">
+                    <circle cx="12" cy="12" r="10" />
+                    <circle cx="12" cy="10" r="3" />
+                    <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" />
+                  </svg>
+                  <span> Profile </span>
+                </a>
+              </li>
+              {% if request.user.is_authenticated %}
+              <li>
+                <a href="{% url 'ui:index' %}" class="flex items-center gap-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-log-out size-4">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" x2="9" y1="12" y2="12" />
+                  </svg>
+                  <span> Logout </span>
+                </a>
+              </li>
+              {% else %}
+              <li>
+                <a href="{% url 'ui:index' %}" class="flex items-center gap-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-log-in size-4">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                    <polyline points="10 17 15 12 10 7" />
+                    <line x1="15" x2="3" y1="12" y2="12" />
+                  </svg>
+                  <span> Login </span>
+                </a>
+              </li>
+              {% endif %}
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </header>
+  </section>
+
+  <!-- Main content -->
+  <main class="relative flex h-screen w-full flex-col gap-4">
+    {% block main %}
+    <div class="grid h-full w-full grid-cols-12 gap-4">
+      <section
+        class="col-span-12 h-full max-h-screen lg:p-4 lg:col-span-3 lg:h-full lg:px-0{% block sidebar_styles %}{% endblock %}">
+        {% block sidebar %}{% endblock %}
+      </section>
+
+      <section
+        class="col-span-12 h-full max-h-screen lg:p-4 lg:col-span-9 lg:h-full lg:pr-4 lg:pl-0{% block content_styles %}{% endblock %}">
         {% block content %}{% endblock %}
-      </main>
+      </section>
     </div>
+    {% endblock %}
+  </main>
 
-    <aside class="drawer-side">
-      <label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay"></label>
-      <ul class="menu bg-base-200 min-h-full w-80 p-4 gap-4">
-        <!-- Sidebar content here -->
-        <li>
-          <a href="{% url 'bah-ui:index' %}" class="flex items-center gap-4">
-            {% include 'ui/components/logo.html' %}
-            Bayt Al-Hikmah
-          </a>
-        </li>
-        <li><a href="{% url 'bah-ui:index' %}">Home</a></li>
-        <li><a href="{% url 'bah-ui:index' %}">About</a></li>
-      </ul>
-    </aside>
-  </div>
+  {% block scripts %}{% endblock %}
 </body>
 
 </html>

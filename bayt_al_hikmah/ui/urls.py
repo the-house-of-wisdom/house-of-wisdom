@@ -1,4 +1,4 @@
-""" URLConf for bayt_al_hikmah.ui """
+"""URLConf for bayt_al_hikmah.ui"""
 
 from django.urls import path, include
 

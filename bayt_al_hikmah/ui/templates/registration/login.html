@@ -1,4 +1,4 @@
-{% extends "bah_ui/base.html" %}
+{% extends "ui/base.html" %}
 
 {% block content %}
 <div class="grid gap-4">
@@ -22,7 +22,7 @@
   {% endif %}
   {% endif %}
 
-  <form method="post" action="{% url 'bah-ui:login' %}" class="grid gap-4">
+  <form method="post" action="{% url 'ui:login' %}" class="grid gap-4">
     <input type="hidden" name="next" value="{{ next }}">
 
     {% include 'ui/components/form.html' %}
@@ -31,7 +31,7 @@
   </form>
 
   <p>
-    <a href="{% url 'bah-ui:password_reset' %}">Lost password?</a>
+    <a href="{% url 'ui:password_reset' %}">Lost password?</a>
   </p>
 </div>
 {% endblock %}

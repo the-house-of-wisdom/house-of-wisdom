@@ -1,4 +1,4 @@
-""" Tests for bayt_al_hikmah.submissions.models """
+"""Tests for bayt_al_hikmah.submissions.models"""
 
 from django.test import TestCase
 

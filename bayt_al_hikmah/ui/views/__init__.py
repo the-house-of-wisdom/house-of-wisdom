@@ -1,4 +1,4 @@
-""" UI views """
+"""UI views"""
 
 from django.views.generic import TemplateView
 
@@ -7,16 +7,16 @@ from django.views.generic import TemplateView
 class IndexView(TemplateView):
     """Home Page"""
 
-    template_name = "bah_ui/public/index.html"
+    template_name = "ui/public/index.html"
 
 
 class AboutView(TemplateView):
     """About Page"""
 
-    template_name = "bah_ui/public/about.html"
+    template_name = "ui/public/about.html"
 
 
 class ProfileView(TemplateView):
     """Profile Page"""
 
-    template_name = "bah_ui/profile.html"
+    template_name = "ui/profile.html"

@@ -1,1 +1,1 @@
-""" Tests for bayt_al_hikmah.modules """
+"""Tests for bayt_al_hikmah.modules"""

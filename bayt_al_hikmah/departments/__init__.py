@@ -1,1 +1,1 @@
-""" Departments """
+"""Departments"""

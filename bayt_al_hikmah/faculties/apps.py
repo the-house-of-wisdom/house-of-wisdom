@@ -1,4 +1,4 @@
-""" AppConf for bayt_al_hikmah.faculties """
+"""AppConf for bayt_al_hikmah.faculties"""
 
 from django.apps import AppConfig
 

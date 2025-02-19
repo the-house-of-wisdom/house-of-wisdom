@@ -1,4 +1,4 @@
-""" Data Models for bayt_al_hikmah.assignments """
+"""Data Models for bayt_al_hikmah.assignments"""
 
 from django.db import models
 from django.core import validators

@@ -1,1 +1,1 @@
-""" Tests for bayt_al_hikmah.answers """
+"""Tests for bayt_al_hikmah.answers"""

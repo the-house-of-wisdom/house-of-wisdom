@@ -1,4 +1,4 @@
-""" List views """
+"""List views"""
 
 from django.views.generic import ListView
 
@@ -23,7 +23,7 @@ class CategoryListView(AdminUserMixin, ModelListView):
 
     model = Category
     extra_context = {"title": "Categories"}
-    template_name = "bah_ui/list/category.html"
+    template_name = "ui/list/category.html"
 
 
 class CourseListView(ModelListView):
@@ -31,7 +31,7 @@ class CourseListView(ModelListView):
 
     model = Course
     extra_context = {"title": "Courses"}
-    template_name = "bah_ui/list/course.html"
+    template_name = "ui/list/course.html"
 
 
 class DepartmentListView(ModelListView):
@@ -39,7 +39,7 @@ class DepartmentListView(ModelListView):
 
     model = Department
     extra_context = {"title": "Departments"}
-    template_name = "bah_ui/list/department.html"
+    template_name = "ui/list/department.html"
 
 
 class FacultyListView(ModelListView):
@@ -47,7 +47,7 @@ class FacultyListView(ModelListView):
 
     model = Faculty
     extra_context = {"title": "Faculties"}
-    template_name = "bah_ui/list/faculty.html"
+    template_name = "ui/list/faculty.html"
 
 
 class SpecializationListView(ModelListView):
@@ -55,7 +55,7 @@ class SpecializationListView(ModelListView):
 
     model = Specialization
     extra_context = {"title": "Specializations"}
-    template_name = "bah_ui/list/specialization.html"
+    template_name = "ui/list/specialization.html"
 
 
 class TagListView(AdminUserMixin, ModelListView):
@@ -63,4 +63,4 @@ class TagListView(AdminUserMixin, ModelListView):
 
     model = Tag
     extra_context = {"title": "Tags"}
-    template_name = "bah_ui/list/tag.html"
+    template_name = "ui/list/tag.html"

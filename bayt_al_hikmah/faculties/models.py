@@ -1,4 +1,4 @@
-""" Data Models for bayt_al_hikmah.faculties """
+"""Data Models for bayt_al_hikmah.faculties"""
 
 from django.db import models
 

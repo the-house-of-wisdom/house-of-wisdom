@@ -1,4 +1,4 @@
-""" Serializers for bayt_al_hikmah.notifications """
+"""Serializers for bayt_al_hikmah.notifications"""
 
 from rest_framework.serializers import ModelSerializer
 

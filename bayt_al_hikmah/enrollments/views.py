@@ -1,4 +1,4 @@
-""" API endpoints for bayt_al_hikmah.enrollments """
+"""API endpoints for bayt_al_hikmah.enrollments"""
 
 from typing import Any, List
 from rest_framework.viewsets import ModelViewSet

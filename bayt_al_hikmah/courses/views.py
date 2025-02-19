@@ -1,4 +1,4 @@
-""" API endpoints for bayt_al_hikmah.courses """
+"""API endpoints for bayt_al_hikmah.courses"""
 
 from typing import Any, List
 from rest_framework import status

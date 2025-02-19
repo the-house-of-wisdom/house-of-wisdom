@@ -1,1 +1,1 @@
-""" Tests for bayt_al_hikmah.enrollments """
+"""Tests for bayt_al_hikmah.enrollments"""

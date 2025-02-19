@@ -1,4 +1,4 @@
-""" Serializers for bayt_al_hikmah.faculties """
+"""Serializers for bayt_al_hikmah.faculties"""
 
 from rest_framework.serializers import ModelSerializer
 

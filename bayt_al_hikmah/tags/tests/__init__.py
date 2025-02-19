@@ -1,1 +1,1 @@
-""" Tests for bayt_al_hikmah.tags """
+"""Tests for bayt_al_hikmah.tags"""

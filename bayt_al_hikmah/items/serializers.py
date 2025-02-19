@@ -1,4 +1,4 @@
-""" Serializers for bayt_al_hikmah.items """
+"""Serializers for bayt_al_hikmah.items"""
 
 from rest_framework.serializers import ModelSerializer
 

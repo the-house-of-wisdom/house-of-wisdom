@@ -1,1 +1,1 @@
-""" Faculties """
+"""Faculties"""

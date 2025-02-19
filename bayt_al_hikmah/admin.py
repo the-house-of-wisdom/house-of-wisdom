@@ -1,4 +1,4 @@
-""" Admin site for Bayt Al-Hikmah """
+"""Admin site for Bayt Al-Hikmah"""
 
 from django.contrib import admin
 

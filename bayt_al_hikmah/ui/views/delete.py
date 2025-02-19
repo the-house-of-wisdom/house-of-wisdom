@@ -1,4 +1,4 @@
-""" Delete views """
+"""Delete views"""
 
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -25,7 +25,7 @@ class ModelDeleteView(ExtraContextMixin, LoginRequiredMixin, DeleteView):
 
     pk_url_kwarg = "id"
     extra_context = {"title": "Delete Model"}
-    template_name = "bah_ui/shared/from.html"
+    template_name = "ui/shared/from.html"
 
 
 class CategoryDeleteView(AdminUserMixin, ModelDeleteView):
@@ -33,7 +33,7 @@ class CategoryDeleteView(AdminUserMixin, ModelDeleteView):
 
     model = Category
     extra_context = {"title": "Delete Category"}
-    success_url = reverse_lazy("bah-ui:categories")
+    success_url = reverse_lazy("ui:categories")
 
 
 class CourseDeleteView(ModelDeleteView):
@@ -41,7 +41,7 @@ class CourseDeleteView(ModelDeleteView):
 
     model = Course
     extra_context = {"title": "Delete Course"}
-    success_url = reverse_lazy("bah-ui:courses")
+    success_url = reverse_lazy("ui:courses")
 
 
 class DepartmentDeleteView(AdminUserMixin, ModelDeleteView):
@@ -49,7 +49,7 @@ class DepartmentDeleteView(AdminUserMixin, ModelDeleteView):
 
     model = Department
     extra_context = {"title": "Delete Department"}
-    success_url = reverse_lazy("bah-ui:departments")
+    success_url = reverse_lazy("ui:departments")
 
 
 class EnrollmentDeleteView(ModelDeleteView):
@@ -57,7 +57,7 @@ class EnrollmentDeleteView(ModelDeleteView):
 
     model = Enrollment
     extra_context = {"title": "Delete Enrollment"}
-    success_url = reverse_lazy("bah-ui:enrollments")
+    success_url = reverse_lazy("ui:enrollments")
 
 
 class FacultyDeleteView(AdminUserMixin, ModelDeleteView):
@@ -65,14 +65,14 @@ class FacultyDeleteView(AdminUserMixin, ModelDeleteView):
 
     model = Faculty
     extra_context = {"title": "Delete Faculty"}
-    success_url = reverse_lazy("bah-ui:faculties")
+    success_url = reverse_lazy("ui:faculties")
 
 
 class ItemDeleteView(ModelDeleteView):
     """Delete an Item"""
 
     model = Item
-    success_url = reverse_lazy("bah-ui:items")
+    success_url = reverse_lazy("ui:items")
 
 
 class ModuleDeleteView(ModelDeleteView):
@@ -80,7 +80,7 @@ class ModuleDeleteView(ModelDeleteView):
 
     model = Module
     extra_context = {"title": "Delete Module"}
-    success_url = reverse_lazy("bah-ui:modules")
+    success_url = reverse_lazy("ui:modules")
 
 
 class NotificationDeleteView(ModelDeleteView):
@@ -88,7 +88,7 @@ class NotificationDeleteView(ModelDeleteView):
 
     model = Notification
     extra_context = {"title": "Delete Notification"}
-    success_url = reverse_lazy("bah-ui:notifications")
+    success_url = reverse_lazy("ui:notifications")
 
 
 class ReviewDeleteView(ModelDeleteView):
@@ -96,7 +96,7 @@ class ReviewDeleteView(ModelDeleteView):
 
     model = Review
     extra_context = {"title": "Delete Review"}
-    success_url = reverse_lazy("bah-ui:reviews")
+    success_url = reverse_lazy("ui:reviews")
 
 
 class LessonDeleteView(ModelDeleteView):
@@ -104,7 +104,7 @@ class LessonDeleteView(ModelDeleteView):
 
     model = Lesson
     extra_context = {"title": "Delete Lesson"}
-    success_url = reverse_lazy("bah-ui:lessons")
+    success_url = reverse_lazy("ui:lessons")
 
 
 class SpecializationDeleteView(ModelDeleteView):
@@ -112,7 +112,7 @@ class SpecializationDeleteView(ModelDeleteView):
 
     model = Specialization
     extra_context = {"title": "Delete Specialization"}
-    success_url = reverse_lazy("bah-ui:specializations")
+    success_url = reverse_lazy("ui:specializations")
 
 
 class TagDeleteView(AdminUserMixin, ModelDeleteView):
@@ -120,4 +120,4 @@ class TagDeleteView(AdminUserMixin, ModelDeleteView):
 
     model = Tag
     extra_context = {"title": "Delete Tag"}
-    success_url = reverse_lazy("bah-ui:tags")
+    success_url = reverse_lazy("ui:tags")

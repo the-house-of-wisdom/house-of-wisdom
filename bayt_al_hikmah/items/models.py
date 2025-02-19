@@ -1,4 +1,4 @@
-""" Data Models for bayt_al_hikmah.items """
+"""Data Models for bayt_al_hikmah.items"""
 
 from django.db import models
 from django.core.validators import FileExtensionValidator
