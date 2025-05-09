@@ -2,11 +2,12 @@
 
 from django.db import models
 
+from bayt_al_hikmah.mixins import DateTimeMixin
 from bayt_al_hikmah.questions import QUESTION_TYPES
 
 
 # Create your models here.
-class Question(models.Model):
+class Question(DateTimeMixin, models.Model):
     """Questions"""
 
     assignment = models.ForeignKey(
@@ -24,14 +25,6 @@ class Question(models.Model):
         max_length=512,
         db_index=True,
         help_text="Question text",
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        help_text="Date created",
-    )
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        help_text="Last update",
     )
 
     def __str__(self) -> str:

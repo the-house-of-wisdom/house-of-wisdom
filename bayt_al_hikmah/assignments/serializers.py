@@ -17,7 +17,7 @@ class AssignmentSerializer(ModelSerializer):
             "id",
             "url",
             "lesson",
-            "is_manual",
+            "is_auto_graded",
             "title",
             "description",
             "content",

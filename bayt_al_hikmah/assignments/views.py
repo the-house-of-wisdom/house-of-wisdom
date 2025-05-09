@@ -17,7 +17,7 @@ class AssignmentViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     search_fields = ["title", "content"]
     ordering_fields = ["created_at", "updated_at"]
-    filterset_fields = ["lesson__module__course", "lesson__module", "lesson", "type"]
+    filterset_fields = ["lesson__module__course", "lesson__module", "lesson"]
 
     def get_permissions(self) -> List[Any]:
         if self.action not in ["list", "retrieve"]:

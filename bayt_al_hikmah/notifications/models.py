@@ -3,6 +3,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
+from bayt_al_hikmah.mixins import DateTimeMixin
 from bayt_al_hikmah.notifications import NOTIFICATION_TYPES
 
 
@@ -10,7 +11,7 @@ from bayt_al_hikmah.notifications import NOTIFICATION_TYPES
 User = get_user_model()
 
 
-class Notification(models.Model):
+class Notification(DateTimeMixin, models.Model):
     """Notifications"""
 
     user = models.ForeignKey(
@@ -28,14 +29,6 @@ class Notification(models.Model):
         max_length=256,
         db_index=True,
         help_text="Notification content",
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        help_text="Date created",
-    )
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        help_text="Last update",
     )
 
     class Meta:

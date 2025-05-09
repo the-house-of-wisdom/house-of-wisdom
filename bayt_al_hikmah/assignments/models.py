@@ -3,9 +3,11 @@
 from django.db import models
 from django.core import validators
 
+from bayt_al_hikmah.mixins import DateTimeMixin
+
 
 # Create your models here.
-class Assignment(models.Model):
+class Assignment(DateTimeMixin, models.Model):
     """Assignments"""
 
     lesson = models.OneToOneField(
@@ -25,8 +27,8 @@ class Assignment(models.Model):
         default=80.0,
         help_text="Minimum percentage to pass the assignment",
         validators=[
-            validators.MinValueValidator(0, "Min percentage must be greater than 0"),
-            validators.MaxValueValidator(100, "Min percentage must be less than 100"),
+            validators.MinValueValidator(0.0, "Min percentage must be greater than 0"),
+            validators.MaxValueValidator(100.0, "Min percentage must be less than 100"),
         ],
     )
     content = models.TextField(
@@ -34,17 +36,9 @@ class Assignment(models.Model):
         blank=True,
         help_text="Assignment content",
     )
-    is_manual = models.BooleanField(
+    is_auto_graded = models.BooleanField(
         default=False,
-        help_text="Weather the assignment graded manually",
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        help_text="Date created",
-    )
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        help_text="Last update",
+        help_text="Weather the assignment graded automatically",
     )
 
     def __str__(self) -> str:

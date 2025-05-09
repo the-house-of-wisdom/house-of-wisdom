@@ -6,9 +6,7 @@ from bayt_al_hikmah.answers.models import Answer
 from bayt_al_hikmah.assignments.models import Assignment
 from bayt_al_hikmah.categories.models import Category
 from bayt_al_hikmah.courses.models import Course
-from bayt_al_hikmah.departments.models import Department
 from bayt_al_hikmah.enrollments.models import Enrollment
-from bayt_al_hikmah.faculties.models import Faculty
 from bayt_al_hikmah.items.models import Item
 from bayt_al_hikmah.modules.models import Module
 from bayt_al_hikmah.notifications.models import Notification
@@ -22,15 +20,6 @@ from bayt_al_hikmah.users.models import User
 
 
 # Create your model inlines here.
-class DepartmentInline(admin.StackedInline):
-    """
-    Department Inline
-    """
-
-    model = Department
-    extra = 0
-
-
 class SpecializationInline(admin.StackedInline):
     """
     Specialization Inline
@@ -122,40 +111,6 @@ class SubmissionInline(admin.StackedInline):
 
 
 # Create your model admins here.
-@admin.register(Faculty)
-class FacultyAdmin(admin.ModelAdmin):
-    """
-    Faculty ModelAdmin
-    """
-
-    model = Faculty
-    date_hierarchy = "created_at"
-    inlines = [DepartmentInline]
-    search_fields = ["name", "headline", "description"]
-    list_filter = ["created_at", "updated_at"]
-    list_display = ["id", "name", "created_at", "updated_at"]
-
-
-@admin.register(Department)
-class DepartmentAdmin(admin.ModelAdmin):
-    """
-    Department ModelAdmin
-    """
-
-    model = Department
-    date_hierarchy = "created_at"
-    inlines = [SpecializationInline]
-    search_fields = ["name", "headline", "description"]
-    list_filter = ["created_at", "updated_at"]
-    list_display = [
-        "id",
-        "faculty",
-        "name",
-        "created_at",
-        "updated_at",
-    ]
-
-
 @admin.register(Specialization)
 class SpecializationAdmin(admin.ModelAdmin):
     """
@@ -169,8 +124,6 @@ class SpecializationAdmin(admin.ModelAdmin):
     list_filter = ["created_at", "updated_at"]
     list_display = [
         "id",
-        "department__faculty",
-        "department",
         "name",
         "created_at",
         "updated_at",
@@ -190,8 +143,6 @@ class CourseAdmin(admin.ModelAdmin):
     list_filter = ["created_at", "updated_at"]
     list_display = [
         "id",
-        "department__faculty",
-        "department",
         "specialization",
         "name",
         "created_at",

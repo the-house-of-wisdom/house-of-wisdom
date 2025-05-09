@@ -8,16 +8,9 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     """Users"""
 
-    department = models.ForeignKey(
-        "departments.Department",
-        on_delete=models.CASCADE,
+    is_instructor = models.BooleanField(
         null=True,
         blank=True,
-        related_name="users",
-        help_text="Department",
-    )
-    is_instructor = models.BooleanField(
-        default=False,
         help_text="Designates weather the user is an instructor",
     )
     image = models.ImageField(

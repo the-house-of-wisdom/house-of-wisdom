@@ -22,14 +22,7 @@ class CourseViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     search_fields = ["name", "headline", "description"]
     ordering_fields = ["created_at", "updated_at"]
-    filterset_fields = [
-        "user",
-        "category",
-        "department__faculty",
-        "department",
-        "specialization",
-        "tags",
-    ]
+    filterset_fields = ["user", "category", "specialization", "tags"]
 
     def get_permissions(self) -> List[Any]:
         if self.action not in ["list", "retrieve"]:

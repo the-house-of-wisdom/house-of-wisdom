@@ -17,7 +17,6 @@ class UserSerializer(ModelSerializer):
         fields = [
             "id",
             "url",
-            "department",
             "is_active",
             "is_staff",
             "is_superuser",

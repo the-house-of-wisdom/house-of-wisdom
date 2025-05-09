@@ -19,7 +19,6 @@ class SpecializationSerializer(ModelSerializer):
             "url",
             "user",
             "category",
-            "department",
             "enrollment_count",
             "image",
             "name",

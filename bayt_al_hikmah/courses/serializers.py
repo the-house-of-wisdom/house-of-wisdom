@@ -19,7 +19,6 @@ class CourseSerializer(ModelSerializer):
             "url",
             "user",
             "category",
-            "department",
             "specialization",
             "enrollment_count",
             "image",

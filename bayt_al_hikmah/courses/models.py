@@ -3,12 +3,14 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
+from bayt_al_hikmah.mixins import DateTimeMixin
+
 
 # Create your models here.
 User = get_user_model()
 
 
-class Course(models.Model):
+class Course(DateTimeMixin, models.Model):
     """Courses"""
 
     user = models.ForeignKey(
@@ -22,12 +24,6 @@ class Course(models.Model):
         on_delete=models.CASCADE,
         related_name="courses",
         help_text="Course category",
-    )
-    department = models.ForeignKey(
-        "departments.Department",
-        on_delete=models.CASCADE,
-        related_name="courses",
-        help_text="Course department",
     )
     specialization = models.ForeignKey(
         "specializations.Specialization",
@@ -53,21 +49,13 @@ class Course(models.Model):
     description = models.TextField(
         help_text="Course description",
     )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        help_text="Date created",
-    )
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        help_text="Last update",
-    )
     tags = models.ManyToManyField(
         "tags.Tag",
         help_text="Course tags",
     )
-    course_enrollments = models.ManyToManyField(
+    students = models.ManyToManyField(
         User,
-        related_name="course_students",
+        related_name="students",
         through="enrollments.Enrollment",
         help_text="Course enrollments",
     )
@@ -87,7 +75,7 @@ class Course(models.Model):
         Number of enrollments of a course
         """
 
-        return self.course_enrollments.count()
+        return self.students.count()
 
     def __str__(self) -> str:
         return self.name

@@ -4,10 +4,11 @@ from django.db import models
 from django.core.validators import FileExtensionValidator
 
 from bayt_al_hikmah.items import ITEM_TYPES
+from bayt_al_hikmah.mixins import DateTimeMixin
 
 
 # Create your models here.
-class Item(models.Model):
+class Item(DateTimeMixin, models.Model):
     """Lesson Items"""
 
     lesson = models.ForeignKey(
@@ -16,17 +17,17 @@ class Item(models.Model):
         related_name="items",
         help_text="Item lesson",
     )
+    type = models.PositiveSmallIntegerField(
+        default=0,
+        help_text="Item type",
+        choices=ITEM_TYPES,
+    )
     title = models.CharField(
         max_length=64,
         db_index=True,
         help_text="Item title",
     )
-    description = models.TextField(
-        help_text="Item description",
-    )
     content = models.TextField(
-        null=True,
-        blank=True,
         help_text="Item content",
     )
     file = models.FileField(
@@ -39,19 +40,6 @@ class Item(models.Model):
                 allowed_extensions=["zip", "mp4", "pdf", "docx", "ppt"]
             )
         ],
-    )
-    type = models.PositiveSmallIntegerField(
-        default=0,
-        help_text="Item type",
-        choices=ITEM_TYPES,
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        help_text="Date created",
-    )
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        help_text="Last update",
     )
 
     def __str__(self) -> str:

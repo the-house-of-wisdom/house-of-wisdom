@@ -3,6 +3,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
+from bayt_al_hikmah.mixins import DateTimeMixin
 from bayt_al_hikmah.reviews import RATINGS
 
 
@@ -10,7 +11,7 @@ from bayt_al_hikmah.reviews import RATINGS
 User = get_user_model()
 
 
-class Review(models.Model):
+class Review(DateTimeMixin, models.Model):
     """Course Reviews"""
 
     user = models.ForeignKey(
@@ -36,16 +37,9 @@ class Review(models.Model):
         help_text="Review comment",
     )
     sentiment = models.BooleanField(
-        default=True,
-        help_text="Review sentiment, true <=> positive, false <=> negative",
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        help_text="Date created",
-    )
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        help_text="Last update",
+        null=True,
+        blank=True,
+        help_text="Review sentiment: true <=> positive, false <=> negative",
     )
 
     class Meta:

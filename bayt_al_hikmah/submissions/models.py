@@ -1,14 +1,17 @@
 """Data Models for bayt_al_hikmah.submissions"""
 
 from django.db import models
+from django.core import validators
 from django.contrib.auth import get_user_model
+
+from bayt_al_hikmah.mixins import DateTimeMixin
 
 
 # Create your models here.
 User = get_user_model()
 
 
-class Submission(models.Model):
+class Submission(DateTimeMixin, models.Model):
     """Assignment Submissions"""
 
     user = models.ForeignKey(
@@ -27,31 +30,21 @@ class Submission(models.Model):
         null=True,
         blank=True,
         help_text="Submission grade",
+        validators=[
+            validators.MinValueValidator(0.0, "Grade must be >= 0."),
+            validators.MaxValueValidator(100.0, "Grade must be <= 100."),
+        ],
     )
-    text = models.JSONField(
+    answers = models.JSONField(
         null=True,
         blank=True,
-        help_text="Submission payload",
+        help_text="Submission answers",
     )
     file = models.FileField(
         null=True,
         blank=True,
         upload_to="files/submissions/",
         help_text="Submission file",
-    )
-    image = models.ImageField(
-        null=True,
-        blank=True,
-        upload_to="files/images/",
-        help_text="Submission image",
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        help_text="Date created",
-    )
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        help_text="Last update",
     )
 
     def status(self) -> str:

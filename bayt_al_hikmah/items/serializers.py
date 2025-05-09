@@ -19,7 +19,6 @@ class ItemSerializer(ModelSerializer):
             "lesson",
             "type",
             "title",
-            "description",
             "content",
             "file",
             "created_at",

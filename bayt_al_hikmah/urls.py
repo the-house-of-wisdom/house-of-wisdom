@@ -7,9 +7,7 @@ from bayt_al_hikmah.answers.views import AnswerViewSet
 from bayt_al_hikmah.assignments.views import AssignmentViewSet
 from bayt_al_hikmah.categories.views import CategoryViewSet
 from bayt_al_hikmah.courses.views import CourseViewSet
-from bayt_al_hikmah.departments.views import DepartmentViewSet
 from bayt_al_hikmah.enrollments.views import EnrollmentViewSet
-from bayt_al_hikmah.faculties.views import FacultyViewSet
 from bayt_al_hikmah.items.views import ItemViewSet
 from bayt_al_hikmah.lessons.views import LessonViewSet
 from bayt_al_hikmah.modules.views import ModuleViewSet
@@ -27,9 +25,7 @@ router.register("answers", AnswerViewSet, "answer")
 router.register("assignments", AssignmentViewSet, "assignment")
 router.register("categories", CategoryViewSet, "category")
 router.register("courses", CourseViewSet, "course")
-router.register("departments", DepartmentViewSet, "department")
 router.register("enrollments", EnrollmentViewSet, "enrollment")
-router.register("faculties", FacultyViewSet, "faculty")
 router.register("items", ItemViewSet, "item")
 router.register("lessons", LessonViewSet, "lesson")
 router.register("modules", ModuleViewSet, "module")

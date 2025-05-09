@@ -2,9 +2,11 @@
 
 from django.db import models
 
+from bayt_al_hikmah.mixins import DateTimeMixin
+
 
 # Create your models here.
-class Answer(models.Model):
+class Answer(DateTimeMixin, models.Model):
     """Question Answers"""
 
     question = models.ForeignKey(
@@ -24,14 +26,6 @@ class Answer(models.Model):
     description = models.CharField(
         max_length=512,
         help_text="Why the answer is correct or wrong",
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        help_text="Date created",
-    )
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        help_text="Last update",
     )
 
     def __str__(self) -> str:

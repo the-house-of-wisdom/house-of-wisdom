@@ -4,13 +4,14 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 from bayt_al_hikmah.enrollments import ENROLLMENT_ROLES
+from bayt_al_hikmah.mixins import DateTimeMixin
 
 
 # Create your models here.
 User = get_user_model()
 
 
-class Enrollment(models.Model):
+class Enrollment(DateTimeMixin, models.Model):
     """Course & Specialization Enrollments"""
 
     user = models.ForeignKey(
@@ -40,19 +41,6 @@ class Enrollment(models.Model):
         choices=ENROLLMENT_ROLES,
         help_text="Enrollment role",
     )
-    is_approved = models.BooleanField(
-        null=True,
-        blank=True,
-        help_text="Weather the enrollment is approved",
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        help_text="Date created",
-    )
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        help_text="Last update",
-    )
 
     class Meta:
         """Meta data"""
@@ -69,10 +57,4 @@ class Enrollment(models.Model):
         ]
 
     def __str__(self) -> str:
-        status = (
-            "Pending"
-            if self.is_approved is None
-            else "Approved" if self.is_approved else "Rejected"
-        )
-
-        return f"{self.user}-{self.course}: {status}"
+        return f"{self.user}-{self.course if self.course else self.specialization}"

@@ -2,13 +2,16 @@
 
 from django.db import models
 
+from bayt_al_hikmah.mixins import DateTimeMixin
+
 
 # Create your models here.
-class Category(models.Model):
+class Category(DateTimeMixin, models.Model):
     """Categories"""
 
     name = models.CharField(
         max_length=64,
+        unique=True,
         db_index=True,
         help_text="Category name",
     )
@@ -16,14 +19,6 @@ class Category(models.Model):
         max_length=256,
         db_index=True,
         help_text="Category description",
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        help_text="Date created",
-    )
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        help_text="Last update",
     )
 
     class Meta:

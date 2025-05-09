@@ -3,12 +3,14 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
+from bayt_al_hikmah.mixins import DateTimeMixin
+
 
 # Create your models here.
 User = get_user_model()
 
 
-class Specialization(models.Model):
+class Specialization(DateTimeMixin, models.Model):
     """Specializations, collections of related courses"""
 
     user = models.ForeignKey(
@@ -22,12 +24,6 @@ class Specialization(models.Model):
         on_delete=models.CASCADE,
         related_name="specializations",
         help_text="Specialization category",
-    )
-    department = models.ForeignKey(
-        "departments.Department",
-        on_delete=models.CASCADE,
-        related_name="specializations",
-        help_text="Specialization department",
     )
     image = models.ImageField(
         help_text="Specialization image",
@@ -45,14 +41,6 @@ class Specialization(models.Model):
     )
     description = models.TextField(
         help_text="Specialization description",
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        help_text="Date created",
-    )
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        help_text="Last update",
     )
     tags = models.ManyToManyField(
         "tags.Tag",

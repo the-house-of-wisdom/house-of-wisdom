@@ -2,9 +2,11 @@
 
 from django.db import models
 
+from bayt_al_hikmah.mixins import DateTimeMixin
+
 
 # Create your models here.
-class Lesson(models.Model):
+class Lesson(DateTimeMixin, models.Model):
     """Lessons"""
 
     module = models.ForeignKey(
@@ -18,16 +20,9 @@ class Lesson(models.Model):
         db_index=True,
         help_text="Lesson name",
     )
-    description = models.TextField(
+    description = models.CharField(
+        max_length=256,
         help_text="Lesson description",
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        help_text="Date created",
-    )
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        help_text="Last update",
     )
 
     def __str__(self) -> str:
