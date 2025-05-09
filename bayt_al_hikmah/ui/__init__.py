@@ -1,1 +1,0 @@
-"""Bayt Al-Hikmah UI"""
