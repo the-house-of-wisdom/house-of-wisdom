@@ -12,7 +12,7 @@ User = get_user_model()
 
 
 class Enrollment(DateTimeMixin, models.Model):
-    """Course & Specialization Enrollments"""
+    """Course & Collection Enrollments"""
 
     user = models.ForeignKey(
         User,
@@ -20,13 +20,13 @@ class Enrollment(DateTimeMixin, models.Model):
         related_name="enrollments",
         help_text="Enrolling User",
     )
-    specialization = models.ForeignKey(
-        "specializations.Specialization",
+    collection = models.ForeignKey(
+        "collections.Collection",
         on_delete=models.CASCADE,
         null=True,
         blank=True,
         related_name="enrollments",
-        help_text="Enrolled Specialization",
+        help_text="Enrolled Collection",
     )
     course = models.ForeignKey(
         "courses.Course",
@@ -51,10 +51,10 @@ class Enrollment(DateTimeMixin, models.Model):
                 fields=["user", "course"],
             ),
             models.UniqueConstraint(
-                name="unique_specialization_enrollment",
-                fields=["user", "specialization"],
+                name="unique_collection_enrollment",
+                fields=["user", "collection"],
             ),
         ]
 
     def __str__(self) -> str:
-        return f"{self.user}-{self.course if self.course else self.specialization}"
+        return f"{self.user}-{self.course if self.course else self.collection}"

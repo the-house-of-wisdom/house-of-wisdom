@@ -36,9 +36,12 @@ class Submission(DateTimeMixin, models.Model):
         ],
     )
     answers = models.JSONField(
+        help_text="Submission answers",
+    )
+    feedback = models.JSONField(
         null=True,
         blank=True,
-        help_text="Submission answers",
+        help_text="Submission feedback",
     )
     file = models.FileField(
         null=True,

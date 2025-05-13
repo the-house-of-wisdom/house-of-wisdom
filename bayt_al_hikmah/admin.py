@@ -5,6 +5,7 @@ from django.contrib import admin
 from bayt_al_hikmah.answers.models import Answer
 from bayt_al_hikmah.assignments.models import Assignment
 from bayt_al_hikmah.categories.models import Category
+from bayt_al_hikmah.collections.models import Collection
 from bayt_al_hikmah.courses.models import Course
 from bayt_al_hikmah.enrollments.models import Enrollment
 from bayt_al_hikmah.items.models import Item
@@ -13,19 +14,18 @@ from bayt_al_hikmah.notifications.models import Notification
 from bayt_al_hikmah.questions.models import Question
 from bayt_al_hikmah.reviews.models import Review
 from bayt_al_hikmah.lessons.models import Lesson
-from bayt_al_hikmah.specializations.models import Specialization
 from bayt_al_hikmah.submissions.models import Submission
 from bayt_al_hikmah.tags.models import Tag
 from bayt_al_hikmah.users.models import User
 
 
 # Create your model inlines here.
-class SpecializationInline(admin.StackedInline):
+class CollectionInline(admin.StackedInline):
     """
-    Specialization Inline
+    Collection Inline
     """
 
-    model = Specialization
+    model = Collection
     extra = 0
 
 
@@ -111,13 +111,13 @@ class SubmissionInline(admin.StackedInline):
 
 
 # Create your model admins here.
-@admin.register(Specialization)
-class SpecializationAdmin(admin.ModelAdmin):
+@admin.register(Collection)
+class CollectionAdmin(admin.ModelAdmin):
     """
-    Specialization ModelAdmin
+    Collection ModelAdmin
     """
 
-    model = Specialization
+    model = Collection
     date_hierarchy = "created_at"
     inlines = [CourseInline]
     search_fields = ["name", "headline", "description"]
@@ -143,7 +143,7 @@ class CourseAdmin(admin.ModelAdmin):
     list_filter = ["created_at", "updated_at"]
     list_display = [
         "id",
-        "specialization",
+        "collection",
         "name",
         "created_at",
         "updated_at",
@@ -212,5 +212,6 @@ admin.site.register(Category)
 admin.site.register(Enrollment)
 admin.site.register(Item)
 admin.site.register(Notification)
+admin.site.register(Submission)
 admin.site.register(Tag)
 admin.site.register(User)

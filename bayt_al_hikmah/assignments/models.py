@@ -20,8 +20,14 @@ class Assignment(DateTimeMixin, models.Model):
         db_index=True,
         help_text="Assignment title",
     )
-    description = models.TextField(
+    description = models.CharField(
+        max_length=256,
         help_text="Assignment description",
+    )
+    question_count = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True,
+        help_text="Max questions to display when using random questions",
     )
     min_percentage = models.FloatField(
         default=80.0,
@@ -37,7 +43,7 @@ class Assignment(DateTimeMixin, models.Model):
         help_text="Assignment content",
     )
     is_auto_graded = models.BooleanField(
-        default=False,
+        default=True,
         help_text="Weather the assignment graded automatically",
     )
 

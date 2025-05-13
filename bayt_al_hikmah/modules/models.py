@@ -26,4 +26,4 @@ class Module(DateTimeMixin, models.Model):
     )
 
     def __str__(self) -> str:
-        return f"{self.course}: Module {self.title}"
+        return self.title

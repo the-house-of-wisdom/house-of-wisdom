@@ -1,4 +1,4 @@
-"""Data Models for bayt_al_hikmah.specializations"""
+"""Data Models for bayt_al_hikmah.collections"""
 
 from django.db import models
 from django.contrib.auth import get_user_model
@@ -10,53 +10,53 @@ from bayt_al_hikmah.mixins import DateTimeMixin
 User = get_user_model()
 
 
-class Specialization(DateTimeMixin, models.Model):
-    """Specializations, collections of related courses"""
+class Collection(DateTimeMixin, models.Model):
+    """Collections of related courses"""
 
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="specializations",
-        help_text="Specialization instructor",
+        related_name="collections",
+        help_text="Collection instructor",
     )
     category = models.ForeignKey(
         "categories.Category",
         on_delete=models.CASCADE,
-        related_name="specializations",
-        help_text="Specialization category",
+        related_name="collections",
+        help_text="Collection category",
     )
     image = models.ImageField(
-        help_text="Specialization image",
-        upload_to="images/specializations/",
+        help_text="Collection image",
+        upload_to="images/collections/",
     )
     name = models.CharField(
         max_length=64,
         db_index=True,
-        help_text="Specialization name",
+        help_text="Collection name",
     )
     headline = models.CharField(
         max_length=128,
         db_index=True,
-        help_text="Specialization headline",
+        help_text="Collection headline",
     )
     description = models.TextField(
-        help_text="Specialization description",
+        help_text="Collection description",
     )
     tags = models.ManyToManyField(
         "tags.Tag",
-        help_text="Specialization tags",
+        help_text="Collection tags",
     )
-    specialization_enrollments = models.ManyToManyField(
+    collection_enrollments = models.ManyToManyField(
         User,
-        related_name="specialization_students",
+        related_name="collection_students",
         through="enrollments.Enrollment",
-        help_text="Specialization enrollments",
+        help_text="Collection enrollments",
     )
 
     @property
     def rating(self) -> float:
         """
-        Specialization rating
+        Collection rating
         """
         # TODO
         return 1.0
@@ -64,10 +64,10 @@ class Specialization(DateTimeMixin, models.Model):
     @property
     def enrollment_count(self) -> int:
         """
-        Number of enrollments of a Specialization
+        Number of enrollments of a Collection
         """
 
-        return self.specialization_enrollments.count()
+        return self.collection_enrollments.count()
 
     def __str__(self) -> str:
         return self.name

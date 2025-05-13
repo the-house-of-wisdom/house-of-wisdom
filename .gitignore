@@ -63,6 +63,8 @@ db.sqlite3-journal
 core/
 manage.py
 media/
+migrations/
+overrides/
 
 # Flask stuff:
 instance/

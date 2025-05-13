@@ -13,6 +13,15 @@ class OwnerMixin:
         serializer.save(user=self.request.user)
 
 
+class UserFilterMixin:
+    """Filter queryset by user"""
+
+    def get_queryset(self):
+        """Perform the filter"""
+
+        return super().get_queryset().filter(user_id=self.request.user.id)
+
+
 class DateTimeMixin(models.Model):
     """Adds `created_at` and `updated_at` fields to a model"""
 

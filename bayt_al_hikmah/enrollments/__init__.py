@@ -1,4 +1,4 @@
-"""Course & Specialization Enrollments"""
+"""Course & Collection Enrollments"""
 
 # Constants
 ENROLLMENT_ROLES = [

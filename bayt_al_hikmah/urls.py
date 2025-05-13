@@ -6,6 +6,7 @@ from rest_framework.routers import DefaultRouter
 from bayt_al_hikmah.answers.views import AnswerViewSet
 from bayt_al_hikmah.assignments.views import AssignmentViewSet
 from bayt_al_hikmah.categories.views import CategoryViewSet
+from bayt_al_hikmah.collections.views import CollectionViewSet
 from bayt_al_hikmah.courses.views import CourseViewSet
 from bayt_al_hikmah.enrollments.views import EnrollmentViewSet
 from bayt_al_hikmah.items.views import ItemViewSet
@@ -14,7 +15,6 @@ from bayt_al_hikmah.modules.views import ModuleViewSet
 from bayt_al_hikmah.notifications.views import NotificationViewSet
 from bayt_al_hikmah.questions.views import QuestionViewSet
 from bayt_al_hikmah.reviews.views import ReviewViewSet
-from bayt_al_hikmah.specializations.views import SpecializationViewSet
 from bayt_al_hikmah.submissions.views import SubmissionViewSet
 from bayt_al_hikmah.tags.views import TagViewSet
 
@@ -24,6 +24,7 @@ router = DefaultRouter(trailing_slash=False)
 router.register("answers", AnswerViewSet, "answer")
 router.register("assignments", AssignmentViewSet, "assignment")
 router.register("categories", CategoryViewSet, "category")
+router.register("collections", CollectionViewSet, "collection")
 router.register("courses", CourseViewSet, "course")
 router.register("enrollments", EnrollmentViewSet, "enrollment")
 router.register("items", ItemViewSet, "item")
@@ -32,7 +33,6 @@ router.register("modules", ModuleViewSet, "module")
 router.register("notifications", NotificationViewSet, "notification")
 router.register("questions", QuestionViewSet, "question")
 router.register("reviews", ReviewViewSet, "review")
-router.register("specializations", SpecializationViewSet, "specialization")
 router.register("submissions", SubmissionViewSet, "submission")
 router.register("tags", TagViewSet, "tag")
 

@@ -1,18 +1,18 @@
-"""Serializers for bayt_al_hikmah.specializations"""
+"""Serializers for bayt_al_hikmah.collections"""
 
 from rest_framework.serializers import ModelSerializer
 
-from bayt_al_hikmah.specializations.models import Specialization
+from bayt_al_hikmah.collections.models import Collection
 
 
 # Create your serializers here.
-class SpecializationSerializer(ModelSerializer):
-    """Specialization serializer"""
+class CollectionSerializer(ModelSerializer):
+    """Collection serializer"""
 
     class Meta:
         """Meta data"""
 
-        model = Specialization
+        model = Collection
         read_only_fields = ["user"]
         fields = [
             "id",

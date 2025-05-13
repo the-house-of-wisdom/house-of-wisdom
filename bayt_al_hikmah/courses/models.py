@@ -25,12 +25,12 @@ class Course(DateTimeMixin, models.Model):
         related_name="courses",
         help_text="Course category",
     )
-    specialization = models.ForeignKey(
-        "specializations.Specialization",
+    collection = models.ForeignKey(
+        "collections.Collection",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        help_text="Course specialization",
+        help_text="Course collection",
     )
     image = models.ImageField(
         help_text="Course image",

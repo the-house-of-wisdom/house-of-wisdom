@@ -26,4 +26,4 @@ class Lesson(DateTimeMixin, models.Model):
     )
 
     def __str__(self) -> str:
-        return f"{self.module.course}, Module {self.module}, Lesson {self.name}"
+        return self.name
