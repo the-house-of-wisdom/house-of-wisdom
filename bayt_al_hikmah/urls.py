@@ -17,6 +17,7 @@ from bayt_al_hikmah.questions.views import QuestionViewSet
 from bayt_al_hikmah.reviews.views import ReviewViewSet
 from bayt_al_hikmah.submissions.views import SubmissionViewSet
 from bayt_al_hikmah.tags.views import TagViewSet
+from bayt_al_hikmah.users.views import UserViewSet
 
 
 # Create your URLConf here.
@@ -35,6 +36,7 @@ router.register("questions", QuestionViewSet, "question")
 router.register("reviews", ReviewViewSet, "review")
 router.register("submissions", SubmissionViewSet, "submission")
 router.register("tags", TagViewSet, "tag")
+router.register("users", UserViewSet, "user")
 
 
 urlpatterns = [
