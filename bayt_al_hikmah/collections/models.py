@@ -46,11 +46,9 @@ class Collection(DateTimeMixin, models.Model):
         "tags.Tag",
         help_text="Collection tags",
     )
-    collection_enrollments = models.ManyToManyField(
-        User,
-        related_name="collection_students",
-        through="enrollments.Enrollment",
-        help_text="Collection enrollments",
+    courses = models.ManyToManyField(
+        "courses.Course",
+        help_text="Collection Courses",
     )
 
     @property
@@ -60,14 +58,6 @@ class Collection(DateTimeMixin, models.Model):
         """
         # TODO
         return 1.0
-
-    @property
-    def enrollment_count(self) -> int:
-        """
-        Number of enrollments of a Collection
-        """
-
-        return self.collection_enrollments.count()
 
     def __str__(self) -> str:
         return self.name

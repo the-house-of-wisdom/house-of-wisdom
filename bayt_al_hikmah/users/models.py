@@ -25,3 +25,8 @@ class User(AbstractUser):
         blank=True,
         help_text="Tell us about yourself",
     )
+    saved = models.ManyToManyField(
+        "collections.Collection",
+        related_name="savers",
+        help_text="Saved collections",
+    )

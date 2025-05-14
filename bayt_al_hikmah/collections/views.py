@@ -38,39 +38,26 @@ class CollectionViewSet(OwnerMixin, ModelViewSet):
         return (
             super()
             .get_queryset()
-            .filter(
-                Q(user_id=self.request.user.pk)
-                | Q(collection_enrollments=self.request.user)
-            )
+            .filter(Q(user_id=self.request.user.pk) | Q(savers=self.request.user))
         )
 
     @action(methods=["post"], detail=True)
-    def enroll(self, request: Request, pk: int) -> Response:
-        """Enroll in a collection"""
+    def save(self, request: Request, pk: int) -> Response:
+        """Add a collection to favorite or saved collections"""
 
-        enrolled: bool = False
+        saved: bool = False
         collection: Collection = self.get_object()
 
-        if collection.students.contains(request.user):
-            collection.students.remove(request.user)
+        if request.user.saved.contains(collection):
+            request.user.saved.remove(collection)
 
         else:
-            enrolled = True
-            collection.students.add(request.user)
-
-            # First course in collection
-            course = collection.courses.first()
-
-            if not course.students.contains(request.user):
-                course.students.add(request.user)
+            saved = True
+            request.user.saved.add(collection)
 
         return Response(
             {
-                "details": (
-                    f"You joined the collection '{collection}' successfully"
-                    if enrolled
-                    else f"You unenrolled from {collection}"
-                )
+                "details": f"Collection '{collection}' {'added to' if saved else 'removed from'} your saved collections"
             },
             status=status.HTTP_200_OK,
         )

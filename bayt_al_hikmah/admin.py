@@ -20,24 +20,6 @@ from bayt_al_hikmah.users.models import User
 
 
 # Create your model inlines here.
-class CollectionInline(admin.StackedInline):
-    """
-    Collection Inline
-    """
-
-    model = Collection
-    extra = 0
-
-
-class CourseInline(admin.StackedInline):
-    """
-    Course Inline
-    """
-
-    model = Course
-    extra = 0
-
-
 class ModuleInline(admin.StackedInline):
     """
     Module Inline
@@ -119,7 +101,6 @@ class CollectionAdmin(admin.ModelAdmin):
 
     model = Collection
     date_hierarchy = "created_at"
-    inlines = [CourseInline]
     search_fields = ["name", "headline", "description"]
     list_filter = ["created_at", "updated_at"]
     list_display = [
@@ -141,13 +122,7 @@ class CourseAdmin(admin.ModelAdmin):
     inlines = [ModuleInline, ReviewInline]
     search_fields = ["name", "headline", "description"]
     list_filter = ["created_at", "updated_at"]
-    list_display = [
-        "id",
-        "collection",
-        "name",
-        "created_at",
-        "updated_at",
-    ]
+    list_display = ["id", "name", "created_at", "updated_at"]
 
 
 @admin.register(Module)

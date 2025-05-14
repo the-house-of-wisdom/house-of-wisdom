@@ -19,12 +19,12 @@ class CollectionSerializer(ModelSerializer):
             "url",
             "user",
             "category",
-            "enrollment_count",
             "image",
             "name",
             "headline",
             "description",
             "created_at",
             "updated_at",
+            "courses",
             "tags",
         ]
