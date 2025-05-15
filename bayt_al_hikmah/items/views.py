@@ -2,8 +2,12 @@
 
 from typing import Any, List
 from django.db.models import Q
-from rest_framework.viewsets import ModelViewSet
+from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.request import Request
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import ModelViewSet
 
 from bayt_al_hikmah.items.models import Item
 from bayt_al_hikmah.items.serializers import ItemSerializer
@@ -37,6 +41,29 @@ class ItemViewSet(ModelViewSet):
                 Q(lesson__module__course__user_id=self.request.user.pk)
                 | Q(lesson__module__course__students=self.request.user)
             )
+        )
+
+    @action(methods=["post"], detail=True)
+    def mark(self, request: Request, pk: int) -> Response:
+        """Mark a course lesson item as un/completed"""
+
+        is_completed = False
+        item = self.get_object()
+
+        if not request.user.items.contains(item):
+            is_completed = True
+            request.user.items.add(item)
+
+        else:
+            request.user.items.remove(item)
+
+        item.save()
+
+        return Response(
+            {
+                "details": f"Item '{item}' marked as {'completed' if is_completed else 'uncompleted'}"
+            },
+            status=status.HTTP_200_OK,
         )
 
 

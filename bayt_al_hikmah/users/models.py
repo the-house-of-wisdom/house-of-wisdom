@@ -30,3 +30,8 @@ class User(AbstractUser):
         related_name="savers",
         help_text="Saved collections",
     )
+    items = models.ManyToManyField(
+        "items.Item",
+        related_name="completers",
+        help_text="Completed items",
+    )
