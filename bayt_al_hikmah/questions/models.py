@@ -28,4 +28,4 @@ class Question(DateTimeMixin, models.Model):
     )
 
     def __str__(self) -> str:
-        return f"Question {self.text[:20]}"
+        return f"{self.text[:20]}..."
