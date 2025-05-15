@@ -5,9 +5,6 @@
 {% block title %}{{ block.super }} | {% translate 'Profile' %}{% endblock %}
 
 <!-- prettier ignore -->
-{% block searchbar_styles %} hidden{% endblock %}
-
-<!-- prettier ignore -->
 {% block content_styles %} hidden lg:block{% endblock %}
 
 <!-- prettier ignore -->
@@ -18,7 +15,7 @@
       <h1 class="text-xl font-semibold">{% translate 'Profile' %}</h1>
 
       <div class="tooltip tooltip-bottom tooltip-primary" data-tip="New">
-        <a href="{% url 'ui:create-platform' %}" class="btn btn-square btn-sm btn-primary btn-soft">
+        <a href="" class="btn btn-square btn-sm btn-primary btn-soft">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
             class="lucide size-4 lg:size-6 lucide-plus">
@@ -49,7 +46,7 @@
           </a>
         </li>
         <li class="tooltip tooltip-bottom" data-tip="{% translate 'Edit account' %}">
-          <a href="{% url 'ui:update-user' request.user.id %}" class="btn btn-ghost justify-start gap-4 w-full">
+          <a href="{% url 'ui:u-user' request.user.id %}" class="btn btn-ghost justify-start gap-4 w-full">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="lucide lucide-pencil size-4 lg:size-6">
@@ -103,7 +100,7 @@
 
       <ul class="menu menu-vertical gap-2 w-full p-0">
         <li class="tooltip tooltip-top tooltip-error" data-tip="{% translate 'Delete account' %}">
-          <a href="{% url 'ui:delete-user' request.user.id %}"
+          <a href="{% url 'ui:d-user' request.user.id %}"
             class="btn btn-soft btn-error justify-start gap-4 w-full">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
