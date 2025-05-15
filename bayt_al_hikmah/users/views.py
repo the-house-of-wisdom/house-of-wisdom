@@ -14,6 +14,7 @@ from bayt_al_hikmah.permissions import IsAccountOwner
 class UserViewSet(BaseUVS):
     """Create, view, update and delete Users"""
 
+    lookup_field = "pk"
     search_fields = ["username", "first_name", "last_name"]
     ordering_fields = ["username", "date_joined", "last_login"]
     filterset_fields = ["username", "is_instructor"]
@@ -31,7 +32,7 @@ class UserViewSet(BaseUVS):
         return super().get_permissions()
 
     @action(methods=["post"], detail=True)
-    def approve(self, request: Request, id: int) -> Response:
+    def approve(self, request: Request, pk: int) -> Response:
         """Approve user request to be an instructor"""
 
         user = self.get_object()
@@ -46,24 +47,24 @@ class UserViewSet(BaseUVS):
         )
 
     @action(methods=["post"], detail=True)
-    def join(self, request: Request, id: int) -> Response:
+    def join(self, request: Request, pk: int) -> Response:
         """Join our platform and become an instructor"""
 
-        message = ""
         user = self.get_object()
-
-        if user.is_instructor is None:
-            user.is_instructor = False
-            user.save()
-            message = "Your request to be an instructor is sent."
-
-        elif user.is_instructor is False:
-            message = "Your request is pending approval."
-
-        else:
-            message = "Your request is approved."
+        user.is_instructor = False if user.is_instructor is None else None
+        user.save()
 
         return Response(
-            {"details": message},
+            {
+                "details": (
+                    "Your request to join our instructors team is sent, pending approval"
+                    if user.is_instructor is False
+                    else (
+                        "You left our instructors team"
+                        if user.is_instructor
+                        else "You dismissed your request to join our instructors team"
+                    )
+                )
+            },
             status=status.HTTP_200_OK,
         )

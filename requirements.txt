@@ -3,7 +3,7 @@ django-cors-headers
 django-filter
 djangorestframework
 djoser
-drf-redesign
+drf-restwind
 huggingface-hub
 pillow
 python-dotenv

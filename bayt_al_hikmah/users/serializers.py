@@ -16,7 +16,7 @@ class UserSerializer(ModelSerializer):
         read_only_fields = ["is_active", "is_staff", "is_instructor"]
         fields = [
             "id",
-            # "url",
+            "url",
             "is_active",
             "is_staff",
             "is_instructor",
