@@ -1,0 +1,13 @@
+<!-- prettier ignore -->
+{% extends 'registration/base.html' %}{% load i18n %}
+
+<!-- prettier ignore -->
+{% block title %}{{ block.super }} | {% translate 'Profile' %}{% endblock %}
+
+<!-- prettier ignore -->
+{% block breadcrumbs %}
+<li>{{ request.user }}</li>
+{% endblock %}
+
+<!-- prettier ignore -->
+{% block main_content %}{% endblock %}

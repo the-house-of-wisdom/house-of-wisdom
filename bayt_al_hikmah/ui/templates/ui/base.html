@@ -27,8 +27,6 @@
   </head>
 
   <body class="flex h-dvh bg-base-300 overflow-hidden">
-    <!-- prettier ignore -->
-    {% block body %}
     <section id="nav" class="h-full z-30">
       <header class="h-full">
         <nav
@@ -279,12 +277,6 @@
                     <span>{% translate 'Profile' %}</span>
                   </button>
                 </li>
-                <!-- prettier ignore -->
-                {% if request.user.is_authenticated %}
-                <!-- prettier ignore -->
-                {% optional_logout request user csrf_token %}{% else %}
-                <!-- prettier ignore -->
-                {% optional_login request %}{% endif %}
               </ul>
             </li>
           </ul>
@@ -295,6 +287,8 @@
     <main
       class="relative flex h-dvh max-h-dvh w-full flex-col gap-2 py-2 pr-2 overflow-hidden"
     >
+      <!-- prettier ignore -->
+      {% block main %}
       <!-- prettier ignore -->
       {% block searchbar %}
       <section id="searchbar" class="z-20 w-full">
@@ -430,7 +424,9 @@
           id="sidebar"
           class="col-span-12 h-full lg:col-span-3 lg:h-[calc(100dvh-4rem)] lg:max-h-[calc(100dvh-4rem)]"
         >
-          <section id="sidebar-content" class="relative h-full">
+        <section id="sidebar-content" class="relative h-full">
+            <!-- prettier ignore -->
+            {% block sidebar %}
             <header class="absolute inset-x-0 top-0 z-10">
               <nav
                 class="flex items-center justify-between p-4 gap-4 backdrop-blur-3xl rounded-t-box"
@@ -440,7 +436,8 @@
 
             <main
               class="flex flex-col gap-4 gap-4 h-full px-4 py-20 lg:max-h-dvh lg:overflow-y-auto"
-            >
+            ></main>
+            {% endblock %}
           </section>
         </section>
 
@@ -464,7 +461,7 @@
         </section>
       </div>
       {% endblock %}
+      {% endblock %}
     </main>
-    {% endblock %}
   </body>
 </html>
