@@ -20,7 +20,7 @@ class UserSerializer(ModelSerializer):
             "is_active",
             "is_staff",
             "is_instructor",
-            "image",
+            "photo",
             "username",
             "first_name",
             "last_name",

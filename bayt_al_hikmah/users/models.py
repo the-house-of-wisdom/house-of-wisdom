@@ -13,7 +13,7 @@ class User(AbstractUser):
         blank=True,
         help_text="Designates weather the user is an instructor",
     )
-    image = models.ImageField(
+    photo = models.ImageField(
         null=True,
         blank=True,
         help_text="Profile image",
