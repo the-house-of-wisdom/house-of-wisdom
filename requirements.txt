@@ -7,3 +7,4 @@ drf-restwind
 huggingface-hub
 pillow
 python-dotenv
+wagtail

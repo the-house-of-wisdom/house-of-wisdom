@@ -19,6 +19,7 @@ drf-restwind = ">=0.1.8"
 huggingface-hub = ">=0.31.1"
 pillow = ">=11.2.1"
 python-dotenv = ">=1.1.0"
+wagtail = ">=7.0"
 
 [tool.poetry.group.dev.dependencies]
 black = ">=25.1.0"
