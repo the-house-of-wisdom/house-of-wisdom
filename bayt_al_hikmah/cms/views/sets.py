@@ -4,6 +4,7 @@ from wagtail.admin.viewsets.model import ModelViewSet
 
 from bayt_al_hikmah.answers.models import Answer
 from bayt_al_hikmah.assignments.models import Assignment
+from bayt_al_hikmah.categories.models import Category
 from bayt_al_hikmah.cms.views import overrides
 from bayt_al_hikmah.courses.models import Course
 from bayt_al_hikmah.items.models import Item
@@ -11,9 +12,28 @@ from bayt_al_hikmah.lessons.models import Lesson
 from bayt_al_hikmah.modules.models import Module
 from bayt_al_hikmah.paths.models import Path
 from bayt_al_hikmah.questions.models import Question
+from bayt_al_hikmah.tags.models import Tag
 
 
 # Create your viewsets here.
+class CategoryViewSet(ModelViewSet):
+    """Wagtail Category ViewSet"""
+
+    model = Category
+    form_fields = ["name", "description"]
+    list_filter = ["name"]
+    icon = "user"
+
+
+class TagViewSet(ModelViewSet):
+    """Wagtail Tag ViewSet"""
+
+    model = Tag
+    form_fields = ["name", "description"]
+    list_filter = ["name"]
+    icon = "user"
+
+
 class PathViewSet(ModelViewSet):
     """Wagtail Learning Path ViewSet"""
 
@@ -146,7 +166,12 @@ class AnswerViewSet(ModelViewSet):
     icon = "user"
 
 
-viewsets = {
+admin_viewsets = {
+    "categories": CategoryViewSet("categories"),
+    "tags": TagViewSet("tags"),
+}
+
+instructor_viewsets = {
     "courses": CourseViewSet("courses"),
     "modules": ModuleViewSet("modules"),
     "lessons": LessonViewSet("lessons"),
