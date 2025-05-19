@@ -1,4 +1,4 @@
-"""Data Models for bayt_al_hikmah.collections"""
+"""Data Models for bayt_al_hikmah.paths"""
 
 from django.db import models
 from django.contrib.auth import get_user_model
@@ -12,34 +12,34 @@ from bayt_al_hikmah.mixins import DateTimeMixin
 User = get_user_model()
 
 
-class Collection(DateTimeMixin, models.Model):
-    """Collections of related courses"""
+class Path(DateTimeMixin, models.Model):
+    """Learning Paths, Paths of related courses"""
 
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="collections",
-        help_text="Collection instructor",
+        related_name="paths",
+        help_text="Path instructor",
     )
     category = models.ForeignKey(
         "categories.Category",
         on_delete=models.CASCADE,
-        related_name="collections",
-        help_text="Collection category",
+        related_name="paths",
+        help_text="Path category",
     )
     image = models.ImageField(
-        help_text="Collection image",
-        upload_to="images/collections/",
+        help_text="Path image",
+        upload_to="images/paths/",
     )
     name = models.CharField(
         max_length=64,
         db_index=True,
-        help_text="Collection name",
+        help_text="Path name",
     )
     headline = models.CharField(
         max_length=128,
         db_index=True,
-        help_text="Collection headline",
+        help_text="Path headline",
     )
     description = StreamField(
         TextContentBlock(),
@@ -47,17 +47,22 @@ class Collection(DateTimeMixin, models.Model):
     )
     tags = models.ManyToManyField(
         "tags.Tag",
-        help_text="Collection tags",
+        help_text="Path tags",
     )
     courses = models.ManyToManyField(
         "courses.Course",
-        help_text="Collection Courses",
+        help_text="Path Courses",
     )
+
+    class Meta:
+        """Meta data"""
+
+        verbose_name = "Learning path"
 
     @property
     def rating(self) -> float:
         """
-        Collection rating
+        Path rating
         """
         # TODO
         return 1.0

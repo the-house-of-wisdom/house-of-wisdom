@@ -20,7 +20,7 @@ class EnrollmentViewSet(OwnerMixin, ModelViewSet):
     permission_classes = [IsAuthenticated]
     search_fields = ["course", "user"]
     ordering_fields = ["created_at", "updated_at"]
-    filterset_fields = ["user", "collection", "course", "role"]
+    filterset_fields = ["user", "path", "course", "role"]
 
     def get_permissions(self) -> List[Any]:
         if self.action not in ["list", "retrieve"]:

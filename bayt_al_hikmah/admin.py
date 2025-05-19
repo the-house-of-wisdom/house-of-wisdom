@@ -5,12 +5,12 @@ from django.contrib import admin
 from bayt_al_hikmah.answers.models import Answer
 from bayt_al_hikmah.assignments.models import Assignment
 from bayt_al_hikmah.categories.models import Category
-from bayt_al_hikmah.collections.models import Collection
 from bayt_al_hikmah.courses.models import Course
 from bayt_al_hikmah.enrollments.models import Enrollment
 from bayt_al_hikmah.items.models import Item
 from bayt_al_hikmah.modules.models import Module
 from bayt_al_hikmah.notifications.models import Notification
+from bayt_al_hikmah.paths.models import Path
 from bayt_al_hikmah.questions.models import Question
 from bayt_al_hikmah.reviews.models import Review
 from bayt_al_hikmah.lessons.models import Lesson
@@ -93,13 +93,13 @@ class SubmissionInline(admin.StackedInline):
 
 
 # Create your model admins here.
-@admin.register(Collection)
-class CollectionAdmin(admin.ModelAdmin):
+@admin.register(Path)
+class PathAdmin(admin.ModelAdmin):
     """
-    Collection ModelAdmin
+    Path ModelAdmin
     """
 
-    model = Collection
+    model = Path
     date_hierarchy = "created_at"
     search_fields = ["name", "headline", "description"]
     list_filter = ["created_at", "updated_at"]

@@ -1,11 +1,11 @@
-"""Tests for bayt_al_hikmah.collections.views"""
+"""Tests for bayt_al_hikmah.paths.views"""
 
 from rest_framework.test import APITestCase
 
 
 # Create your tests here.
-class CollectionViewSetTests(APITestCase):
-    """Collection ViewSet tests"""
+class PathViewSetTests(APITestCase):
+    """Path ViewSet tests"""
 
     def setUp(self) -> None:
         """Setup before running tests"""

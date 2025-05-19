@@ -1,18 +1,18 @@
-"""Serializers for bayt_al_hikmah.collections"""
+"""Serializers for bayt_al_hikmah.paths"""
 
 from rest_framework.serializers import ModelSerializer
 
-from bayt_al_hikmah.collections.models import Collection
+from bayt_al_hikmah.paths.models import Path
 
 
 # Create your serializers here.
-class CollectionSerializer(ModelSerializer):
-    """Collection serializer"""
+class PathSerializer(ModelSerializer):
+    """Path serializer"""
 
     class Meta:
         """Meta data"""
 
-        model = Collection
+        model = Path
         read_only_fields = ["user"]
         fields = [
             "id",

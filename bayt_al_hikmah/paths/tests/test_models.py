@@ -1,11 +1,11 @@
-"""Tests for bayt_al_hikmah.collections.models"""
+"""Tests for bayt_al_hikmah.paths.models"""
 
 from django.test import TestCase
 
 
 # Create your tests here.
-class CollectionTests(TestCase):
-    """Collection tests"""
+class PathTests(TestCase):
+    """Path tests"""
 
     def setUp(self) -> None:
         """Setup before running tests"""

@@ -26,9 +26,9 @@ class User(AbstractUser):
         help_text="Tell us about yourself",
     )
     saved = models.ManyToManyField(
-        "collections.Collection",
+        "paths.Path",
         related_name="savers",
-        help_text="Saved collections",
+        help_text="Saved learning paths",
     )
     # NOTE: When generating migrations, you need to comment this field
     # generate the migrations then uncomment it to add it to Item model
