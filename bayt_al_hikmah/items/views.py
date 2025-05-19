@@ -1,7 +1,6 @@
 """API endpoints for bayt_al_hikmah.items"""
 
 from typing import Any, List
-from django.db.models import Q
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.request import Request
@@ -9,13 +8,15 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
+
 from bayt_al_hikmah.items.models import Item
 from bayt_al_hikmah.items.serializers import ItemSerializer
 from bayt_al_hikmah.permissions import IsInstructor
+from bayt_al_hikmah.ui.mixins import UserAIMixin
 
 
 # Create your views here.
-class ItemViewSet(ModelViewSet):
+class ItemViewSet(UserAIMixin, ModelViewSet):
     """Create, view, update and delete Module Items"""
 
     queryset = Item.objects.all()
@@ -30,18 +31,6 @@ class ItemViewSet(ModelViewSet):
             self.permission_classes = [IsAuthenticated, IsInstructor]
 
         return super().get_permissions()
-
-    def get_queryset(self):
-        """Filter queryset by user"""
-
-        return (
-            super()
-            .get_queryset()
-            .filter(
-                Q(lesson__module__course__user_id=self.request.user.pk)
-                | Q(lesson__module__course__students=self.request.user)
-            )
-        )
 
     @action(methods=["post"], detail=True)
     def mark(self, request: Request, pk: int) -> Response:

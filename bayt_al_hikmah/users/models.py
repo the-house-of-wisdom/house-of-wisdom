@@ -30,8 +30,11 @@ class User(AbstractUser):
         related_name="savers",
         help_text="Saved collections",
     )
-    items = models.ManyToManyField(
-        "items.Item",
-        related_name="completers",
-        help_text="Completed items",
-    )
+    # NOTE: When generating migrations, you need to comment this field
+    # generate the migrations then uncomment it to add it to Item model
+    # to avoid django.db.migrations.exceptions.CircularDependencyError
+    # items = models.ManyToManyField(
+    #     "items.Item",
+    #     related_name="completers",
+    #     help_text="Completed items",
+    # )

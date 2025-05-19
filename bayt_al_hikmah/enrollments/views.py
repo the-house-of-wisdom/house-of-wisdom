@@ -7,12 +7,12 @@ from rest_framework.permissions import IsAuthenticated
 
 from bayt_al_hikmah.enrollments.models import Enrollment
 from bayt_al_hikmah.enrollments.serializers import EnrollmentSerializer
-from bayt_al_hikmah.mixins import OwnerMixin, UserFilterMixin
+from bayt_al_hikmah.mixins import OwnerMixin
 from bayt_al_hikmah.permissions import IsOwner
 
 
 # Create your views here.
-class EnrollmentViewSet(OwnerMixin, UserFilterMixin, ModelViewSet):
+class EnrollmentViewSet(OwnerMixin, ModelViewSet):
     """Create, view, update and delete Enrollments"""
 
     queryset = Enrollment.objects.all()

@@ -11,6 +11,7 @@ class Tag(DateTimeMixin, models.Model):
 
     name = models.CharField(
         max_length=64,
+        unique=True,
         db_index=True,
         help_text="Tag name",
     )

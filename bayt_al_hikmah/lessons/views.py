@@ -1,17 +1,17 @@
 """API endpoints for bayt_al_hikmah.lessons"""
 
 from typing import Any, List
-from django.db.models import Q
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
 from bayt_al_hikmah.lessons.models import Lesson
 from bayt_al_hikmah.lessons.serializers import LessonSerializer
 from bayt_al_hikmah.permissions import IsInstructor
+from bayt_al_hikmah.ui.mixins import UserLessonsMixin
 
 
 # Create your views here.
-class LessonViewSet(ModelViewSet):
+class LessonViewSet(UserLessonsMixin, ModelViewSet):
     """Create, view, update and delete Lessons"""
 
     queryset = Lesson.objects.all()
@@ -26,18 +26,6 @@ class LessonViewSet(ModelViewSet):
             self.permission_classes = [IsAuthenticated, IsInstructor]
 
         return super().get_permissions()
-
-    def get_queryset(self):
-        """Filter queryset by user"""
-
-        return (
-            super()
-            .get_queryset()
-            .filter(
-                Q(module__course__user_id=self.request.user.pk)
-                | Q(module__course__students=self.request.user)
-            )
-        )
 
 
 class ModuleLessonsViewSet(LessonViewSet):

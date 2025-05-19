@@ -20,7 +20,6 @@ class ItemSerializer(ModelSerializer):
             "type",
             "title",
             "content",
-            "file",
             "created_at",
             "updated_at",
         ]

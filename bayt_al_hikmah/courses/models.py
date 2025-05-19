@@ -2,7 +2,9 @@
 
 from django.db import models
 from django.contrib.auth import get_user_model
+from wagtail.fields import StreamField
 
+from bayt_al_hikmah.cms.blocks import TextContentBlock
 from bayt_al_hikmah.mixins import DateTimeMixin
 
 
@@ -39,8 +41,9 @@ class Course(DateTimeMixin, models.Model):
         db_index=True,
         help_text="Course headline",
     )
-    description = models.TextField(
-        help_text="Course description",
+    description = StreamField(
+        TextContentBlock(),
+        help_text="Item content",
     )
     tags = models.ManyToManyField(
         "tags.Tag",
@@ -63,9 +66,9 @@ class Course(DateTimeMixin, models.Model):
         return 1.0
 
     @property
-    def enrollment_count(self) -> int:
+    def student_count(self) -> int:
         """
-        Number of enrollments of a course
+        Number of students enrolled in a course
         """
 
         return self.students.count()

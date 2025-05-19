@@ -1,7 +1,6 @@
 """API endpoints for bayt_al_hikmah.courses"""
 
 from typing import Any, List
-from django.db.models import Q
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.request import Request
@@ -31,15 +30,6 @@ class CourseViewSet(OwnerMixin, ModelViewSet):
             self.permission_classes = [IsAuthenticated, IsInstructor, IsOwner]
 
         return super().get_permissions()
-
-    def get_queryset(self):
-        """Filter queryset by user"""
-
-        return (
-            super()
-            .get_queryset()
-            .filter(Q(user_id=self.request.user.pk) | Q(students=self.request.user))
-        )
 
     @action(methods=["post"], detail=True)
     def enroll(self, request: Request, pk: int) -> Response:

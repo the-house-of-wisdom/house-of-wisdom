@@ -2,7 +2,9 @@
 
 from django.db import models
 from django.core import validators
+from wagtail.fields import StreamField
 
+from bayt_al_hikmah.cms.blocks import TextContentBlock
 from bayt_al_hikmah.mixins import DateTimeMixin
 
 
@@ -37,10 +39,9 @@ class Assignment(DateTimeMixin, models.Model):
             validators.MaxValueValidator(100.0, "Min percentage must be less than 100"),
         ],
     )
-    content = models.TextField(
-        null=True,
-        blank=True,
-        help_text="Assignment content",
+    content = StreamField(
+        TextContentBlock(),
+        help_text="Item content",
     )
     is_auto_graded = models.BooleanField(
         default=True,

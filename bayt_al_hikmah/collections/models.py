@@ -2,7 +2,9 @@
 
 from django.db import models
 from django.contrib.auth import get_user_model
+from wagtail.fields import StreamField
 
+from bayt_al_hikmah.cms.blocks import TextContentBlock
 from bayt_al_hikmah.mixins import DateTimeMixin
 
 
@@ -39,8 +41,9 @@ class Collection(DateTimeMixin, models.Model):
         db_index=True,
         help_text="Collection headline",
     )
-    description = models.TextField(
-        help_text="Collection description",
+    description = StreamField(
+        TextContentBlock(),
+        help_text="Item content",
     )
     tags = models.ManyToManyField(
         "tags.Tag",
