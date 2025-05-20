@@ -1,7 +1,7 @@
 """Widgets"""
 
-from bayt_al_hikmah.cms.views.choosers import chooser_viewsets
+from bayt_al_hikmah.cms.views.choosers import viewsets
 
 
 # Create your widgets here.
-CourseChooserWidget = chooser_viewsets["courses"].widget_class
+classes = {k: v.widget_class for k, v in viewsets.items()}

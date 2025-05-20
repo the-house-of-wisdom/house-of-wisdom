@@ -7,130 +7,182 @@ from bayt_al_hikmah.ui import mixins
 
 # Create your views here.
 # Courses
-class UserCreateView(mixins.OwnerMixin, generic.CreateView):
+class UserCreateView(mixins.OwnerMixin, mixins.InstructorMixin, generic.CreateView):
     """Adds the owner of the object automatically"""
 
 
-class UserCoursesView(mixins.UserFilterMixin, generic.IndexView):
+class UserCoursesView(
+    mixins.UserFilterMixin, mixins.InstructorMixin, generic.IndexView
+):
     """Filter the queryset by user to display only courses owned by that user"""
 
 
-class UserCoursesEditView(mixins.UserFilterMixin, generic.EditView):
+class UserCoursesEditView(
+    mixins.UserFilterMixin, mixins.InstructorMixin, generic.EditView
+):
     """Filter the queryset by user to edit only courses owned by that user"""
 
 
-class UserCoursesDeleteView(mixins.UserFilterMixin, generic.DeleteView):
+class UserCoursesDeleteView(
+    mixins.UserFilterMixin, mixins.InstructorMixin, generic.DeleteView
+):
     """Filter the queryset by user to delete only courses owned by that user"""
 
 
-class UserCoursesHistoryView(mixins.UserFilterMixin, generic.HistoryView):
+class UserCoursesHistoryView(
+    mixins.UserFilterMixin, mixins.InstructorMixin, generic.HistoryView
+):
     """Filter the queryset by user to view only courses owned by that user"""
 
 
-class UserCoursesUsageView(mixins.UserFilterMixin, generic.UsageView):
+class UserCoursesUsageView(
+    mixins.UserFilterMixin, mixins.InstructorMixin, generic.UsageView
+):
     """Filter the queryset by user to view only courses owned by that user"""
 
 
 # Modules
-class UserModulesView(mixins.UserModulesMixin, generic.IndexView):
+class UserModulesView(
+    mixins.UserModulesMixin, mixins.InstructorMixin, generic.IndexView
+):
     """Filter the queryset by user to display only modules owned by that user"""
 
 
-class UserModulesEditView(mixins.UserModulesMixin, generic.EditView):
+class UserModulesEditView(
+    mixins.UserModulesMixin, mixins.InstructorMixin, generic.EditView
+):
     """Filter the queryset by user to edit only modules owned by that user"""
 
 
-class UserModulesDeleteView(mixins.UserModulesMixin, generic.DeleteView):
+class UserModulesDeleteView(
+    mixins.UserModulesMixin, mixins.InstructorMixin, generic.DeleteView
+):
     """Filter the queryset by user to delete only modules owned by that user"""
 
 
-class UserModulesHistoryView(mixins.UserModulesMixin, generic.HistoryView):
+class UserModulesHistoryView(
+    mixins.UserModulesMixin, mixins.InstructorMixin, generic.HistoryView
+):
     """Filter the queryset by user to view only modules owned by that user"""
 
 
-class UserModulesUsageView(mixins.UserModulesMixin, generic.UsageView):
+class UserModulesUsageView(
+    mixins.UserModulesMixin, mixins.InstructorMixin, generic.UsageView
+):
     """Filter the queryset by user to view only modules owned by that user"""
 
 
 # Lessons
-class UserLessonsView(mixins.UserLessonsMixin, generic.IndexView):
+class UserLessonsView(
+    mixins.UserLessonsMixin, mixins.InstructorMixin, generic.IndexView
+):
     """Filter the queryset by user to display only lessons owned by that user"""
 
 
-class UserLessonsEditView(mixins.UserLessonsMixin, generic.EditView):
+class UserLessonsEditView(
+    mixins.UserLessonsMixin, mixins.InstructorMixin, generic.EditView
+):
     """Filter the queryset by user to edit only lessons owned by that user"""
 
 
-class UserLessonsDeleteView(mixins.UserLessonsMixin, generic.DeleteView):
+class UserLessonsDeleteView(
+    mixins.UserLessonsMixin, mixins.InstructorMixin, generic.DeleteView
+):
     """Filter the queryset by user to delete only lessons owned by that user"""
 
 
-class UserLessonsHistoryView(mixins.UserLessonsMixin, generic.HistoryView):
+class UserLessonsHistoryView(
+    mixins.UserLessonsMixin, mixins.InstructorMixin, generic.HistoryView
+):
     """Filter the queryset by user to view only lessons owned by that user"""
 
 
-class UserLessonsUsageView(mixins.UserLessonsMixin, generic.UsageView):
+class UserLessonsUsageView(
+    mixins.UserLessonsMixin, mixins.InstructorMixin, generic.UsageView
+):
     """Filter the queryset by user to view only lessons owned by that user"""
 
 
 # Assignments & Items
-class UserAIView(mixins.UserAIMixin, generic.IndexView):
+class UserAIView(mixins.UserAIMixin, mixins.InstructorMixin, generic.IndexView):
     """Filter the queryset by user to display only assignments and items owned by that user"""
 
 
-class UserAIEditView(mixins.UserAIMixin, generic.EditView):
+class UserAIEditView(mixins.UserAIMixin, mixins.InstructorMixin, generic.EditView):
     """Filter the queryset by user to edit only assignments and items owned by that user"""
 
 
-class UserAIDeleteView(mixins.UserAIMixin, generic.DeleteView):
+class UserAIDeleteView(mixins.UserAIMixin, mixins.InstructorMixin, generic.DeleteView):
     """Filter the queryset by user to delete only assignments and items owned by that user"""
 
 
-class UserAIHistoryView(mixins.UserAIMixin, generic.HistoryView):
+class UserAIHistoryView(
+    mixins.UserAIMixin, mixins.InstructorMixin, generic.HistoryView
+):
     """Filter the queryset by user to view only assignments and items owned by that user"""
 
 
-class UserAIUsageView(mixins.UserAIMixin, generic.UsageView):
+class UserAIUsageView(mixins.UserAIMixin, mixins.InstructorMixin, generic.UsageView):
     """Filter the queryset by user to view only assignments and items owned by that user"""
 
 
 # Questions
-class UserQuestionsView(mixins.UserQuestionsMixin, generic.IndexView):
+class UserQuestionsView(
+    mixins.UserQuestionsMixin, mixins.InstructorMixin, generic.IndexView
+):
     """Filter the queryset by user to display only questions owned by that user"""
 
 
-class UserQuestionsEditView(mixins.UserQuestionsMixin, generic.EditView):
+class UserQuestionsEditView(
+    mixins.UserQuestionsMixin, mixins.InstructorMixin, generic.EditView
+):
     """Filter the queryset by user to edit only questions owned by that user"""
 
 
-class UserQuestionsDeleteView(mixins.UserQuestionsMixin, generic.DeleteView):
+class UserQuestionsDeleteView(
+    mixins.UserQuestionsMixin, mixins.InstructorMixin, generic.DeleteView
+):
     """Filter the queryset by user to delete only questions owned by that user"""
 
 
-class UserQuestionsHistoryView(mixins.UserQuestionsMixin, generic.HistoryView):
+class UserQuestionsHistoryView(
+    mixins.UserQuestionsMixin, mixins.InstructorMixin, generic.HistoryView
+):
     """Filter the queryset by user to view only questions owned by that user"""
 
 
-class UserQuestionsUsageView(mixins.UserQuestionsMixin, generic.UsageView):
+class UserQuestionsUsageView(
+    mixins.UserQuestionsMixin, mixins.InstructorMixin, generic.UsageView
+):
     """Filter the queryset by user to view only questions owned by that user"""
 
 
 # Answers
-class UserAnswersView(mixins.UserAnswersMixin, generic.IndexView):
+class UserAnswersView(
+    mixins.UserAnswersMixin, mixins.InstructorMixin, generic.IndexView
+):
     """Filter the queryset by user to display only answers owned by that user"""
 
 
-class UserAnswersEditView(mixins.UserAnswersMixin, generic.EditView):
+class UserAnswersEditView(
+    mixins.UserAnswersMixin, mixins.InstructorMixin, generic.EditView
+):
     """Filter the queryset by user to edit only answers owned by that user"""
 
 
-class UserAnswersDeleteView(mixins.UserAnswersMixin, generic.DeleteView):
+class UserAnswersDeleteView(
+    mixins.UserAnswersMixin, mixins.InstructorMixin, generic.DeleteView
+):
     """Filter the queryset by user to delete only answers owned by that user"""
 
 
-class UserAnswersHistoryView(mixins.UserAnswersMixin, generic.HistoryView):
+class UserAnswersHistoryView(
+    mixins.UserAnswersMixin, mixins.InstructorMixin, generic.HistoryView
+):
     """Filter the queryset by user to view only answers owned by that user"""
 
 
-class UserAnswersUsageView(mixins.UserAnswersMixin, generic.UsageView):
+class UserAnswersUsageView(
+    mixins.UserAnswersMixin, mixins.InstructorMixin, generic.UsageView
+):
     """Filter the queryset by user to view only answers owned by that user"""

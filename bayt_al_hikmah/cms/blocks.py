@@ -4,7 +4,7 @@ from wagtail import blocks
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 
-from bayt_al_hikmah.cms.views.choosers import chooser_viewsets
+from bayt_al_hikmah.cms.views.choosers import viewsets
 
 
 # Create your blocks here.
@@ -22,7 +22,7 @@ class CommonContentBlock(TextContentBlock):
     document = DocumentChooserBlock()
 
 
-CourseChooserBlock = chooser_viewsets["courses"].get_block_class(
+CourseChooserBlock = viewsets["courses"].get_block_class(
     name="CourseChooserBlock",
     module_path="cms.blocks",
 )

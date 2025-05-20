@@ -51,6 +51,7 @@ class Path(DateTimeMixin, models.Model):
     )
     courses = models.ManyToManyField(
         "courses.Course",
+        blank=True,
         help_text="Path Courses",
     )
 

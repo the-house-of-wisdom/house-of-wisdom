@@ -2,7 +2,7 @@
 
 from wagtail import hooks
 
-from bayt_al_hikmah.cms.views.choosers import chooser_viewsets
+from bayt_al_hikmah.cms.views.choosers import viewsets
 from bayt_al_hikmah.cms.views.groups import AdminViewSetGroup, InstructorViewSetGroup
 from bayt_al_hikmah.cms.views.sets import PathViewSet
 
@@ -14,7 +14,7 @@ def register_views():
         PathViewSet("paths"),
         AdminViewSetGroup(),
         InstructorViewSetGroup(),
-        *chooser_viewsets.values(),
+        *viewsets.values(),
     ]
 
 

@@ -22,6 +22,13 @@ class AccountOwnerMixin(UserPassesTestMixin):
         return self.request.user == self.get_object()
 
 
+class InstructorMixin(UserPassesTestMixin):
+    """Check if the user is an instructor"""
+
+    def test_func(self) -> bool | None:
+        return self.request.user.is_instructor
+
+
 class OwnerMixin:
     """Adds the owner automatically"""
 
