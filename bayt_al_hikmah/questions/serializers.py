@@ -13,6 +13,7 @@ class QuestionSerializer(ModelSerializer):
         """Meta data"""
 
         model = Question
+        read_only_fields = ["assignment"]
         fields = [
             "id",
             "url",

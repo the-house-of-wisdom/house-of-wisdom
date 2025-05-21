@@ -18,19 +18,6 @@ def register_views():
     ]
 
 
-# @hooks.register("filter_form_submissions_for_user")
-# def construct_forms_for_user(user, queryset):
-#     if not user.is_superuser:
-#         queryset = queryset.none()
-#     return queryset
-
-
-# @hooks.register("construct_page_chooser_queryset")
-# def show_my_pages_only(pages, request):
-#     """Filter pages by user"""
-#     return pages.filter(owner=request.user)
-
-
 @hooks.register("construct_document_chooser_queryset")
 def show_my_uploaded_documents_only(documents, request):
     """Filter docs by user"""

@@ -2,7 +2,7 @@
 
 from django.db import models
 
-from bayt_al_hikmah.mixins import DateTimeMixin
+from bayt_al_hikmah.mixins.models import DateTimeMixin
 from bayt_al_hikmah.questions import QUESTION_TYPES
 
 

@@ -131,7 +131,7 @@ class ItemViewSet(AssignmentViewSet):
 
     model = Item
     form_fields = ["lesson", "type", "title", "content"]
-    list_display = ["lesson", "title", "type"]
+    list_display = ["lesson", "title"]
     list_filter = ["lesson", "type"]
     icon = "user"
 
@@ -176,6 +176,7 @@ instructor_viewsets = {
     "modules": ModuleViewSet("modules"),
     "lessons": LessonViewSet("lessons"),
     "assignments": AssignmentViewSet("assignments"),
+    "items": ItemViewSet("items"),
     "questions": QuestionViewSet("questions"),
     "answers": AnswerViewSet("answers"),
 }

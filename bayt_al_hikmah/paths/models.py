@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from wagtail.fields import StreamField
 
 from bayt_al_hikmah.cms.blocks import TextContentBlock
-from bayt_al_hikmah.mixins import DateTimeMixin
+from bayt_al_hikmah.mixins.models import DateTimeMixin
 
 
 # Create your models here.

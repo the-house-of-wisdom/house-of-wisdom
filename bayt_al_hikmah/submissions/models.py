@@ -4,7 +4,7 @@ from django.db import models
 from django.core import validators
 from django.contrib.auth import get_user_model
 
-from bayt_al_hikmah.mixins import DateTimeMixin
+from bayt_al_hikmah.mixins.models import DateTimeMixin
 
 
 # Create your models here.

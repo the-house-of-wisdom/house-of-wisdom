@@ -8,15 +8,15 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
-from bayt_al_hikmah.mixins import OwnerMixin, UserFilterMixin
+from bayt_al_hikmah.mixins.views import OwnerMixin, UserFilterMixin
 from bayt_al_hikmah.paths.models import Path
 from bayt_al_hikmah.paths.serializers import PathSerializer
 from bayt_al_hikmah.permissions import IsInstructor, IsOwner
 
 
 # Create your views here.
-class PathViewSet(OwnerMixin, UserFilterMixin, ModelViewSet):
-    """Create, view, update and delete Paths"""
+class BasePathVS(OwnerMixin, ModelViewSet):
+    """Base ViewSet for extension"""
 
     queryset = Path.objects.all()
     serializer_class = PathSerializer
@@ -26,7 +26,7 @@ class PathViewSet(OwnerMixin, UserFilterMixin, ModelViewSet):
     filterset_fields = ["user", "category", "tags"]
 
     def get_permissions(self) -> List[Any]:
-        if self.action not in ["list", "retrieve", "enroll"]:
+        if self.action not in ["list", "retrieve"]:
             self.permission_classes = [IsAuthenticated, IsInstructor, IsOwner]
 
         return super().get_permissions()
@@ -51,3 +51,7 @@ class PathViewSet(OwnerMixin, UserFilterMixin, ModelViewSet):
             },
             status=status.HTTP_200_OK,
         )
+
+
+class PathViewSet(UserFilterMixin, BasePathVS):
+    """Create, view, update and delete Paths"""

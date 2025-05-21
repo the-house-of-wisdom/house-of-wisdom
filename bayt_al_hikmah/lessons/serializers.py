@@ -13,6 +13,7 @@ class LessonSerializer(ModelSerializer):
         """Meta data"""
 
         model = Lesson
+        read_only_fields = ["module"]
         fields = [
             "id",
             "url",

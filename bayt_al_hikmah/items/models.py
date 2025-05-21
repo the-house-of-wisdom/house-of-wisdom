@@ -6,7 +6,7 @@ from wagtail.fields import StreamField
 
 from bayt_al_hikmah.cms.blocks import CommonContentBlock
 from bayt_al_hikmah.items import ITEM_TYPES
-from bayt_al_hikmah.mixins import DateTimeMixin
+from bayt_al_hikmah.mixins.models import DateTimeMixin
 
 
 # Create your models here.

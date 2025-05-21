@@ -10,7 +10,7 @@ from bayt_al_hikmah.tags.serializers import TagSerializer
 
 # Create your views here.
 class TagViewSet(ModelViewSet):
-    """Create, view, update and delete Tags"""
+    """Base ViewSet for extension"""
 
     queryset = Tag.objects.all()
     serializer_class = TagSerializer

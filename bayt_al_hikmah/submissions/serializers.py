@@ -22,6 +22,7 @@ class SubmissionSerializer(ModelSerializer):
             "status",
             "grade",
             "answers",
+            "feedback",
             "file",
             "created_at",
             "updated_at",

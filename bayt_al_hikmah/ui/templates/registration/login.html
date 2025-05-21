@@ -2,26 +2,29 @@
 {% extends "registration/base.html" %}{% load i18n %}
 
 <!-- prettier ignore -->
-{% block title %}{{ block.super }} | {% translate 'Login' %}{% endblock %}
+{% block title %}{{ block.super }} | {% trans 'Login' %}{% endblock %}
 
 <!-- prettier ignore -->
 {% block main %}
-<section class="flex h-full w-full items-center justify-center rounded-box bg-base-100 lg:p-40">
-  <div class="card gap-4 mx-2 max-w-md w-full rounded-box bg-base-200">
-    <div class="card-body">
-      <h1 class="text-3xl font-black">
-        {% translate 'Login to' %}
-        <span class="text-primary">{% translate 'Ui' %}</span>
+<section
+  class="flex col-span-12 size-full items-center justify-center rounded-box bg-base-100 lg:p-40"
+>
+  <div class="card mx-2 max-w-md w-full rounded-box bg-base-200">
+    <div class="card-body gap-8">
+      <h1 class="text-4xl font-black text-center font-serif text-primary">
+        {% trans 'House Of Wisdom' %}
       </h1>
 
-      <p>{% translate 'Welcome, please login to continue.' %}</p>
+      <div class="grid gap-4">
+        <h2 class="text-2xl">{% trans 'Log in' %}</h2>
+        <p>{% trans 'Welcome, please login to continue.' %}</p>
+      </div>
 
       <!-- prettier ignore -->
       {% if form.errors %}
       <p>
         <!-- prettier ignore -->
-        {% translate 'Your username and password did not match. Please try
-        again.' %}
+        {% trans 'Your username and password did not match. Please try again.' %}
       </p>
       <!-- prettier ignore -->
       {% endif %}
@@ -31,29 +34,24 @@
       {% if user.is_authenticated %}
       <p>
         <!-- prettier ignore -->
-        {% blocktranslate %} Your account doesn't have access to this page. To
-        proceed, please login with an account that has access.
-        <!-- prettier ignore -->
-        {% endblocktranslate %}
+        {% blocktranslate %}Your account doesn't have access to this page. To
+        proceed, please login with an account that has access.{% endblocktranslate %}
       </p>
-
       <!-- prettier ignore -->
       {% else %}
-      <p>{% translate 'Please login to see this page.' %}</p>
+      <p>{% trans 'Please login to see this page.' %}</p>
       <!-- prettier ignore -->
-      {% endif %}
-      <!-- prettier ignore -->
-      {% endif %}
+      {% endif %}{% endif %}
 
       <!-- prettier ignore -->
       {% include 'ui/components/form.html' %}
 
       <p>
         <a href="{% url 'ui:signup' %}" class="btn btn-ghost">
-          {% translate 'Do not have an account?' %}
+          {% trans 'Do not have an account?' %}
         </a>
         <a href="{% url 'ui:password_reset' %}" class="btn btn-ghost">
-          {% translate 'Lost password?' %}
+          {% trans 'Lost password?' %}
         </a>
       </p>
     </div>

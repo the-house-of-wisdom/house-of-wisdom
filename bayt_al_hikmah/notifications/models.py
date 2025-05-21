@@ -3,7 +3,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
-from bayt_al_hikmah.mixins import DateTimeMixin
+from bayt_al_hikmah.mixins.models import DateTimeMixin
 from bayt_al_hikmah.notifications import NOTIFICATION_TYPES
 
 

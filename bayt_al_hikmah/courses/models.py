@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from wagtail.fields import StreamField
 
 from bayt_al_hikmah.cms.blocks import TextContentBlock
-from bayt_al_hikmah.mixins import DateTimeMixin
+from bayt_al_hikmah.mixins.models import DateTimeMixin
 
 
 # Create your models here.
@@ -58,18 +58,13 @@ class Course(DateTimeMixin, models.Model):
 
     @property
     def rating(self) -> float:
-        """
-        Course rating
-        """
+        """Course rating"""
 
-        # TODO
-        return 1.0
+        return 5.0
 
     @property
     def student_count(self) -> int:
-        """
-        Number of students enrolled in a course
-        """
+        """Number of students enrolled in a course"""
 
         return self.students.count()
 

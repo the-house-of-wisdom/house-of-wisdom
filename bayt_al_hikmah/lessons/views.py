@@ -1,34 +1,38 @@
 """API endpoints for bayt_al_hikmah.lessons"""
 
-from typing import Any, List
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
 from bayt_al_hikmah.lessons.models import Lesson
 from bayt_al_hikmah.lessons.serializers import LessonSerializer
-from bayt_al_hikmah.permissions import IsInstructor
+from bayt_al_hikmah.mixins.views import ActionPermDictMixin
+from bayt_al_hikmah.permissions import DenyAll, IsInstructor, IsLessonOwner
 from bayt_al_hikmah.ui.mixins import UserLessonsMixin
 
 
 # Create your views here.
-class LessonViewSet(UserLessonsMixin, ModelViewSet):
-    """Create, view, update and delete Lessons"""
+class BaseLessonVS(ActionPermDictMixin, UserLessonsMixin, ModelViewSet):
+    """Base ViewSet for extension"""
 
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsInstructor]
     search_fields = ["title", "description"]
     ordering_fields = ["created_at", "updated_at"]
     filterset_fields = ["module__course", "module"]
-
-    def get_permissions(self) -> List[Any]:
-        if self.action not in ["list", "retrieve"]:
-            self.permission_classes = [IsAuthenticated, IsInstructor]
-
-        return super().get_permissions()
+    action_perm_dict = {
+        "default": permission_classes,
+        "create": permission_classes + [IsLessonOwner],
+    }
 
 
-class ModuleLessonsViewSet(LessonViewSet):
+class LessonViewSet(BaseLessonVS):
+    """Create, view, update and delete Lessons"""
+
+    action_perm_dict = {**BaseLessonVS.action_perm_dict, "create": [DenyAll]}
+
+
+class ModuleLessonsVS(BaseLessonVS):
     """Create, view, update and delete Module Lessons"""
 
     def perform_create(self, serializer):

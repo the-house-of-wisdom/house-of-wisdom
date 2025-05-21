@@ -46,7 +46,7 @@ class UserUpdateView(
     """Update a user"""
 
     model = User
-    template_name = "registration/form.html"
+    template_name = "registration/edit.html"
     fields = ["first_name", "last_name", "email"]
     success_url = reverse_lazy("ui:profile")
     success_message = "Your account was updated successfully!"
@@ -61,6 +61,6 @@ class UserDeleteView(
     """Delete a user"""
 
     model = User
-    template_name = "registration/form.html"
+    template_name = "registration/delete.html"
     success_url = reverse_lazy("ui:index")
     success_message = "Your account was deleted successfully!"

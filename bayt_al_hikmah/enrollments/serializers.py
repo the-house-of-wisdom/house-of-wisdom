@@ -13,12 +13,11 @@ class EnrollmentSerializer(ModelSerializer):
         """Meta data"""
 
         model = Enrollment
-        read_only_fields = ["user", "path", "course", "role"]
+        read_only_fields = ["user", "course", "role"]
         fields = [
             "id",
             "url",
             "user",
-            "path",
             "course",
             "role",
             "created_at",

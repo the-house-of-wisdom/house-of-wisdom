@@ -3,7 +3,7 @@
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
-from bayt_al_hikmah.mixins import UserFilterMixin
+from bayt_al_hikmah.mixins.views import UserFilterMixin
 from bayt_al_hikmah.notifications.models import Notification
 from bayt_al_hikmah.notifications.serializers import NotificationSerializer
 from bayt_al_hikmah.permissions import IsOwner

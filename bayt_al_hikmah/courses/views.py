@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from bayt_al_hikmah.courses.models import Course
 from bayt_al_hikmah.courses.serializers import CourseSerializer
-from bayt_al_hikmah.mixins import OwnerMixin
+from bayt_al_hikmah.mixins.views import OwnerMixin
 from bayt_al_hikmah.permissions import IsInstructor, IsOwner
 
 

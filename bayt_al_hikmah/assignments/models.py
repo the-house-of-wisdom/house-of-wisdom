@@ -5,16 +5,17 @@ from django.core import validators
 from wagtail.fields import StreamField
 
 from bayt_al_hikmah.cms.blocks import TextContentBlock
-from bayt_al_hikmah.mixins import DateTimeMixin
+from bayt_al_hikmah.mixins.models import DateTimeMixin
 
 
 # Create your models here.
 class Assignment(DateTimeMixin, models.Model):
     """Assignments"""
 
-    lesson = models.OneToOneField(
+    lesson = models.ForeignKey(
         "lessons.Lesson",
         on_delete=models.CASCADE,
+        related_name="assignments",
         help_text="Assignment lesson",
     )
     title = models.CharField(

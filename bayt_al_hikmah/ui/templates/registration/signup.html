@@ -2,30 +2,36 @@
 {% extends "registration/base.html" %}{% load i18n %}
 
 <!-- prettier ignore -->
-{% block title %}{{ block.super }} | {% translate 'Sign up' %}{% endblock %}
+{% block title %}{{ block.super }} | {% trans 'Sign up' %}{% endblock %}
 
 <!-- prettier ignore -->
 {% block main %}
-<section class="flex h-full w-full max-h-dvh overflow-y-auto items-center justify-center rounded-box bg-base-100">
-  <div class="card gap-4 mx-2 max-w-md card-body w-full rounded-box bg-base-200 mt-40 mb-20">
-    <h1 class="text-3xl font-black">
-      {% translate 'Sign up' %}
-      <span class="text-primary">{% translate 'Ui' %}</span>
-    </h1>
+<section
+  class="flex col-span-12 size-full items-center justify-center lg:max-h-[calc(100dvh-1rem)] lg:overflow-y-auto"
+>
+  <div class="card mx-2 max-w-md w-full rounded-box bg-base-200 mt-40 mb-20">
+    <div class="card-body gap-8">
+      <h1 class="text-4xl font-black text-center font-serif text-primary">
+        {% trans 'House Of Wisdom' %}
+      </h1>
 
-    <p>{% translate 'Welcome, please signup to continue.' %}</p>
+      <div class="grid gap-4">
+        <h2 class="text-2xl">{% trans 'Sign up' %}</h2>
+        <p>{% trans 'Welcome, please signup to continue.' %}</p>
+      </div>
 
-    <!-- prettier ignore -->
-    {% include 'ui/components/form.html' %}
+      <!-- prettier ignore -->
+      {% include 'ui/components/form.html' %}
 
-    <p>
-      <a href="{% url 'ui:login' %}" class="btn btn-ghost">
-        {% translate 'Already have an account?' %}
-      </a>
-      <a href="{% url 'ui:password_reset' %}" class="btn btn-ghost">
-        {% translate 'Lost password?' %}
-      </a>
-    </p>
+      <p>
+        <a href="{% url 'ui:login' %}" class="btn btn-ghost">
+          {% trans 'Already have an account?' %}
+        </a>
+        <a href="{% url 'ui:password_reset' %}" class="btn btn-ghost">
+          {% trans 'Lost password?' %}
+        </a>
+      </p>
+    </div>
   </div>
 </section>
 {% endblock %}

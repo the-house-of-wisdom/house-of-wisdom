@@ -1,10 +1,13 @@
 """Generic View Mixins for bayt_al_hikmah.ui"""
 
-from typing import Any
+from typing import Any, List
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.db.models.query import QuerySet
 from django.forms import BaseModelForm
 from django.http import HttpResponse
+from rest_framework.permissions import IsAuthenticated
+
+from bayt_al_hikmah.permissions import IsInstructor
 
 
 # Create your mixins here.
