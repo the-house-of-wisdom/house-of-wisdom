@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 from wagtail.fields import StreamField
 
 from bayt_al_hikmah.cms.blocks import TextContentBlock
@@ -19,48 +20,48 @@ class Course(DateTimeMixin, models.Model):
         User,
         on_delete=models.CASCADE,
         related_name="courses",
-        help_text="Course instructor",
+        help_text=_("Course instructor"),
     )
     category = models.ForeignKey(
         "categories.Category",
         on_delete=models.CASCADE,
         related_name="courses",
-        help_text="Course category",
+        help_text=_("Course category"),
     )
     image = models.ImageField(
-        help_text="Course image",
+        help_text=_("Course image"),
         upload_to=" images/courses/",
     )
     name = models.CharField(
         max_length=64,
         db_index=True,
-        help_text="Course name",
+        help_text=_("Course name"),
     )
     headline = models.CharField(
         max_length=128,
         db_index=True,
-        help_text="Course headline",
+        help_text=_("Course headline"),
+    )
+    rating = models.FloatField(
+        null=True,
+        blank=True,
+        db_index=True,
+        help_text=_("Course rating"),
     )
     description = StreamField(
         TextContentBlock(),
-        help_text="Item content",
+        help_text=_("Item content"),
     )
     tags = models.ManyToManyField(
         "tags.Tag",
-        help_text="Course tags",
+        help_text=_("Course tags"),
     )
     students = models.ManyToManyField(
         User,
         related_name="students",
         through="enrollments.Enrollment",
-        help_text="Course enrollments",
+        help_text=_("Course enrollments"),
     )
-
-    @property
-    def rating(self) -> float:
-        """Course rating"""
-
-        return 5.0
 
     @property
     def student_count(self) -> int:

@@ -1,6 +1,7 @@
 """Data Models for bayt_al_hikmah.lessons"""
 
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from bayt_al_hikmah.mixins.models import DateTimeMixin
 
@@ -13,16 +14,16 @@ class Lesson(DateTimeMixin, models.Model):
         "modules.Module",
         on_delete=models.CASCADE,
         related_name="lessons",
-        help_text="Lesson module",
+        help_text=_("Lesson module"),
     )
     name = models.CharField(
         max_length=64,
         db_index=True,
-        help_text="Lesson name",
+        help_text=_("Lesson name"),
     )
     description = models.CharField(
         max_length=256,
-        help_text="Lesson description",
+        help_text=_("Lesson description"),
     )
 
     def __str__(self) -> str:

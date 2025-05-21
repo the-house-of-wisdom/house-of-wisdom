@@ -13,7 +13,7 @@ class PathSerializer(ModelSerializer):
         """Meta data"""
 
         model = Path
-        read_only_fields = ["user"]
+        read_only_fields = ["user", "rating"]
         fields = [
             "id",
             "url",

@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 
 from bayt_al_hikmah.enrollments import ENROLLMENT_ROLES
 from bayt_al_hikmah.mixins.models import DateTimeMixin
@@ -18,18 +19,18 @@ class Enrollment(DateTimeMixin, models.Model):
         User,
         on_delete=models.CASCADE,
         related_name="enrollments",
-        help_text="Enrolling User",
+        help_text=_("Enrolling User"),
     )
     course = models.ForeignKey(
         "courses.Course",
         on_delete=models.CASCADE,
         related_name="enrollments",
-        help_text="Enrolled Course",
+        help_text=_("Enrolled Course"),
     )
     role = models.PositiveSmallIntegerField(
         default=0,
         choices=ENROLLMENT_ROLES,
-        help_text="Enrollment role",
+        help_text=_("Enrollment role"),
     )
 
     class Meta:

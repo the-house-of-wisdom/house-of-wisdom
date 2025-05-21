@@ -3,6 +3,7 @@
 from django.db import models
 from django.core import validators
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 
 from bayt_al_hikmah.mixins.models import DateTimeMixin
 
@@ -18,36 +19,36 @@ class Submission(DateTimeMixin, models.Model):
         User,
         on_delete=models.CASCADE,
         related_name="submissions",
-        help_text="User",
+        help_text=_("User"),
     )
     assignment = models.ForeignKey(
         "assignments.Assignment",
         on_delete=models.CASCADE,
         related_name="submissions",
-        help_text="Submission assignment",
+        help_text=_("Submission assignment"),
     )
     grade = models.FloatField(
         null=True,
         blank=True,
-        help_text="Submission grade",
+        help_text=_("Submission grade"),
         validators=[
             validators.MinValueValidator(0.0, "Grade must be >= 0."),
             validators.MaxValueValidator(100.0, "Grade must be <= 100."),
         ],
     )
     answers = models.JSONField(
-        help_text="Submission answers",
+        help_text=_("Submission answers"),
     )
     feedback = models.JSONField(
         null=True,
         blank=True,
-        help_text="Submission feedback",
+        help_text=_("Submission feedback"),
     )
     file = models.FileField(
         null=True,
         blank=True,
         upload_to="files/submissions/",
-        help_text="Submission file",
+        help_text=_("Submission file"),
     )
 
     def status(self) -> str:

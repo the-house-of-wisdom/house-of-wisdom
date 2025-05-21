@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 
 from bayt_al_hikmah.mixins.models import DateTimeMixin
 from bayt_al_hikmah.notifications import NOTIFICATION_TYPES
@@ -18,17 +19,17 @@ class Notification(DateTimeMixin, models.Model):
         User,
         on_delete=models.CASCADE,
         related_name="notifications",
-        help_text="Notified User",
+        help_text=_("Notified User"),
     )
     type = models.PositiveSmallIntegerField(
         default=1,
         choices=NOTIFICATION_TYPES,
-        help_text="Notification type",
+        help_text=_("Notification type"),
     )
     content = models.CharField(
         max_length=256,
         db_index=True,
-        help_text="Notification content",
+        help_text=_("Notification content"),
     )
 
     class Meta:

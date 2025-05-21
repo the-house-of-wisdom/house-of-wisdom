@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 
 from bayt_al_hikmah.mixins.models import DateTimeMixin
 from bayt_al_hikmah.reviews import RATINGS
@@ -18,28 +19,28 @@ class Review(DateTimeMixin, models.Model):
         User,
         on_delete=models.CASCADE,
         related_name="reviews",
-        help_text="Reviewer",
+        help_text=_("Reviewer"),
     )
     course = models.ForeignKey(
         "courses.Course",
         on_delete=models.CASCADE,
         related_name="reviews",
-        help_text="Reviewed course",
+        help_text=_("Reviewed course"),
     )
     rating = models.PositiveSmallIntegerField(
         default=1,
         choices=RATINGS,
-        help_text="Review rating",
+        help_text=_("Review rating"),
     )
     comment = models.CharField(
         max_length=512,
         db_index=True,
-        help_text="Review comment",
+        help_text=_("Review comment"),
     )
     sentiment = models.BooleanField(
         null=True,
         blank=True,
-        help_text="Review sentiment: true <=> positive, false <=> negative",
+        help_text=_("Review sentiment"),
     )
 
     class Meta:

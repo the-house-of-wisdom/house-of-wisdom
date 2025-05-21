@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.core import validators
+from django.utils.translation import gettext_lazy as _
 from wagtail.fields import StreamField
 
 from bayt_al_hikmah.cms.blocks import TextContentBlock
@@ -16,25 +17,25 @@ class Assignment(DateTimeMixin, models.Model):
         "lessons.Lesson",
         on_delete=models.CASCADE,
         related_name="assignments",
-        help_text="Assignment lesson",
+        help_text=_("Assignment lesson"),
     )
     title = models.CharField(
         max_length=64,
         db_index=True,
-        help_text="Assignment title",
+        help_text=_("Assignment title"),
     )
     description = models.CharField(
         max_length=256,
-        help_text="Assignment description",
+        help_text=_("Assignment description"),
     )
     question_count = models.PositiveSmallIntegerField(
         null=True,
         blank=True,
-        help_text="Max questions to display when using random questions",
+        help_text=_("Max questions to display when using random questions"),
     )
     min_percentage = models.FloatField(
         default=80.0,
-        help_text="Minimum percentage to pass the assignment",
+        help_text=_("Minimum percentage to pass the assignment"),
         validators=[
             validators.MinValueValidator(0.0, "Min percentage must be greater than 0"),
             validators.MaxValueValidator(100.0, "Min percentage must be less than 100"),
@@ -42,11 +43,11 @@ class Assignment(DateTimeMixin, models.Model):
     )
     content = StreamField(
         TextContentBlock(),
-        help_text="Item content",
+        help_text=_("Item content"),
     )
     is_auto_graded = models.BooleanField(
         default=True,
-        help_text="Weather the assignment graded automatically",
+        help_text=_("Weather the assignment graded automatically"),
     )
 
     def __str__(self) -> str:

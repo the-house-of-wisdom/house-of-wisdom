@@ -1,6 +1,7 @@
 """Data Models for bayt_al_hikmah.questions"""
 
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from bayt_al_hikmah.mixins.models import DateTimeMixin
 from bayt_al_hikmah.questions import QUESTION_TYPES
@@ -14,17 +15,17 @@ class Question(DateTimeMixin, models.Model):
         "assignments.Assignment",
         on_delete=models.CASCADE,
         related_name="questions",
-        help_text="Question assignment",
+        help_text=_("Question assignment"),
     )
     type = models.PositiveSmallIntegerField(
         default=0,
         choices=QUESTION_TYPES,
-        help_text="Question type",
+        help_text=_("Question type"),
     )
     text = models.CharField(
         max_length=512,
         db_index=True,
-        help_text="Question text",
+        help_text=_("Question text"),
     )
 
     def __str__(self) -> str:

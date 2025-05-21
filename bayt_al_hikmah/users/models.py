@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils.translation import gettext_lazy as _
 
 
 # Create your models here.
@@ -11,30 +12,30 @@ class User(AbstractUser):
     is_instructor = models.BooleanField(
         null=True,
         blank=True,
-        help_text="Designates weather the user is an instructor",
+        help_text=_("Designates weather the user is an instructor"),
     )
     photo = models.ImageField(
         null=True,
         blank=True,
-        help_text="Profile image",
+        help_text=_("Profile image"),
         upload_to="images/users/",
     )
     bio = models.CharField(
         max_length=256,
         null=True,
         blank=True,
-        help_text="Tell us about yourself",
+        help_text=_("Tell us about yourself"),
     )
     saved = models.ManyToManyField(
         "paths.Path",
         related_name="savers",
-        help_text="Saved learning paths",
+        help_text=_("Saved learning paths"),
     )
     # NOTE: When generating migrations, you need to comment this field
     # generate the migrations then uncomment it to add it to Item model
     # to avoid django.db.migrations.exceptions.CircularDependencyError
-    # items = models.ManyToManyField(
-    #     "items.Item",
-    #     related_name="completers",
-    #     help_text="Completed items",
-    # )
+    items = models.ManyToManyField(
+        "items.Item",
+        related_name="completers",
+        help_text=_("Completed items"),
+    )

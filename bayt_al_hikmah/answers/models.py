@@ -1,6 +1,7 @@
 """Data Models for bayt_al_hikmah.answers"""
 
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from bayt_al_hikmah.mixins.models import DateTimeMixin
 
@@ -13,19 +14,19 @@ class Answer(DateTimeMixin, models.Model):
         "questions.Question",
         on_delete=models.CASCADE,
         related_name="answers",
-        help_text="Answer question",
+        help_text=_("Answer question"),
     )
     is_correct = models.BooleanField(
         default=False,
-        help_text="Weather the answer is correct",
+        help_text=_("Weather the answer is correct"),
     )
     text = models.CharField(
         max_length=64,
-        help_text="Answer text",
+        help_text=_("Answer text"),
     )
     description = models.CharField(
         max_length=512,
-        help_text="Why the answer is correct or wrong",
+        help_text=_("Why the answer is correct or wrong"),
     )
 
     def __str__(self) -> str:

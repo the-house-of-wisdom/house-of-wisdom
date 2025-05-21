@@ -1,6 +1,7 @@
 """Model Mixins"""
 
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 # Create your model mixins here.
@@ -9,11 +10,11 @@ class DateTimeMixin(models.Model):
 
     created_at = models.DateTimeField(
         auto_now_add=True,
-        help_text="Date created",
+        help_text=_("Date created"),
     )
     updated_at = models.DateTimeField(
         auto_now=True,
-        help_text="Last update",
+        help_text=_("Last update"),
     )
 
     class Meta:
