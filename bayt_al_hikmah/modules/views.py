@@ -32,7 +32,7 @@ class ModuleVS(BaseModuleVS):
     action_perm_dict = {**BaseModuleVS.action_perm_dict, "create": [DenyAll]}
 
 
-class CourseModulesViewSet(BaseModuleVS):
+class CourseModulesVS(BaseModuleVS):
     """Create, view, update and delete Course Modules"""
 
     def perform_create(self, serializer):

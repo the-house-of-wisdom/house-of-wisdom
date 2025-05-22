@@ -14,8 +14,9 @@ from bayt_al_hikmah.courses.views import CourseViewSet
 from bayt_al_hikmah.enrollments.views import CourseEnrollmentsVS, EnrollmentViewSet
 from bayt_al_hikmah.items.views import ItemViewSet, LessonItemsVS
 from bayt_al_hikmah.lessons.views import LessonViewSet, ModuleLessonsVS
-from bayt_al_hikmah.modules.views import CourseModulesViewSet, ModuleVS
+from bayt_al_hikmah.modules.views import CourseModulesVS, ModuleVS
 from bayt_al_hikmah.notifications.views import NotificationViewSet
+from bayt_al_hikmah.posts.views import CoursePostsVS, PostViewSet
 from bayt_al_hikmah.questions.views import AssignmentQuestionsVS, QuestionViewSet
 from bayt_al_hikmah.reviews.views import CourseReviewsVS, ReviewViewSet
 from bayt_al_hikmah.submissions.views import AssignmentSubmissionsVS, SubmissionViewSet
@@ -31,8 +32,9 @@ router.register("categories", CategoryViewSet, "category")
 router.register("paths", PathViewSet, "path")
 router.register("courses", CourseViewSet, "course")
 router.register("enrollments", EnrollmentViewSet, "enrollment")
-router.register("reviews", ReviewViewSet, "review")
+router.register("posts", PostViewSet, "post")
 router.register("modules", ModuleVS, "module")
+router.register("reviews", ReviewViewSet, "review")
 router.register("lessons", LessonViewSet, "lesson")
 router.register("items", ItemViewSet, "item")
 router.register("assignments", AssignmentViewSet, "assignment")
@@ -44,7 +46,8 @@ router.register("notifications", NotificationViewSet, "notification")
 # Sub-routers
 course_router = DefaultRouter(trailing_slash=False)
 course_router.register("enrollments", CourseEnrollmentsVS, "enrollment")
-course_router.register("modules", CourseModulesViewSet, "module")
+course_router.register("posts", CoursePostsVS, "post")
+course_router.register("modules", CourseModulesVS, "module")
 course_router.register("reviews", CourseReviewsVS, "review")
 
 module_router = DefaultRouter(trailing_slash=False)

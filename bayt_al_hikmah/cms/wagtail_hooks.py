@@ -18,6 +18,13 @@ def register_views():
     ]
 
 
+@hooks.register("construct_explorer_page_queryset")
+def show_my_pages_only(parent_page, pages, request):
+    """Filter pages by user"""
+
+    return pages.filter(owner=request.user)
+
+
 @hooks.register("construct_document_chooser_queryset")
 def show_my_uploaded_documents_only(documents, request):
     """Filter docs by user"""

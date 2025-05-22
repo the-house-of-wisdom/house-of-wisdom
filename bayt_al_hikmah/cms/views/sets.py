@@ -11,6 +11,7 @@ from bayt_al_hikmah.items.models import Item
 from bayt_al_hikmah.lessons.models import Lesson
 from bayt_al_hikmah.modules.models import Module
 from bayt_al_hikmah.paths.models import Path
+from bayt_al_hikmah.posts.models import Post
 from bayt_al_hikmah.questions.models import Question
 from bayt_al_hikmah.tags.models import Tag
 
@@ -64,6 +65,17 @@ class CourseViewSet(PathViewSet):
 
     model = Course
     form_fields = PathViewSet.form_fields[:-1]
+    icon = "user"
+    add_to_admin_menu = False
+
+
+class PostViewSet(PathViewSet):
+    """Wagtail Post ViewSet"""
+
+    model = Post
+    form_fields = ["course", "title", "content"]
+    list_display = ["course", "title"]
+    list_filter = ["course"]
     icon = "user"
     add_to_admin_menu = False
 
@@ -173,6 +185,7 @@ admin_viewsets = {
 
 instructor_viewsets = {
     "courses": CourseViewSet("courses"),
+    "posts": PostViewSet("posts"),
     "modules": ModuleViewSet("modules"),
     "lessons": LessonViewSet("lessons"),
     "assignments": AssignmentViewSet("assignments"),
