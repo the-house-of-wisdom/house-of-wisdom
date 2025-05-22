@@ -17,9 +17,9 @@ class BasePostVS(ActionPermDictMixin, ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
-    search_fields = ["comment"]
+    search_fields = ["title", "content"]
     ordering_fields = ["created_at", "updated_at"]
-    filterset_fields = ["user", "course", "rating", "sentiment"]
+    filterset_fields = ["user", "course"]
     action_perm_dict = {
         "default": [IsAuthenticated, IsOwner],
         "list": permission_classes,
