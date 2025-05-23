@@ -6,6 +6,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from bayt_al_hikmah.assignments.models import Assignment
 from bayt_al_hikmah.courses.models import Course
+from bayt_al_hikmah.enrollments.models import Enrollment
 from bayt_al_hikmah.lessons.models import Lesson
 from bayt_al_hikmah.modules.models import Module
 from bayt_al_hikmah.questions.models import Question
@@ -44,7 +45,7 @@ class IsOwner(BasePermission):
 
 
 class IsModelOwner(BasePermission):
-    """Base class that checks if the user is owner of the obj"""
+    """Base class that checks if the user is owner of the course obj like modules, lessons..."""
 
     def has_permission(self, request: Request, view: ModelViewSet) -> bool:
         return Course.objects.filter(
@@ -57,8 +58,36 @@ class IsModelOwner(BasePermission):
         ).exists()
 
 
+class IsEnrolledOrInstructor(IsModelOwner):
+    """Check if the user is enrolled in course or is the instructor of the course"""
+
+    def has_permission(self, request: Request, view: ModelViewSet) -> bool:
+        return (
+            super().has_permission(request, view)
+            or Enrollment.objects.filter(
+                user_id=request.user.id, course_id=view.kwargs["course_id"]
+            ).exists()
+        )
+
+    def has_object_permission(self, request: Request, view: ModelViewSet, obj) -> bool:
+        return (
+            super().has_object_permission(request, view, obj)
+            or Enrollment.objects.filter(
+                user_id=request.user.id, course_id=view.kwargs["course_id"]
+            ).exists()
+        )
+
+
+class IsEnrollmentOwner(IsModelOwner):
+    """Check if the user is the owner of the Enrollment"""
+
+
 class IsModuleOwner(IsModelOwner):
     """Check if the user is the owner of the Module"""
+
+
+class IsPostOwner(IsModelOwner):
+    """Check if the user is the owner of the Post"""
 
 
 class IsLessonOwner(IsModelOwner):

@@ -50,7 +50,7 @@ class Course(DateTimeMixin, models.Model):
     )
     description = StreamField(
         TextContentBlock(),
-        help_text=_("Item content"),
+        help_text=_("Course description"),
     )
     tags = models.ManyToManyField(
         "tags.Tag",

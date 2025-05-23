@@ -3,15 +3,20 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
-from bayt_al_hikmah.mixins.views import ActionPermDictMixin
+from bayt_al_hikmah.mixins.views import ActionPermissionsMixin
 from bayt_al_hikmah.modules.models import Module
 from bayt_al_hikmah.modules.serializers import ModuleSerializer
-from bayt_al_hikmah.permissions import DenyAll, IsInstructor, IsModuleOwner
+from bayt_al_hikmah.permissions import (
+    DenyAll,
+    IsEnrolledOrInstructor,
+    IsInstructor,
+    IsModuleOwner,
+)
 from bayt_al_hikmah.ui.mixins import UserModulesMixin
 
 
 # Create your views here.
-class BaseModuleVS(ActionPermDictMixin, UserModulesMixin, ModelViewSet):
+class BaseModuleVS(ActionPermissionsMixin, ModelViewSet):
     """Base ViewSet for extension"""
 
     queryset = Module.objects.all()
@@ -20,20 +25,23 @@ class BaseModuleVS(ActionPermDictMixin, UserModulesMixin, ModelViewSet):
     search_fields = ["title", "description"]
     ordering_fields = ["created_at", "updated_at"]
     filterset_fields = ["course"]
-    action_perm_dict = {
-        "default": permission_classes,
-        "create": permission_classes + [IsModuleOwner],
-    }
+    action_permissions = {"default": permission_classes}
 
 
-class ModuleVS(BaseModuleVS):
+class ModuleViewSet(UserModulesMixin, BaseModuleVS):
     """View, update and delete Modules"""
 
-    action_perm_dict = {**BaseModuleVS.action_perm_dict, "create": [DenyAll]}
+    action_permissions = {**BaseModuleVS.action_permissions, "create": [DenyAll]}
 
 
-class CourseModulesVS(BaseModuleVS):
+class CourseModules(BaseModuleVS):
     """Create, view, update and delete Course Modules"""
+
+    action_permissions = {
+        "default": [IsAuthenticated, IsInstructor, IsModuleOwner],
+        "list": [IsAuthenticated, IsEnrolledOrInstructor],
+        "retrieve": [IsAuthenticated, IsEnrolledOrInstructor],
+    }
 
     def perform_create(self, serializer):
         """Create a module with course set automatically"""

@@ -18,10 +18,12 @@ class AssignmentSerializer(ModelSerializer):
             "id",
             "url",
             "lesson",
-            "is_auto_graded",
             "title",
             "description",
+            "question_count",
+            "min_percentage",
             "content",
+            "is_auto_graded",
             "created_at",
             "updated_at",
         ]

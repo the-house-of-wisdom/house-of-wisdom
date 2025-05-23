@@ -1,13 +1,10 @@
 """Generic View Mixins for bayt_al_hikmah.ui"""
 
-from typing import Any, List
+from typing import Any
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.db.models.query import QuerySet
 from django.forms import BaseModelForm
 from django.http import HttpResponse
-from rest_framework.permissions import IsAuthenticated
-
-from bayt_al_hikmah.permissions import IsInstructor
 
 
 # Create your mixins here.
@@ -48,14 +45,14 @@ class UserFilterMixin:
     """Filters queryset by user"""
 
     def get_queryset(self) -> QuerySet[Any]:
-        return super().get_queryset().filter(user_id=self.request.user.pk)
+        return super().get_queryset().filter(user_id=self.request.user.id)
 
 
 class UserModulesMixin:
     """Filter modules by user"""
 
     def get_queryset(self) -> QuerySet[Any]:
-        return super().get_queryset().filter(course__user_id=self.request.user.pk)
+        return super().get_queryset().filter(course__user_id=self.request.user.id)
 
 
 class UserLessonsMixin:
@@ -63,7 +60,7 @@ class UserLessonsMixin:
 
     def get_queryset(self) -> QuerySet[Any]:
         return (
-            super().get_queryset().filter(module__course__user_id=self.request.user.pk)
+            super().get_queryset().filter(module__course__user_id=self.request.user.id)
         )
 
 
@@ -74,8 +71,23 @@ class UserAIMixin:
         return (
             super()
             .get_queryset()
-            .filter(lesson__module__course__user_id=self.request.user.pk)
+            .filter(lesson__module__course__user_id=self.request.user.id)
         )
+
+
+class UserAssignmentsMixin:
+    """Filter assignments by user"""
+
+    def get_queryset(self) -> QuerySet[Any]:
+        return (
+            super()
+            .get_queryset()
+            .filter(lesson__module__course__user_id=self.request.user.id)
+        )
+
+
+class UserItemsMixin(UserAIMixin):
+    """Filter items by user"""
 
 
 class UserQuestionsMixin:
@@ -85,7 +97,7 @@ class UserQuestionsMixin:
         return (
             super()
             .get_queryset()
-            .filter(assignment__lesson__module__course__user_id=self.request.user.pk)
+            .filter(assignment__lesson__module__course__user_id=self.request.user.id)
         )
 
 
@@ -97,6 +109,6 @@ class UserAnswersMixin:
             super()
             .get_queryset()
             .filter(
-                question__assignment__lesson__module__course__user_id=self.request.user.pk
+                question__assignment__lesson__module__course__user_id=self.request.user.id
             )
         )

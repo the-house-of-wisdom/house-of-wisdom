@@ -5,11 +5,11 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
 from bayt_al_hikmah.blog.models import Blog
 from bayt_al_hikmah.blog.serializers import BlogSerializer
-from bayt_al_hikmah.mixins.views import ActionPermDictMixin
+from bayt_al_hikmah.mixins.views import ActionPermissionsMixin
 
 
 # Create your views here.
-class BlogViewSet(ActionPermDictMixin, ModelViewSet):
+class BlogViewSet(ActionPermissionsMixin, ModelViewSet):
     """Base ViewSet for extension"""
 
     queryset = Blog.objects.all()
@@ -18,7 +18,7 @@ class BlogViewSet(ActionPermDictMixin, ModelViewSet):
     search_fields = ["title", "headline", "content"]
     ordering_fields = ["created_at", "updated_at"]
     filterset_fields = ["owner"]
-    action_perm_dict = {
+    action_permissions = {
         "default": [IsAuthenticated, IsAdminUser],
         "list": permission_classes,
         "retrieve": permission_classes,
@@ -27,4 +27,4 @@ class BlogViewSet(ActionPermDictMixin, ModelViewSet):
     def get_queryset(self):
         """Filter queryset by owner"""
 
-        return super().get_queryset().filter(owner_id=self.request.user.pk)
+        return super().get_queryset().filter(owner_id=self.request.user.id)

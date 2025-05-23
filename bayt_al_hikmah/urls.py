@@ -6,20 +6,20 @@ from wagtail.api.v2.router import WagtailAPIRouter
 from wagtail.images.api.v2.views import ImagesAPIViewSet
 from wagtail.documents.api.v2.views import DocumentsAPIViewSet
 
-from bayt_al_hikmah.answers.views import AnswerViewSet, QuestionAnswersVS
-from bayt_al_hikmah.assignments.views import AssignmentViewSet, LessonAssignmentsVS
+from bayt_al_hikmah.answers.views import AnswerViewSet, QuestionAnswers
+from bayt_al_hikmah.assignments.views import AssignmentViewSet, LessonAssignments
 from bayt_al_hikmah.categories.views import CategoryViewSet
 from bayt_al_hikmah.paths.views import PathViewSet
 from bayt_al_hikmah.courses.views import CourseViewSet
-from bayt_al_hikmah.enrollments.views import CourseEnrollmentsVS, EnrollmentViewSet
-from bayt_al_hikmah.items.views import ItemViewSet, LessonItemsVS
-from bayt_al_hikmah.lessons.views import LessonViewSet, ModuleLessonsVS
-from bayt_al_hikmah.modules.views import CourseModulesVS, ModuleVS
+from bayt_al_hikmah.enrollments.views import CourseEnrollments, EnrollmentViewSet
+from bayt_al_hikmah.items.views import ItemViewSet, LessonItems
+from bayt_al_hikmah.lessons.views import LessonViewSet, ModuleLessons
+from bayt_al_hikmah.modules.views import CourseModules, ModuleViewSet
 from bayt_al_hikmah.notifications.views import NotificationViewSet
-from bayt_al_hikmah.posts.views import CoursePostsVS, PostViewSet
-from bayt_al_hikmah.questions.views import AssignmentQuestionsVS, QuestionViewSet
-from bayt_al_hikmah.reviews.views import CourseReviewsVS, ReviewViewSet
-from bayt_al_hikmah.submissions.views import AssignmentSubmissionsVS, SubmissionViewSet
+from bayt_al_hikmah.posts.views import CoursePosts, PostViewSet
+from bayt_al_hikmah.questions.views import AssignmentQuestions, QuestionViewSet
+from bayt_al_hikmah.reviews.views import CourseReviews, ReviewViewSet
+from bayt_al_hikmah.submissions.views import AssignmentSubmissions, SubmissionViewSet
 from bayt_al_hikmah.tags.views import TagViewSet
 from bayt_al_hikmah.users.views import UserViewSet
 
@@ -33,7 +33,7 @@ router.register("paths", PathViewSet, "path")
 router.register("courses", CourseViewSet, "course")
 router.register("enrollments", EnrollmentViewSet, "enrollment")
 router.register("posts", PostViewSet, "post")
-router.register("modules", ModuleVS, "module")
+router.register("modules", ModuleViewSet, "module")
 router.register("reviews", ReviewViewSet, "review")
 router.register("lessons", LessonViewSet, "lesson")
 router.register("items", ItemViewSet, "item")
@@ -45,24 +45,24 @@ router.register("notifications", NotificationViewSet, "notification")
 
 # Sub-routers
 course_router = DefaultRouter(trailing_slash=False)
-course_router.register("enrollments", CourseEnrollmentsVS, "enrollment")
-course_router.register("posts", CoursePostsVS, "post")
-course_router.register("modules", CourseModulesVS, "module")
-course_router.register("reviews", CourseReviewsVS, "review")
+course_router.register("enrollments", CourseEnrollments, "enrollment")
+course_router.register("posts", CoursePosts, "post")
+course_router.register("modules", CourseModules, "module")
+course_router.register("reviews", CourseReviews, "review")
 
 module_router = DefaultRouter(trailing_slash=False)
-module_router.register("lessons", ModuleLessonsVS, "lesson")
+module_router.register("lessons", ModuleLessons, "lesson")
 
 lesson_router = DefaultRouter(trailing_slash=False)
-lesson_router.register("assignments", LessonAssignmentsVS, "assignment")
-lesson_router.register("items", LessonItemsVS, "item")
+lesson_router.register("assignments", LessonAssignments, "assignment")
+lesson_router.register("items", LessonItems, "item")
 
 assignment_router = DefaultRouter(trailing_slash=False)
-assignment_router.register("questions", AssignmentQuestionsVS, "question")
-assignment_router.register("submissions", AssignmentSubmissionsVS, "submission")
+assignment_router.register("questions", AssignmentQuestions, "question")
+assignment_router.register("submissions", AssignmentSubmissions, "submission")
 
 question_router = DefaultRouter(trailing_slash=False)
-question_router.register("answers", QuestionAnswersVS, "answer")
+question_router.register("answers", QuestionAnswers, "answer")
 
 
 # Wagtail API endpoints

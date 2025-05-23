@@ -4,14 +4,14 @@ from django.db.models import Q
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
-from bayt_al_hikmah.mixins.views import ActionPermDictMixin
+from bayt_al_hikmah.mixins.views import ActionPermissionsMixin
 from bayt_al_hikmah.reviews.models import Review
 from bayt_al_hikmah.reviews.serializers import ReviewSerializer
-from bayt_al_hikmah.permissions import DenyAll, IsOwner
+from bayt_al_hikmah.permissions import DenyAll, IsEnrolledOrInstructor, IsOwner
 
 
 # Create your views here.
-class BaseReviewVS(ActionPermDictMixin, ModelViewSet):
+class BaseReviewVS(ActionPermissionsMixin, ModelViewSet):
     """Base ViewSet for extension"""
 
     queryset = Review.objects.all()
@@ -20,7 +20,7 @@ class BaseReviewVS(ActionPermDictMixin, ModelViewSet):
     search_fields = ["comment"]
     ordering_fields = ["created_at", "updated_at"]
     filterset_fields = ["user", "course", "rating", "sentiment"]
-    action_perm_dict = {
+    action_permissions = {
         "default": [IsAuthenticated, IsOwner],
         "list": permission_classes,
         "retrieve": permission_classes,
@@ -30,32 +30,37 @@ class BaseReviewVS(ActionPermDictMixin, ModelViewSet):
 class ReviewViewSet(BaseReviewVS):
     """View, update and delete Reviews"""
 
-    action_perm_dict = {
-        **BaseReviewVS.action_perm_dict,
-        "create": [DenyAll],
-    }
+    action_permissions = {**BaseReviewVS.action_permissions, "create": [DenyAll]}
 
     def get_queryset(self):
-        """Filter queryset by user"""
+        """
+        Filter queryset by user to allow users to view their reviews only and
+        allow instructors to view reviews of their courses.
+        """
 
         return (
             super()
             .get_queryset()
             .filter(
-                Q(user_id=self.request.user.pk)
-                | Q(course__user_id=self.request.user.pk)
+                Q(user_id=self.request.user.id)
+                | Q(course__user_id=self.request.user.id)
             )
         )
 
 
-class CourseReviewsVS(BaseReviewVS):
+class CourseReviews(BaseReviewVS):
     """Create, read, update and delete Course Reviews"""
+
+    action_permissions = {
+        **BaseReviewVS.action_permissions,
+        "create": [IsAuthenticated, IsEnrolledOrInstructor],
+    }
 
     def perform_create(self, serializer):
         """Add course to review automatically"""
 
         serializer.save(
-            user_id=self.request.user.pk, course_id=self.kwargs["course_id"]
+            user_id=self.request.user.id, course_id=self.kwargs["course_id"]
         )
 
     def get_queryset(self):

@@ -5,13 +5,18 @@ from rest_framework.permissions import IsAuthenticated
 
 from bayt_al_hikmah.answers.models import Answer
 from bayt_al_hikmah.answers.serializers import AnswerSerializer
-from bayt_al_hikmah.mixins.views import ActionPermDictMixin
-from bayt_al_hikmah.permissions import DenyAll, IsAnswerOwner, IsInstructor
+from bayt_al_hikmah.mixins.views import ActionPermissionsMixin
+from bayt_al_hikmah.permissions import (
+    DenyAll,
+    IsAnswerOwner,
+    IsEnrolledOrInstructor,
+    IsInstructor,
+)
 from bayt_al_hikmah.ui.mixins import UserAnswersMixin
 
 
 # Create your views here.
-class BaseAnswerVS(ActionPermDictMixin, UserAnswersMixin, ModelViewSet):
+class BaseAnswerVS(ActionPermissionsMixin, ModelViewSet):
     """Base ViewSet for extension"""
 
     queryset = Answer.objects.all()
@@ -20,20 +25,26 @@ class BaseAnswerVS(ActionPermDictMixin, UserAnswersMixin, ModelViewSet):
     search_fields = ["text"]
     ordering_fields = ["created_at", "updated_at"]
     filterset_fields = ["question", "is_correct"]
-    action_perm_dict = {
+    action_permissions = {
         "default": permission_classes,
         "create": permission_classes + [IsAnswerOwner],
     }
 
 
-class AnswerViewSet(BaseAnswerVS):
+class AnswerViewSet(UserAnswersMixin, BaseAnswerVS):
     """View, update and delete Answers"""
 
-    action_perm_dict = {**BaseAnswerVS.action_perm_dict, "create": [DenyAll]}
+    action_permissions = {**BaseAnswerVS.action_permissions, "create": [DenyAll]}
 
 
-class QuestionAnswersVS(BaseAnswerVS):
+class QuestionAnswers(BaseAnswerVS):
     """Create, view, update and delete Question Answers"""
+
+    action_permissions = {
+        "default": [IsAuthenticated, IsInstructor, IsAnswerOwner],
+        "list": [IsAuthenticated, IsEnrolledOrInstructor],
+        "retrieve": [IsAuthenticated, IsEnrolledOrInstructor],
+    }
 
     def perform_create(self, serializer):
         """Add question to answer automatically"""
@@ -43,4 +54,16 @@ class QuestionAnswersVS(BaseAnswerVS):
     def get_queryset(self):
         """Filter queryset by question"""
 
-        return super().get_queryset().filter(question_id=self.kwargs["question_id"])
+        return (
+            super()
+            .get_queryset()
+            .filter(
+                question_id=self.kwargs["question_id"],
+                question__assignment_id=self.kwargs["assignment_id"],
+                question__assignment__lesson_id=self.kwargs["lesson_id"],
+                question__assignment__lesson__module_id=self.kwargs["module_id"],
+                question__assignment__lesson__module__course_id=self.kwargs[
+                    "course_id"
+                ],
+            )
+        )

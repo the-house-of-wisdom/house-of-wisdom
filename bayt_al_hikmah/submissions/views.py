@@ -1,26 +1,29 @@
 """API endpoints for bayt_al_hikmah.submissions"""
 
-from typing import Any, List
+from django.db.models import Q
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
-from bayt_al_hikmah.mixins.views import ActionPermDictMixin, UserFilterMixin
-from bayt_al_hikmah.permissions import DenyAll, IsOwner
+from bayt_al_hikmah.mixins.views import ActionPermissionsMixin, ActionSerializersMixin
+from bayt_al_hikmah.permissions import DenyAll, IsEnrolledOrInstructor, IsOwner
 from bayt_al_hikmah.submissions.models import Submission
-from bayt_al_hikmah.submissions.serializers import SubmissionSerializer
+from bayt_al_hikmah.submissions.serializers import (
+    SubmissionCreateSerializer,
+    SubmissionSerializer,
+)
 
 
 # Create your views here.
-class BaseSubmissionVS(ActionPermDictMixin, ModelViewSet):
+class BaseSubmissionVS(ActionPermissionsMixin, ModelViewSet):
     """Create, view, update and delete Submissions"""
 
     queryset = Submission.objects.all()
     serializer_class = SubmissionSerializer
     permission_classes = [IsAuthenticated, IsOwner]
     search_fields = ["user", "assignment"]
-    ordering_fields = ["created_at", "updated_at"]
+    ordering_fields = ["grade", "created_at", "updated_at"]
     filterset_fields = ["user", "assignment", "grade"]
-    action_perm_dict = {"default": permission_classes}
+    action_permissions = {"default": permission_classes}
 
     def perform_create(self, serializer) -> None:
         """Create and grade a submission
@@ -37,7 +40,7 @@ class BaseSubmissionVS(ActionPermDictMixin, ModelViewSet):
                 "question": q.id,
                 # Check if ids of answers and ids of submission answers are equal
                 "is_correct": [
-                    i["id"] for i in q.answers.filter(is_correct=True).values("id")
+                    i[0] for i in q.answers.filter(is_correct=True).values_list("id")
                 ]
                 == list(filter(lambda a: a["question"] == q.id, submission.answers))[0][
                     "answers"
@@ -45,8 +48,8 @@ class BaseSubmissionVS(ActionPermDictMixin, ModelViewSet):
                 # Generate question feedback
                 "feedback": [
                     {
-                        "answer": a.id,
-                        "is_correct": a.is_correct,
+                        "id": a.id,
+                        "text": a.text,
                         "content": a.description,
                     }
                     for a in q.answers.filter(
@@ -67,23 +70,52 @@ class BaseSubmissionVS(ActionPermDictMixin, ModelViewSet):
         )
         submission.save()
 
-    def get_permissions(self) -> List[Any]:
-        if self.action not in ["list", "retrieve"]:
-            self.permission_classes = [IsAuthenticated, IsOwner]
 
-        return super().get_permissions()
-
-
-class SubmissionViewSet(UserFilterMixin, BaseSubmissionVS):
+class SubmissionViewSet(BaseSubmissionVS):
     """View, update and delete Submissions"""
 
-    action_perm_dict = {**BaseSubmissionVS.action_perm_dict, "create": [DenyAll]}
+    action_permissions = {**BaseSubmissionVS.action_permissions, "create": [DenyAll]}
+
+    def get_queryset(self):
+        """
+        Filter queryset by user to allow users to view their submissions only and
+        allow instructors to view submissions of their assignments.
+        """
+
+        return (
+            super()
+            .get_queryset()
+            .filter(
+                Q(user_id=self.request.user.id)
+                | Q(assignment__lesson__module__course__user_id=self.request.user.id)
+            )
+        )
 
 
-class AssignmentSubmissionsVS(BaseSubmissionVS):
+class AssignmentSubmissions(ActionSerializersMixin, BaseSubmissionVS):
     """Create, view, update and delete Assignment Submissions"""
+
+    action_serializers = {
+        "default": SubmissionSerializer,
+        "create": SubmissionCreateSerializer,
+    }
+    action_permissions = {
+        **BaseSubmissionVS.action_permissions,
+        "list": [IsAuthenticated, IsEnrolledOrInstructor],
+        "retrieve": [IsAuthenticated, IsEnrolledOrInstructor, IsOwner],
+    }
 
     def get_queryset(self):
         """Filter queryset by assignment"""
 
-        return super().get_queryset().filter(assignment_id=self.kwargs["assignment_id"])
+        return (
+            super()
+            .get_queryset()
+            .filter(
+                user_id=self.request.user.id,
+                assignment_id=self.kwargs["assignment_id"],
+                assignment__lesson_id=self.kwargs["lesson_id"],
+                assignment__lesson__module_id=self.kwargs["module_id"],
+                assignment__lesson__module__course_id=self.kwargs["course_id"],
+            )
+        )

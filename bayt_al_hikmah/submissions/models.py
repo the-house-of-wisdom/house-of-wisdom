@@ -61,4 +61,4 @@ class Submission(DateTimeMixin, models.Model):
         )
 
     def __str__(self) -> str:
-        return f"{self.assignment}: Submission {self.pk}"
+        return f"{self.assignment}: Submission {self.id}"

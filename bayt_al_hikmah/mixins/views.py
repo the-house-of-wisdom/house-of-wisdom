@@ -1,13 +1,9 @@
 """View Mixins"""
 
-from typing import Any, List
-from rest_framework.permissions import IsAuthenticated
-
-from bayt_al_hikmah.permissions import DenyAll, IsInstructor
+from typing import Any, Dict, List, Optional
 
 
 # Create your mixins here.
-# View Mixins
 class OwnerMixin:
     """Add the owner of the object"""
 
@@ -26,26 +22,33 @@ class UserFilterMixin:
         return super().get_queryset().filter(user_id=self.request.user.id)
 
 
-class InstructorMixin:
-    """Customize permissions"""
-
-    def get_permissions(self) -> List[Any]:
-        if self.action not in ["list", "retrieve"]:
-            self.permission_classes = [IsAuthenticated, IsInstructor]
-
-        return super().get_permissions()
-
-
-class ActionPermDictMixin:
+class ActionPermissionsMixin:
     """Allows you to set permissions for each action using a dict"""
 
-    action_perm_dict = {"default": [IsAuthenticated]}
+    action_permissions: Optional[Dict[str, List[Any]]] = None
 
     def get_permissions(self) -> List[Any]:
         """Set permissions based on each action"""
 
-        self.permission_classes = self.action_perm_dict.get(
-            self.action, self.action_perm_dict["default"]
-        )
+        if self.action_permissions:
+            self.permission_classes = self.action_permissions.get(
+                self.action, self.action_permissions["default"]
+            )
 
         return super().get_permissions()
+
+
+class ActionSerializersMixin:
+    """Allows you to set Serializers for each action using a dict"""
+
+    action_serializers: Optional[Dict[str, Any]] = None
+
+    def get_serializer_class(self):
+        """Set serializer class based on action"""
+
+        if self.action_serializers:
+            self.serializer_class = self.action_serializers.get(
+                self.action, self.action_serializers["default"]
+            )
+
+        return super().get_serializer_class()

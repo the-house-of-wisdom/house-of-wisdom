@@ -29,21 +29,24 @@ class Assignment(DateTimeMixin, models.Model):
         help_text=_("Assignment description"),
     )
     question_count = models.PositiveSmallIntegerField(
-        null=True,
-        blank=True,
-        help_text=_("Max questions to display when using random questions"),
+        default=10,
+        help_text=_("Max number of questions to display (Random Question Selection)"),
     )
     min_percentage = models.FloatField(
         default=80.0,
         help_text=_("Minimum percentage to pass the assignment"),
         validators=[
-            validators.MinValueValidator(0.0, "Min percentage must be greater than 0"),
-            validators.MaxValueValidator(100.0, "Min percentage must be less than 100"),
+            validators.MinValueValidator(
+                0.0, _("Min percentage must be greater than 0")
+            ),
+            validators.MaxValueValidator(
+                100.0, _("Min percentage must be less than 100")
+            ),
         ],
     )
     content = StreamField(
         TextContentBlock(),
-        help_text=_("Item content"),
+        help_text=_("Assignment instructions or more info"),
     )
     is_auto_graded = models.BooleanField(
         default=True,
