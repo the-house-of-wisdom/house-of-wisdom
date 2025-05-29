@@ -1,5 +1,6 @@
 """Data Models for bayt_al_hikmah.enrollments"""
 
+from django.core import validators
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
@@ -31,6 +32,19 @@ class Enrollment(DateTimeMixin, models.Model):
         default=0,
         choices=ENROLLMENT_ROLES,
         help_text=_("Enrollment role"),
+    )
+    progress = models.FloatField(
+        null=True,
+        blank=True,
+        help_text=_("Course completion progress"),
+        validators=[
+            validators.MinValueValidator(0.0, "Progress must be >= 0."),
+            validators.MaxValueValidator(100.0, "Progress must be <= 100."),
+        ],
+    )
+    is_completed = models.BooleanField(
+        default=False,
+        help_text=_("Designates weather the course is completed or not"),
     )
 
     class Meta:

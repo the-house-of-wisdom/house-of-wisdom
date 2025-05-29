@@ -2,9 +2,9 @@
 
 from wagtail import hooks
 
-from bayt_al_hikmah.cms.views.choosers import viewsets
-from bayt_al_hikmah.cms.views.groups import AdminViewSetGroup, InstructorViewSetGroup
-from bayt_al_hikmah.cms.views.sets import PathViewSet
+from bayt_al_hikmah.ui.cms.views.choosers import viewsets
+from bayt_al_hikmah.ui.cms.views.groups import AdminViewSetGroup, InstructorViewSetGroup
+from bayt_al_hikmah.ui.cms.views.sets import PathViewSet
 
 
 # Create your hooks here.

@@ -5,8 +5,9 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from wagtail.fields import StreamField
 
-from bayt_al_hikmah.cms.blocks import CommonContentBlock
 from bayt_al_hikmah.mixins.models import DateTimeMixin
+from bayt_al_hikmah.posts import POST_TYPES
+from bayt_al_hikmah.ui.cms.blocks import CommonContentBlock
 
 
 # Create your models here.
@@ -27,6 +28,11 @@ class Post(DateTimeMixin, models.Model):
         on_delete=models.PROTECT,
         related_name="posts",
         help_text=_("Post course"),
+    )
+    type = models.PositiveSmallIntegerField(
+        default=0,
+        help_text=_("Assignment type"),
+        choices=POST_TYPES,
     )
     title = models.CharField(
         max_length=64,

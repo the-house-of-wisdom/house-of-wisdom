@@ -7,8 +7,8 @@ from wagtail.fields import StreamField
 from wagtail.models import Page
 from wagtail.search import index
 
-from bayt_al_hikmah.cms.blocks import CommonContentBlock
 from bayt_al_hikmah.mixins.models import DateTimeMixin
+from bayt_al_hikmah.ui.cms.blocks import CommonContentBlock
 
 
 # Create your models here.

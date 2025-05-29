@@ -2,6 +2,8 @@ django
 django-cors-headers
 django-filter
 djangorestframework
+markdown
+pygments
 djoser
 drf-restwind
 huggingface-hub

@@ -63,6 +63,7 @@ db.sqlite3-journal
 core/
 manage.py
 media/
+rest_wind/
 
 # Flask stuff:
 instance/

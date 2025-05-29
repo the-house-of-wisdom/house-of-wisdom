@@ -24,7 +24,7 @@ class BaseQuestionVS(ActionPermissionsMixin, ModelViewSet):
     serializer_class = QuestionSerializer
     permission_classes = [IsAuthenticated, IsInstructor]
     search_fields = ["text"]
-    ordering_fields = ["created_at", "updated_at"]
+    ordering_fields = ["order", "created_at", "updated_at"]
     filterset_fields = ["assignment", "type"]
     action_permissions = {
         "default": permission_classes,
@@ -33,19 +33,155 @@ class BaseQuestionVS(ActionPermissionsMixin, ModelViewSet):
 
 
 class QuestionViewSet(UserQuestionsMixin, BaseQuestionVS):
-    """View, update and delete Questions"""
+    """
+    API endpoints for managing Questions.
+
+    ## Overview
+
+    API endpoints provide RUD (Retrieve, Update, Delete) functionality for questions within an assignment.
+    These questions can be structured as multiple-choice, short answer, coding exercises, or other formats depending on the assignment type.
+
+    ## Endpoints
+
+    - **List Assignment Questions**
+      `GET /api/questions`
+      Retrieves a list of all questions across assignments.
+
+    - **Create Assignment Question**
+      `POST /api/questions`
+      Creates a new question within an assignment. Requires details in the request body.
+
+    - **Retrieve Assignment Question**
+      `GET /api/questions/{id}`
+      Retrieves detailed information for a specific question identified by `id`.
+
+    - **Update Assignment Question**
+      `PUT /api/questions/{id}`
+      Fully updates an existing question.
+
+    - **Partial Update Assignment Question**
+      `PATCH /api/questions/{id}`
+      Applies partial updates to a question's attributes.
+
+    - **Delete Assignment Question**
+      `DELETE /api/questions/{id}`
+      Deletes the question identified by `id`.
+
+    ## Query Parameters
+
+    - **assignment:**
+      Filter questions by assignment (e.g., `?assignment=1`).
+
+    - **search:**
+      Filter questions by text content (e.g., `?search=python`).
+
+    - **ordering:**
+      Sort questions by a specific field (e.g., `?ordering=order` for sequential arrangement).
+
+    ## Permissions
+
+    - **Instructors/Admins:**
+      Can create, update, and delete assignment questions.
+
+    ## Example API Requests
+
+    **List Assignment Questions:**
+
+    ```bash
+    curl -X GET http://localhost:8000/api/questions \\
+        -H "Authorization: Bearer YOUR_TOKEN_HERE"
+    ```
+
+    **Retrieve an Assignment Question:**
+
+    ```bash
+    curl -X POST http://localhost:8000/api/questions/1 \\
+        -H "Authorization: Bearer YOUR_TOKEN_HERE"
+    ```
+
+    > **🔹 Info:** Be sure to check the [`QuestionInstanceAPI`](/api/courses/1/modules/1/lessons/1/assignments/1/).
+    """
 
     action_permissions = {**BaseQuestionVS.action_permissions, "create": [DenyAll]}
 
 
 class AssignmentQuestions(BaseQuestionVS):
-    """Create, view, update and delete Assignment Questions"""
+    """
+    API endpoints for managing Assignment Questions.
 
-    action_permissions = {
-        "default": [IsAuthenticated, IsInstructor, IsQuestionOwner],
-        "list": [IsAuthenticated, IsEnrolledOrInstructor],
-        "retrieve": [IsAuthenticated, IsEnrolledOrInstructor],
-    }
+    ## Overview
+
+    API endpoints provide CRUD (Create, Retrieve, Update, Delete) functionality for questions within an assignment.
+    These questions can be structured as multiple-choice, short answer, coding exercises, or other formats depending on the assignment type.
+
+    ## Endpoints
+
+    - **List Assignment Questions**
+      `GET /api/courses/{courseId}/modules/{moduleId}/lessons/{lessonId}/assignments/{assignmentId}/questions`
+      Retrieves a list of all questions across assignments.
+
+    - **Create Assignment Question**
+      `POST /api/courses/{courseId}/modules/{moduleId}/lessons/{lessonId}/assignments/{assignmentId}/questions`
+      Creates a new question within an assignment. Requires details in the request body.
+
+    - **Retrieve Assignment Question**
+      `GET /api/courses/{courseId}/modules/{moduleId}/lessons/{lessonId}/assignments/{assignmentId}/questions/{id}`
+      Retrieves detailed information for a specific question identified by `id`.
+
+    - **Update Assignment Question**
+      `PUT /api/courses/{courseId}/modules/{moduleId}/lessons/{lessonId}/assignments/{assignmentId}/questions/{id}`
+      Fully updates an existing question.
+
+    - **Partial Update Assignment Question**
+      `PATCH /api/courses/{courseId}/modules/{moduleId}/lessons/{lessonId}/assignments/{assignmentId}/questions/{id}`
+      Applies partial updates to a question's attributes.
+
+    - **Delete Assignment Question**
+      `DELETE /api/courses/{courseId}/modules/{moduleId}/lessons/{lessonId}/assignments/{assignmentId}/questions/{id}`
+      Deletes the question identified by `id`.
+
+    ## Query Parameters
+
+    - **type:**
+      Filter questions by type (e.g., `?type=1`).
+
+    - **search:**
+      Filter questions by text content (e.g., `?search=python`).
+
+    - **ordering:**
+      Sort questions by a specific field (e.g., `?ordering=order` for sequential arrangement).
+
+    ## Permissions
+
+    - **Students:**
+      Can view questions within assignments they are enrolled in.
+
+    - **Instructors/Admins:**
+      Can create, update, and delete assignment questions.
+
+    ## Example API Requests
+
+    **List Assignment Questions:**
+
+    ```bash
+    curl -X GET http://localhost:8000/api/courses/1/modules/1/lessons/1/assignments/1/questions \\
+        -H "Authorization: Bearer YOUR_TOKEN_HERE"
+    ```
+
+    **Create an Assignment Question:**
+
+    ```bash
+    curl -X POST http://localhost:8000/api/courses/1/modules/1/lessons/1/assignments/1/questions \\
+        -H "Content-Type: application/json" \\
+        -H "Authorization: Bearer YOUR_TOKEN_HERE" \\
+        -d '{
+                "text": "What is the output of print(2 + 2)?",
+                "type": 0
+            }'
+    ```
+    """
+
+    action_permissions = {"default": [IsAuthenticated, IsInstructor, IsQuestionOwner]}
 
     def perform_create(self, serializer):
         """Add assignment to question automatically"""

@@ -2,7 +2,7 @@
 
 from wagtail.admin.viewsets.model import ModelViewSetGroup
 
-from bayt_al_hikmah.cms.views.sets import admin_viewsets, instructor_viewsets
+from bayt_al_hikmah.ui.cms.views.sets import admin_viewsets, instructor_viewsets
 
 
 # Create your view set groups here.

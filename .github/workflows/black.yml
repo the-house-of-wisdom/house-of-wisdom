@@ -3,7 +3,6 @@ name: Black
 on: [push]
 
 jobs:
-
   format:
     runs-on: ubuntu-latest
 
@@ -17,11 +16,11 @@ jobs:
         run: |
           python -m venv .venv
           source .venv/bin/activate
-          python -m pip install --upgrade pip
-          python -m pip install -r requirements.txt
-          python -m pip install black
+          pip install --upgrade pip
+          pip install poetry
+          poetry install
 
-      - name: Checking the code format with Black
+      - name: Run tests
         run: |
           source .venv/bin/activate
-          python -m black --check $(git ls-files '*.py')
+          poetry run black --check .

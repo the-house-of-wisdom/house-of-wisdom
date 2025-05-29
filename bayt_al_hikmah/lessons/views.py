@@ -23,7 +23,7 @@ class BaseLessonVS(ActionPermissionsMixin, ModelViewSet):
     serializer_class = LessonSerializer
     permission_classes = [IsAuthenticated, IsInstructor]
     search_fields = ["title", "description"]
-    ordering_fields = ["created_at", "updated_at"]
+    ordering_fields = ["title", "order", "created_at", "updated_at"]
     filterset_fields = ["module__course", "module"]
     action_permissions = {
         "default": permission_classes,
@@ -32,13 +32,141 @@ class BaseLessonVS(ActionPermissionsMixin, ModelViewSet):
 
 
 class LessonViewSet(UserLessonsMixin, BaseLessonVS):
-    """Create, view, update and delete Lessons"""
+    """
+    API endpoints for managing Lessons within Modules.
+
+    ## Overview
+
+    API endpoints provide RUD (Retrieve, Update, Delete) functionality for lessons within a module.
+    Lessons form the core instructional content of a module and may include text-based materials, videos, quizzes, or interactive exercises.
+
+    ## Endpoints
+
+    - **List Lessons**
+      `GET /api/lessons`
+      Retrieves a list of all lessons.
+
+    - **Retrieve Lesson**
+      `GET /api/lessons/{id}`
+      Retrieves detailed information for the lesson identified by `id`.
+
+    - **Update Lesson**
+      `PUT /api/lessons/{id}`
+      Fully updates an existing lesson with new details.
+
+    - **Partial Update Lesson**
+      `PATCH /api/lessons/{id}`
+      Applies partial updates to lesson attributes.
+
+    - **Delete Lesson**
+      `DELETE /api/lessons/{id}`
+      Deletes the lesson identified by `id`.
+
+    ## Query Parameters
+
+    - **module:**
+      Filter lessons by title or content keywords (e.g., `?module=1`).
+
+    - **search:**
+      Filter lessons by title or description (e.g., `?search=arrays`).
+
+    - **ordering:**
+      Order lessons by a specific field (e.g., `?ordering=order` to list lessons in sequence).
+
+    ## Permissions
+
+    - **Instructors/Admins:**
+      Can create, update, and delete lessons.
+
+    ## Example API Requests
+
+    **List Lessons:**
+
+    ```bash
+    curl -X GET http://localhost:8000/api/lessons \\
+        -H "Authorization: Bearer YOUR_TOKEN_HERE"
+    ```
+
+    > **🔹 Info:** Be sure to check the [`LessonInstanceAPI`](/api/courses/1/modules/1/lessons/1/).
+    """
 
     action_permissions = {**BaseLessonVS.action_permissions, "create": [DenyAll]}
 
 
 class ModuleLessons(BaseLessonVS):
-    """Create, view, update and delete Module Lessons"""
+    """
+    API endpoints for managing Lessons within Course Modules.
+
+    ## Overview
+
+    API endpoints provide CRUD (Create, Retrieve, Update, Delete) functionality for lessons within a module.
+    Lessons form the core instructional content of a module and may include text-based materials, videos, quizzes, or interactive exercises.
+
+    ## Endpoints
+
+    - **List Lessons**
+      `GET /api/courses/{courseId}/modules/{moduleId}/lessons`
+      Retrieves a list of all lessons.
+
+    - **Create Lesson**
+      `POST /api/courses/{courseId}/modules/{moduleId}/lessons`
+      Creates a new lesson within a module. Requires lesson details in the request body.
+
+    - **Retrieve Lesson**
+      `GET /api/courses/{courseId}/modules/{moduleId}/lessons/{id}`
+      Retrieves detailed information for the lesson identified by `id`.
+
+    - **Update Lesson**
+      `PUT /api/courses/{courseId}/modules/{moduleId}/lessons/{id}`
+      Fully updates an existing lesson with new details.
+
+    - **Partial Update Lesson**
+      `PATCH /api/courses/{courseId}/modules/{moduleId}/lessons/{id}`
+      Applies partial updates to lesson attributes.
+
+    - **Delete Lesson**
+      `DELETE /api/courses/{courseId}/modules/{moduleId}/lessons/{id}`
+      Deletes the lesson identified by `id`.
+
+    ## Query Parameters
+
+    - **search:**
+      Filter lessons by title or description (e.g., `?search=arrays`).
+
+    - **ordering:**
+      Order lessons by a specific field (e.g., `?ordering=order` to list lessons in sequence).
+
+    ## Permissions
+
+    - **Authenticated Users:**
+      Can view lessons within their enrolled courses.
+
+    - **Instructors/Admins:**
+      Can create, update, and delete lessons.
+
+    ## Example API Requests
+
+    **List Lessons:**
+
+    ```bash
+    curl -X GET http://localhost:8000/api/courses/1/lessons \\
+        -H "Authorization: Bearer YOUR_TOKEN_HERE"
+    ```
+
+    **Create a Lesson:**
+
+    ```bash
+    curl -X POST http://localhost:8000/api/courses/1/lessons \\
+        -H "Content-Type: application/json" \\
+        -H "Authorization: Bearer YOUR_TOKEN_HERE" \\
+        -d '{
+                "module": 2,
+                "title": "Introduction to Data Structures",
+                "description": "Understanding arrays, linked lists, and trees.",
+                "order": 1
+            }'
+    ```
+    """
 
     action_permissions = {
         "default": [IsAuthenticated, IsInstructor, IsLessonOwner],

@@ -25,6 +25,10 @@ class Module(DateTimeMixin, models.Model):
         max_length=256,
         help_text=_("Module description"),
     )
+    order = models.SmallIntegerField(
+        default=0,
+        help_text=_("Module order in the course"),
+    )
 
     def __str__(self) -> str:
         return self.title

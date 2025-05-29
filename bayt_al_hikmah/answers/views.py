@@ -32,19 +32,127 @@ class BaseAnswerVS(ActionPermissionsMixin, ModelViewSet):
 
 
 class AnswerViewSet(UserAnswersMixin, BaseAnswerVS):
-    """View, update and delete Answers"""
+    """
+    API endpoints for managing Answers.
+
+    ## Overview
+
+    API endpoints provide full RUD (Retrieve, Update, Delete) functionality for answer to assignment questions.
+    This viewset enables students to submit their responses and allows instructors to review, grade, and provide feedback on those answers.
+
+    ## Endpoints
+
+    - **List Answers**
+      `GET /api/answers`
+      Retrieves a list of all answer for assignment questions.
+
+    - **Retrieve Answer**
+      `GET /api/answers/{id}`
+      Retrieves detailed information for a specific answer identified by `id`.
+
+    - **Update Answer**
+      `PUT /api/answers/{id}`
+      Fully updates an existing answer.
+
+    - **Partial Update Answer**
+      `PATCH /api/answers/{id}`
+      Applies partial updates to an answer (e.g., adding instructor feedback).
+
+    - **Delete Answer**
+      `DELETE /api/answers/{id}`
+      Deletes the answer identified by `id`.
+
+    ## Query Parameters
+
+    - **question:**
+      Filter answers by `question` (e.g., `?question=1`).
+
+    - **search:**
+      Filter answers by keywords in `text` (e.g., `?search=variable`).
+
+    - **ordering:**
+      Sort answers by a specific field (e.g., `?ordering=-created_at` for newest first).
+
+    ## Permissions
+
+    - **Instructors/Admins:**
+      Can list, review, update and delete all answer.
+
+    ## Example API Requests
+
+    **List Answers:**
+
+    ```bash
+    curl -X GET http://localhost:8000/api/answers \\
+        -H "Authorization: Bearer YOUR_TOKEN_HERE"
+    ```
+    """
 
     action_permissions = {**BaseAnswerVS.action_permissions, "create": [DenyAll]}
 
 
 class QuestionAnswers(BaseAnswerVS):
-    """Create, view, update and delete Question Answers"""
+    """
+    API endpoints for managing Assignment Question Answers.
 
-    action_permissions = {
-        "default": [IsAuthenticated, IsInstructor, IsAnswerOwner],
-        "list": [IsAuthenticated, IsEnrolledOrInstructor],
-        "retrieve": [IsAuthenticated, IsEnrolledOrInstructor],
-    }
+    ## Overview
+
+    API endpoints provide full CRUD (Create, Retrieve, Update, Delete) functionality for answer to assignment questions.
+    This viewset enables instructors to review, and provide feedback on those answers.
+
+    ## Endpoints
+
+    - **List Answers**
+      `GET /api/courses/{courseId}/modules/{moduleId}/lessons/{lessonId}/assignments/{assignmentId}/questions/{questionId}/answers`
+      Retrieves a list of all answer for assignment questions.
+
+    - **Create Answer (Submit Answer)**
+      `POST /api/courses/{courseId}/modules/{moduleId}/lessons/{lessonId}/assignments/{assignmentId}/questions/{questionId}/answers`
+      Creates a new answer. Typically used when an instructor adds an answer for a question.
+
+    - **Retrieve Answer**
+      `GET /api/courses/{courseId}/modules/{moduleId}/lessons/{lessonId}/assignments/{assignmentId}/questions/{questionId}/answers/{id}`
+      Retrieves detailed information for a specific answer identified by `id`.
+
+    - **Update Answer**
+      `PUT /api/courses/{courseId}/modules/{moduleId}/lessons/{lessonId}/assignments/{assignmentId}/questions/{questionId}/answers/{id}`
+      Fully updates an existing answer.
+
+    - **Partial Update Answer**
+      `PATCH /api/courses/{courseId}/modules/{moduleId}/lessons/{lessonId}/assignments/{assignmentId}/questions/{questionId}/answers/{id}`
+      Applies partial updates to an answer (e.g., adding instructor feedback).
+
+    - **Delete Answer**
+      `DELETE /api/courses/{courseId}/modules/{moduleId}/lessons/{lessonId}/assignments/{assignmentId}/questions/{questionId}/answers/{id}`
+      Deletes the answer identified by `id`.
+
+    ## Query Parameters
+
+    - **question:**
+      Filter answers by `question` (e.g., `?question=1`).
+
+    - **search:**
+      Filter answers by keywords in `text` (e.g., `?search=variable`).
+
+    - **ordering:**
+      Sort answers by a specific field (e.g., `?ordering=-created_at` for newest first).
+
+    ## Permissions
+
+    - **Instructors/Admins:**
+      Can list, review, grade, and update all answer.
+
+    ## Example API Requests
+
+    **List Answers:**
+
+    ```bash
+    curl -X GET http://localhost:8000/api/courses/1/modules/1/lessons/1/assignments/1/questions/1/answers \\
+        -H "Authorization: Bearer YOUR_TOKEN_HERE"
+    ```
+    """
+
+    action_permissions = {"default": [IsAuthenticated, IsInstructor, IsAnswerOwner]}
 
     def perform_create(self, serializer):
         """Add question to answer automatically"""

@@ -1,24 +1,8 @@
 <!-- prettier ignore -->
-{% extends 'rest_framework/base.html' %}{% load i18n %}
+{% extends 'rest_framework/base.html' %}{% load i18n static %}
 
 <!-- prettier ignore -->
 {% block title %}{% trans 'House Of Wisdom' %} | API | {{ name }}{% endblock %}
-
-{% block highlight_theme %}
-<link id="highlight" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" />
-
-<script>
-  const themeToggle = document.querySelector('label.swap')
-  themeToggle.onclick = () => {
-    document.getElementById('highlight').setAttribute(
-    'href',
-    document.querySelector('.theme-controller').checked ?
-      'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css'
-      : 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css'
-    )
-  }
-</script>
-{% endblock %}
 
 <!-- prettier ignore -->
 {% block theme %}silk{% endblock %}
@@ -252,3 +236,6 @@
 {% endif %}
 {% endif %}
 {% endblock %}
+
+<!-- prettier ignore -->
+{% block markdown_styles %}{% endblock %}

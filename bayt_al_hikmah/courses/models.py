@@ -5,8 +5,8 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from wagtail.fields import StreamField
 
-from bayt_al_hikmah.cms.blocks import TextContentBlock
 from bayt_al_hikmah.mixins.models import DateTimeMixin
+from bayt_al_hikmah.ui.cms.blocks import TextContentBlock
 
 
 # Create your models here.
@@ -51,6 +51,17 @@ class Course(DateTimeMixin, models.Model):
     description = StreamField(
         TextContentBlock(),
         help_text=_("Course description"),
+    )
+    prerequisites = StreamField(
+        TextContentBlock(),
+        null=True,
+        blank=True,
+        help_text=_("Learning Path prerequisites"),
+    )
+    duration = models.DurationField(
+        null=True,
+        blank=True,
+        help_text=_("Learning Path duration"),
     )
     tags = models.ManyToManyField(
         "tags.Tag",

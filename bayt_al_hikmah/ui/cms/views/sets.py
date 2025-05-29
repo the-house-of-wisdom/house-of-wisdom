@@ -5,7 +5,6 @@ from wagtail.admin.viewsets.model import ModelViewSet
 from bayt_al_hikmah.answers.models import Answer
 from bayt_al_hikmah.assignments.models import Assignment
 from bayt_al_hikmah.categories.models import Category
-from bayt_al_hikmah.cms.views import overrides
 from bayt_al_hikmah.courses.models import Course
 from bayt_al_hikmah.items.models import Item
 from bayt_al_hikmah.lessons.models import Lesson
@@ -14,6 +13,7 @@ from bayt_al_hikmah.paths.models import Path
 from bayt_al_hikmah.posts.models import Post
 from bayt_al_hikmah.questions.models import Question
 from bayt_al_hikmah.tags.models import Tag
+from bayt_al_hikmah.ui.cms.views import overrides
 
 
 # Create your viewsets here.

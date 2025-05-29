@@ -5,8 +5,9 @@ from django.core import validators
 from django.utils.translation import gettext_lazy as _
 from wagtail.fields import StreamField
 
-from bayt_al_hikmah.cms.blocks import TextContentBlock
+from bayt_al_hikmah.assignments import ASSIGNMENT_TYPES
 from bayt_al_hikmah.mixins.models import DateTimeMixin
+from bayt_al_hikmah.ui.cms.blocks import TextContentBlock
 
 
 # Create your models here.
@@ -18,6 +19,11 @@ class Assignment(DateTimeMixin, models.Model):
         on_delete=models.CASCADE,
         related_name="assignments",
         help_text=_("Assignment lesson"),
+    )
+    type = models.PositiveSmallIntegerField(
+        default=0,
+        help_text=_("Assignment type"),
+        choices=ASSIGNMENT_TYPES,
     )
     title = models.CharField(
         max_length=64,

@@ -1,6 +1,6 @@
 """Widgets"""
 
-from bayt_al_hikmah.cms.views.choosers import viewsets
+from bayt_al_hikmah.ui.cms.views.choosers import viewsets
 
 
 # Create your widgets here.

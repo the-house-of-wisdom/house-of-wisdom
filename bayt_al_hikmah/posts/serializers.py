@@ -19,6 +19,7 @@ class PostSerializer(ModelSerializer):
             "url",
             "user",
             "course",
+            "type",
             "content",
             "created_at",
             "updated_at",

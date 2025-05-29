@@ -1,0 +1,84 @@
+name: Django CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+
+      - name: Install Dependencies
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install --upgrade pip
+          pip install poetry
+          poetry install
+          
+      - name: Start Django project
+        run: |
+          source .venv/bin/activate
+          poetry run django-admin startproject core
+          mv bayt_al_hikmah core
+
+          # Configure settings
+          echo "AUTH_USER_MODEL = 'users.User'" >> core/settings.py
+          echo "INSTALLED_APPS += [" >> core/settings.py
+          echo "    # Bayt al Hikmah" >> core/settings.py
+          echo "    'bayt_al_hikmah'," >> core/settings.py
+          echo "    'bayt_al_hikmah.answers'," >> core/settings.py
+          echo "    'bayt_al_hikmah.assignments'," >> core/settings.py
+          echo "    'bayt_al_hikmah.blog'," >> core/settings.py
+          echo "    'bayt_al_hikmah.categories'," >> core/settings.py
+          echo "    'bayt_al_hikmah.ui.cms'," >> core/settings.py
+          echo "    'bayt_al_hikmah.courses'," >> core/settings.py
+          echo "    'bayt_al_hikmah.enrollments'," >> core/settings.py
+          echo "    'bayt_al_hikmah.items'," >> core/settings.py
+          echo "    'bayt_al_hikmah.lessons'," >> core/settings.py
+          echo "    'bayt_al_hikmah.modules'," >> core/settings.py
+          echo "    'bayt_al_hikmah.notifications'," >> core/settings.py
+          echo "    'bayt_al_hikmah.paths'," >> core/settings.py
+          echo "    'bayt_al_hikmah.posts'," >> core/settings.py
+          echo "    'bayt_al_hikmah.questions'," >> core/settings.py
+          echo "    'bayt_al_hikmah.reviews'," >> core/settings.py
+          echo "    'bayt_al_hikmah.submissions'," >> core/settings.py
+          echo "    'bayt_al_hikmah.tags'," >> core/settings.py
+          echo "    'bayt_al_hikmah.ui'," >> core/settings.py
+          echo "    'bayt_al_hikmah.users'," >> core/settings.py
+          echo "    # Deps" >> core/settings.py
+          echo "    'rest_wind'," >> core/settings.py
+          echo "    'rest_framework'," >> core/settings.py
+          echo "    'wagtail.contrib.forms'," >> core/settings.py
+          echo "    'wagtail.contrib.redirects'," >> core/settings.py
+          echo "    'wagtail.embeds'," >> core/settings.py
+          echo "    'wagtail.sites'," >> core/settings.py
+          echo "    'wagtail.users'," >> core/settings.py
+          echo "    'wagtail.snippets'," >> core/settings.py
+          echo "    'wagtail.documents'," >> core/settings.py
+          echo "    'wagtail.images'," >> core/settings.py
+          echo "    'wagtail.search'," >> core/settings.py
+          echo "    'wagtail.admin'," >> core/settings.py
+          echo "    'wagtail'," >> core/settings.py
+          echo "    'modelcluster'," >> core/settings.py
+          echo "    'taggit'," >> core/settings.py
+          echo "]" >> core/settings.py
+
+          # Setup URLConf
+          echo "from django.urls import include" >> core/urls.py
+          echo "urlpatterns += [path('', include('bayt_al_hikmah.urls'))]" >> core/urls.py
+
+      - name: the bayt_al_hikmah
+        run: |
+          source .venv/bin/activate
+          poetry python core/manage.py migrate
+          poetry python core/manage.py check

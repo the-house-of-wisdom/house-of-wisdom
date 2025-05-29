@@ -27,6 +27,10 @@ class Question(DateTimeMixin, models.Model):
         db_index=True,
         help_text=_("Question text"),
     )
+    order = models.SmallIntegerField(
+        default=0,
+        help_text=_("Item order in the lesson"),
+    )
 
     def __str__(self) -> str:
         return f"{self.text[:20]}..."

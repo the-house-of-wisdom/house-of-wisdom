@@ -27,7 +27,7 @@ class BaseItemVS(ActionPermissionsMixin, ModelViewSet):
     serializer_class = ItemSerializer
     permission_classes = [IsAuthenticated, IsInstructor]
     search_fields = ["title", "content"]
-    ordering_fields = ["created_at", "updated_at"]
+    ordering_fields = ["order", "created_at", "updated_at"]
     filterset_fields = ["lesson__module__course", "lesson__module", "lesson", "type"]
     action_permissions = {
         "default": permission_classes,
@@ -59,13 +59,192 @@ class BaseItemVS(ActionPermissionsMixin, ModelViewSet):
 
 
 class ItemViewSet(UserItemsMixin, BaseItemVS):
-    """View, update and delete Items"""
+    """
+    API endpoints for managing Items.
+
+    ## Overview
+
+    API endpoints handle RUD (Retrieve, Update, Delete) operations for lesson items within a lesson.
+    Lesson items represent smaller sections of a lesson, such as individual text passages, videos, quizzes, or interactive activities.
+
+    ## Endpoints
+
+    - **List Lesson Items**
+      `GET /api/items`
+      Retrieves a list of all lesson items.
+
+    - **Retrieve Lesson Item**
+      `GET /api/items/{id}`
+      Retrieves detailed information for the lesson item identified by `id`.
+
+    - **Update Lesson Item**
+      `PUT /api/items/{id}`
+      Fully updates an existing lesson item.
+
+    - **Partial Update Lesson Item**
+      `PATCH /api/items/{id}`
+      Applies partial updates to the lesson item.
+
+    - **Delete Lesson Item**
+      `DELETE /api/items/{id}`
+      Deletes the lesson item identified by `id`.
+
+    ## Query Parameters
+
+    - **lesson:**
+      Filter lesson items by lesson (e.g., `?lesson=1`).
+
+    - **type:**
+      Filter lesson items by type (e.g., `?type=1`).
+
+    - **search:**
+      Filter lesson items by title or content (e.g., `?search=introduction`).
+
+    - **ordering:**
+      Sort items by a specific field (e.g., `?ordering=order` for sequence sorting).
+
+    ## Permissions
+
+    - **Instructors/Admins:**
+      Can create, update, and delete lesson items.
+
+    ## Extra Actions
+
+    This viewset includes additional actions to enhance functionality:
+
+    - **Mark Item as Completed:**
+      Allows a student to mark an individual lesson item as completed.
+      `POST /api/items/{id}/mark`
+      *Request:* No body required.
+      *Response:* Returns confirmation of completion.
+
+    ## Example API Requests
+
+    **List Lesson Items:**
+
+    ```bash
+    curl -X GET http://localhost:8000/api/items \\
+        -H "Authorization: Bearer YOUR_TOKEN_HERE"
+    ```
+
+    **Create a Lesson Item:**
+
+    ```bash
+    curl -X POST http://localhost:8000/api/items \\
+        -H "Content-Type: application/json" \\
+        -H "Authorization: Bearer YOUR_TOKEN_HERE" \\
+        -d '{
+                "lesson": 3,
+                "title": "Understanding Variables",
+                "content": "This section explains variables in Python.",
+                "item_type": "text",
+                "order": 1
+            }'
+    ```
+
+    **Mark Item as Completed:**
+
+    ```bash
+    curl -X POST http://localhost:8000/api/items/1/mark
+    ```
+    """
 
     action_permissions = {**BaseItemVS.action_permissions, "create": [DenyAll]}
 
 
 class LessonItems(BaseItemVS):
-    """Create, view, update and delete Lesson Items"""
+    """
+    API endpoints for managing Lesson Items.
+
+    ## Overview
+
+    API endpoints handle CRUD (Create, Retrieve, Update, Delete) operations for lesson items within a lesson.
+    Lesson items represent smaller sections of a lesson, such as individual text passages, videos, quizzes, or interactive activities.
+
+    ## Endpoints
+
+    - **List Lesson Items**
+      `GET /api/courses/{courseId}/modules/{moduleId}/lessons/{lessonId}/items`
+      Retrieves a list of all lesson items.
+
+    - **Create Lesson Item**
+      `POST /api/courses/{courseId}/modules/{moduleId}/lessons/{lessonId}/items`
+      Creates a new lesson item within a lesson. Requires details in the request body.
+
+    - **Retrieve Lesson Item**
+      `GET /api/courses/{courseId}/modules/{moduleId}/lessons/{lessonId}/items/{id}`
+      Retrieves detailed information for the lesson item identified by `id`.
+
+    - **Update Lesson Item**
+      `PUT /api/courses/{courseId}/modules/{moduleId}/lessons/{lessonId}/items/{id}`
+      Fully updates an existing lesson item.
+
+    - **Partial Update Lesson Item**
+      `PATCH /api/courses/{courseId}/modules/{moduleId}/lessons/{lessonId}/items/{id}`
+      Applies partial updates to the lesson item.
+
+    - **Delete Lesson Item**
+      `DELETE /api/courses/{courseId}/modules/{moduleId}/lessons/{lessonId}/items/{id}`
+      Deletes the lesson item identified by `id`.
+
+    ## Query Parameters
+
+    - **type:**
+      Filter lesson items by type (e.g., `?type=1`).
+
+    - **search:**
+      Filter lesson items by title or content (e.g., `?search=introduction`).
+
+    - **ordering:**
+      Sort items by a specific field (e.g., `?ordering=order` for sequence sorting).
+
+    ## Permissions
+
+    - **Authenticated Users:**
+      Can view lesson items within their enrolled courses.
+
+    - **Instructors/Admins:**
+      Can create, update, and delete lesson items.
+
+    ## Extra Actions
+
+    This viewset includes additional actions to enhance functionality:
+
+    - **Mark Item as Completed:**
+      Allows a student to mark an individual lesson item as completed.
+      `POST /api/courses/{courseId}/modules/{moduleId}/lessons/{lessonId}/items/{id}/mark`
+      *Request:* No body required.
+      *Response:* Returns confirmation of completion.
+
+    ## Example API Requests
+
+    **List Lesson Items:**
+
+    ```bash
+    curl -X GET http://localhost:8000/api/courses/1/modules/1/lessons/1/items \\
+        -H "Authorization: Bearer YOUR_TOKEN_HERE"
+    ```
+
+    **Create a Lesson Item (Reading):**
+
+    ```bash
+    curl -X POST http://localhost:8000/api/courses/1/modules/1/lessons/1/items \\
+        -H "Content-Type: application/json" \\
+        -H "Authorization: Bearer YOUR_TOKEN_HERE" \\
+        -d '{
+                "type": 0,
+                "title": "Understanding Variables",
+                "content": "This section explains variables in Python."
+            }'
+    ```
+
+    **Mark Item as Completed:**
+
+    ```bash
+    curl -X POST http://localhost:8000/api/courses/1/modules/1/lessons/1/items/1/mark \\
+        -H "Authorization: Bearer YOUR_TOKEN_HERE"
+    ```
+    """
 
     action_permissions = {
         "default": [IsAuthenticated, IsInstructor, IsItemOwner],

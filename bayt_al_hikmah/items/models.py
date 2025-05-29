@@ -4,9 +4,9 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from wagtail.fields import StreamField
 
-from bayt_al_hikmah.cms.blocks import CommonContentBlock
 from bayt_al_hikmah.items import ITEM_TYPES
 from bayt_al_hikmah.mixins.models import DateTimeMixin
+from bayt_al_hikmah.ui.cms.blocks import CommonContentBlock
 
 
 # Create your models here.
@@ -32,6 +32,10 @@ class Item(DateTimeMixin, models.Model):
     content = StreamField(
         CommonContentBlock(),
         help_text=_("Item content"),
+    )
+    order = models.SmallIntegerField(
+        default=0,
+        help_text=_("Item order in the lesson"),
     )
 
     def __str__(self) -> str:

@@ -20,6 +20,7 @@ class ModuleSerializer(ModelSerializer):
             "course",
             "title",
             "description",
+            "order",
             "created_at",
             "updated_at",
         ]
