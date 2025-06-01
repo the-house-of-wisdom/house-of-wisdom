@@ -3,17 +3,17 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
-from bayt_al_hikmah.blog.models import Blog
-from bayt_al_hikmah.blog.serializers import BlogSerializer
+from bayt_al_hikmah.blog.models import Article
+from bayt_al_hikmah.blog.serializers import ArticleSerializer
 from bayt_al_hikmah.mixins.views import ActionPermissionsMixin
 
 
 # Create your views here.
-class BlogViewSet(ActionPermissionsMixin, ModelViewSet):
+class ArticleViewSet(ActionPermissionsMixin, ModelViewSet):
     """Base ViewSet for extension"""
 
-    queryset = Blog.objects.all()
-    serializer_class = BlogSerializer
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
     permission_classes = [IsAuthenticated]
     search_fields = ["title", "headline", "content"]
     ordering_fields = ["created_at", "updated_at"]

@@ -5,12 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
 from bayt_al_hikmah.mixins.views import ActionPermissionsMixin
-from bayt_al_hikmah.permissions import (
-    DenyAll,
-    IsEnrolledOrInstructor,
-    IsInstructor,
-    IsQuestionOwner,
-)
+from bayt_al_hikmah.permissions import DenyAll, IsInstructor, IsQuestionOwner
 from bayt_al_hikmah.questions.models import Question
 from bayt_al_hikmah.questions.serializers import QuestionSerializer
 from bayt_al_hikmah.ui.mixins import UserQuestionsMixin

@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from wagtail.fields import StreamField
 
 from bayt_al_hikmah.mixins.models import DateTimeMixin
-from bayt_al_hikmah.ui.cms.blocks import TextContentBlock
+from bayt_al_hikmah.ui.cms.blocks import PathPrerequisitesBlock, TextContentBlock
 
 
 # Create your models here.
@@ -47,7 +47,7 @@ class Path(DateTimeMixin, models.Model):
         help_text=_("Learning Path description"),
     )
     prerequisites = StreamField(
-        TextContentBlock(),
+        PathPrerequisitesBlock(),
         null=True,
         blank=True,
         help_text=_("Learning Path prerequisites"),
@@ -65,6 +65,7 @@ class Path(DateTimeMixin, models.Model):
     )
     tags = models.ManyToManyField(
         "tags.Tag",
+        blank=True,
         help_text=_("Learning Path tags"),
     )
     courses = models.ManyToManyField(

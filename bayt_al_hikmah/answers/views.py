@@ -6,12 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from bayt_al_hikmah.answers.models import Answer
 from bayt_al_hikmah.answers.serializers import AnswerSerializer
 from bayt_al_hikmah.mixins.views import ActionPermissionsMixin
-from bayt_al_hikmah.permissions import (
-    DenyAll,
-    IsAnswerOwner,
-    IsEnrolledOrInstructor,
-    IsInstructor,
-)
+from bayt_al_hikmah.permissions import DenyAll, IsAnswerOwner, IsInstructor
 from bayt_al_hikmah.ui.mixins import UserAnswersMixin
 
 

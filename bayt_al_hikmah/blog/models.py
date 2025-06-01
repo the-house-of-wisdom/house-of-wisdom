@@ -12,8 +12,8 @@ from bayt_al_hikmah.ui.cms.blocks import CommonContentBlock
 
 
 # Create your models here.
-class Blog(DateTimeMixin, Page):
-    """Blog posts"""
+class Article(DateTimeMixin, Page):
+    """Blog articles"""
 
     headline = models.CharField(
         max_length=128,

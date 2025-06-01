@@ -2,17 +2,17 @@
 
 from rest_framework.serializers import ModelSerializer
 
-from bayt_al_hikmah.blog.models import Blog
+from bayt_al_hikmah.blog.models import Article
 
 
 # Create your serializers here.
-class BlogSerializer(ModelSerializer):
+class ArticleSerializer(ModelSerializer):
     """Blog serializer"""
 
     class Meta:
         """Meta data"""
 
-        model = Blog
+        model = Article
         fields = [
             "id",
             "url",
