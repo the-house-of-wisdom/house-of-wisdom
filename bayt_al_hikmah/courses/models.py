@@ -56,12 +56,12 @@ class Course(DateTimeMixin, models.Model):
         CoursePrerequisitesBlock(),
         null=True,
         blank=True,
-        help_text=_("Learning Path prerequisites"),
+        help_text=_("Course prerequisites"),
     )
     duration = models.DurationField(
         null=True,
         blank=True,
-        help_text=_("Learning Path duration"),
+        help_text=_("Course duration"),
     )
     tags = models.ManyToManyField(
         "tags.Tag",

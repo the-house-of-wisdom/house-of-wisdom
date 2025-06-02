@@ -2,8 +2,10 @@
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from wagtail.fields import StreamField
 
 from bayt_al_hikmah.mixins.models import DateTimeMixin
+from bayt_al_hikmah.ui.cms.blocks import TextContentBlock
 
 
 # Create your models here.
@@ -18,14 +20,14 @@ class Answer(DateTimeMixin, models.Model):
     )
     is_correct = models.BooleanField(
         default=False,
-        help_text=_("Weather the answer is correct"),
+        help_text=_("Designates if the answer is correct"),
     )
-    text = models.CharField(
-        max_length=512,
+    text = StreamField(
+        TextContentBlock(),
         help_text=_("Answer text"),
     )
-    description = models.CharField(
-        max_length=1024,
+    description = StreamField(
+        TextContentBlock(),
         help_text=_("Why the answer is correct or wrong"),
     )
 

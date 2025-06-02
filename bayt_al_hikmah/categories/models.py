@@ -2,8 +2,10 @@
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from wagtail.fields import StreamField
 
 from bayt_al_hikmah.mixins.models import DateTimeMixin
+from bayt_al_hikmah.ui.cms.blocks import TextContentBlock
 
 
 # Create your models here.
@@ -16,9 +18,8 @@ class Category(DateTimeMixin, models.Model):
         db_index=True,
         help_text=_("Category name"),
     )
-    description = models.CharField(
-        max_length=256,
-        db_index=True,
+    description = StreamField(
+        TextContentBlock(),
         help_text=_("Category description"),
     )
 

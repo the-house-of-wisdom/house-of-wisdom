@@ -2,9 +2,11 @@
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from wagtail.fields import StreamField
 
 from bayt_al_hikmah.mixins.models import DateTimeMixin
 from bayt_al_hikmah.questions import QUESTION_TYPES
+from bayt_al_hikmah.ui.cms.blocks import TextContentBlock
 
 
 # Create your models here.
@@ -22,9 +24,8 @@ class Question(DateTimeMixin, models.Model):
         choices=QUESTION_TYPES,
         help_text=_("Question type"),
     )
-    text = models.CharField(
-        max_length=512,
-        db_index=True,
+    text = StreamField(
+        TextContentBlock(),
         help_text=_("Question text"),
     )
     order = models.SmallIntegerField(

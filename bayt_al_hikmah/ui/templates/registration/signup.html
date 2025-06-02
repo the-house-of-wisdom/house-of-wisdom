@@ -6,32 +6,54 @@
 
 <!-- prettier ignore -->
 {% block main %}
-<section
+<div
   class="flex col-span-12 size-full items-center justify-center lg:max-h-[calc(100dvh-1rem)] lg:overflow-y-auto"
 >
-  <div class="card mx-2 max-w-md w-full rounded-box bg-base-200 mt-40 mb-20">
-    <div class="card-body gap-8">
-      <h1 class="text-4xl font-black text-center font-serif text-primary">
+  <section
+    className="group card relative overflow-hidden rounded-box bg-base-200 shadow-xs hover:bg-primary hover:text-primary-content lg:card-lg xl:card-xl"
+  >
+    <header
+      className="bg-primary p-4 text-center text-primary-content group-hover:bg-success group-hover:text-success-content"
+    >
+      <h1 className="font-serif text-4xl font-black">
         {% trans 'House Of Wisdom' %}
       </h1>
+    </header>
 
-      <div class="grid gap-4">
-        <h2 class="text-2xl">{% trans 'Sign up' %}</h2>
-        <p>{% trans 'Welcome, please signup to continue.' %}</p>
-      </div>
+    <main className="card-body gap-6">
+      <h2
+        className="text-3xl font-bold text-primary group-hover:text-primary-content"
+      >
+        {% trans 'Sign up' %}
+      </h2>
+
+      <p>{% trans 'Welcome, please sign up to continue.' %}</p>
 
       <!-- prettier ignore -->
       {% include 'ui/components/form.html' %}
+    </main>
 
-      <p>
-        <a href="{% url 'ui:login' %}" class="btn btn-ghost">
-          {% trans 'Already have an account?' %}
-        </a>
-        <a href="{% url 'ui:password_reset' %}" class="btn btn-ghost">
-          {% trans 'Lost password?' %}
-        </a>
-      </p>
-    </div>
-  </div>
-</section>
+    <footer className="grid grid-cols-2">
+      <button
+        type="submit"
+        form="form"
+        className="btn col-span-2 rounded-none font-semibold btn-primary group-hover:btn-success lg:btn-lg"
+      >
+        {% trans 'Sign up' %}
+      </button>
+      <a
+        href="{% url 'ui:login' %}"
+        className="btn rounded-none btn-soft btn-primary group-hover:btn-success lg:btn-lg"
+      >
+        {% trans 'Log in' %}
+      </a>
+      <a
+        href="{% url 'ui:password_reset' %}"
+        className="btn rounded-none btn-soft btn-primary group-hover:btn-success lg:btn-lg"
+      >
+        {% trans 'Forgot password?' %}
+      </a>
+    </footer>
+  </section>
+</div>
 {% endblock %}

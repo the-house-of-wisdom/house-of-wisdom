@@ -23,7 +23,7 @@ class CategoryViewSet(ModelViewSet):
     model = Category
     form_fields = ["name", "description"]
     list_filter = ["name"]
-    icon = "user"
+    icon = "folder"
 
 
 class TagViewSet(ModelViewSet):
@@ -32,7 +32,7 @@ class TagViewSet(ModelViewSet):
     model = Tag
     form_fields = ["name", "description"]
     list_filter = ["name"]
-    icon = "user"
+    icon = "folder"
 
 
 class PathViewSet(ModelViewSet):
@@ -51,12 +51,14 @@ class PathViewSet(ModelViewSet):
         "name",
         "headline",
         "description",
+        "prerequisites",
+        "duration",
         "tags",
         "courses",
     ]
     list_display = ["category", "name"]
     list_filter = ["category", "name"]
-    icon = "user"
+    icon = "folder"
     add_to_admin_menu = True
 
 
@@ -65,7 +67,7 @@ class CourseViewSet(PathViewSet):
 
     model = Course
     form_fields = PathViewSet.form_fields[:-1]
-    icon = "user"
+    icon = "folder-inverse"
     add_to_admin_menu = False
 
 
@@ -76,7 +78,7 @@ class PostViewSet(PathViewSet):
     form_fields = ["course", "title", "content"]
     list_display = ["course", "title"]
     list_filter = ["course"]
-    icon = "user"
+    icon = "mail"
     add_to_admin_menu = False
 
 
@@ -92,7 +94,7 @@ class ModuleViewSet(ModelViewSet):
     form_fields = ["course", "title", "description"]
     list_display = ["course", "title"]
     list_filter = ["course"]
-    icon = "user"
+    icon = "folder-open-1"
 
 
 class LessonViewSet(ModelViewSet):
@@ -107,7 +109,7 @@ class LessonViewSet(ModelViewSet):
     form_fields = ["module", "name", "description"]
     list_display = ["module", "name"]
     list_filter = ["module"]
-    icon = "user"
+    icon = "folder-open-1"
 
 
 class AssignmentViewSet(ModelViewSet):
@@ -135,7 +137,7 @@ class AssignmentViewSet(ModelViewSet):
         "question_count",
         "min_percentage",
     ]
-    icon = "user"
+    icon = "circle-check"
 
 
 class ItemViewSet(AssignmentViewSet):
@@ -145,7 +147,7 @@ class ItemViewSet(AssignmentViewSet):
     form_fields = ["lesson", "type", "title", "content"]
     list_display = ["lesson", "title"]
     list_filter = ["lesson", "type"]
-    icon = "user"
+    icon = "doc-full"
 
 
 class QuestionViewSet(ModelViewSet):
@@ -160,7 +162,7 @@ class QuestionViewSet(ModelViewSet):
     form_fields = ["assignment", "type", "text"]
     list_display = ["assignment", "type", "text"]
     list_filter = ["assignment", "type"]
-    icon = "user"
+    icon = "pick"
 
 
 class AnswerViewSet(ModelViewSet):
@@ -175,7 +177,7 @@ class AnswerViewSet(ModelViewSet):
     form_fields = ["question", "is_correct", "text", "description"]
     list_display = ["question", "is_correct", "text"]
     list_filter = ["question", "is_correct"]
-    icon = "user"
+    icon = "doc-full-inverse"
 
 
 admin_viewsets = {

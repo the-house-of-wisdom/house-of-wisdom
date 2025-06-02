@@ -53,4 +53,10 @@ auth_urls = [
 urlpatterns = [
     path("", views.HomeView.as_view(), name="home"),
     *auth_urls,
+    path("articles/", views.ArticleListView.as_view(), name="articles"),
+    path("articles/<slug:slug>/", views.ArticleDetailView.as_view(), name="article"),
+    path("courses/", views.CourseListView.as_view(), name="courses"),
+    path("courses/<slug:slug>/", views.CourseDetailView.as_view(), name="course"),
+    path("learning-paths/", views.PathListView.as_view(), name="paths"),
+    path("learning-paths/<slug:slug>/", views.PathDetailView.as_view(), name="path"),
 ]

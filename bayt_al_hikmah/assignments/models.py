@@ -56,7 +56,7 @@ class Assignment(DateTimeMixin, models.Model):
     )
     is_auto_graded = models.BooleanField(
         default=True,
-        help_text=_("Weather the assignment graded automatically"),
+        help_text=_("Designates if the assignment is auto graded"),
     )
 
     def __str__(self) -> str:

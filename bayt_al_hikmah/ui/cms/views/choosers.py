@@ -76,7 +76,7 @@ class ModuleChooserViewSet(ChooserViewSet):
     choose_one_text = _("Choose a Module")
     edit_item_text = _("Edit this Module")
     choose_another_text = _("Choose another Module")
-    form_fields = ["course", "title", "description"]
+    form_fields = ["course", "name", "description"]
 
 
 class LessonChooserViewSet(ChooserViewSet):
@@ -87,7 +87,7 @@ class LessonChooserViewSet(ChooserViewSet):
     choose_one_text = _("Choose a Lesson")
     edit_item_text = _("Edit this Lesson")
     choose_another_text = _("Choose another Lesson")
-    form_fields = ["module", "title", "description"]
+    form_fields = ["module", "name", "description"]
 
 
 class AssignmentChooserViewSet(ChooserViewSet):
@@ -101,7 +101,7 @@ class AssignmentChooserViewSet(ChooserViewSet):
     form_fields = [
         "lesson",
         "type",
-        "title",
+        "name",
         "description",
         "question_count",
         "min_percentage",
@@ -118,7 +118,7 @@ class ItemChooserViewSet(ChooserViewSet):
     choose_one_text = _("Choose a Item")
     edit_item_text = _("Edit this Item")
     choose_another_text = _("Choose another Item")
-    form_fields = ["lesson", "title", "description"]
+    form_fields = ["lesson", "name", "description"]
 
 
 class QuestionChooserViewSet(ChooserViewSet):
