@@ -13,11 +13,9 @@ class ModuleSerializer(ModelSerializer):
         """Meta data"""
 
         model = Module
-        read_only_fields = ["course"]
         fields = [
             "id",
             "url",
-            "course",
             "title",
             "description",
             "order",

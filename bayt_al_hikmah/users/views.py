@@ -85,14 +85,14 @@ class UserViewSet(BaseUVS):
     **List Users:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/users \\
+    curl -X GET /api/users \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
     **Register a New User:**
 
     ```bash
-    curl -X POST http://localhost:8000/api/users \\
+    curl -X POST /api/users \\
         -H "Content-Type: application/json" \\
         -d '{
                 "username": "johndoe",
@@ -104,7 +104,7 @@ class UserViewSet(BaseUVS):
     **Set User Password:**
     
     ```bash
-    curl -X POST http://localhost:8000/api/users/1/set_password \\
+    curl -X POST /api/users/1/set_password \\
         -H "Content-Type: application/json" \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE" \\
         -d '{

@@ -1,34 +1,45 @@
 """Data Models for bayt_al_hikmah.lessons"""
 
-from django.db import models
 from django.utils.translation import gettext_lazy as _
+from wagtail.admin.panels import FieldPanel
+from wagtail.api import APIField
+from wagtail.fields import StreamField
+from wagtail.models import Page
+from wagtail.search import index
 
-from bayt_al_hikmah.mixins.models import DateTimeMixin
+from bayt_al_hikmah.mixins.models import DateTimeMixin, Orderable
+from bayt_al_hikmah.ui.cms.blocks import TextContentBlock
 
 
 # Create your models here.
-class Lesson(DateTimeMixin, models.Model):
+class Lesson(DateTimeMixin, Orderable, Page):
     """Lessons"""
 
-    module = models.ForeignKey(
-        "modules.Module",
-        on_delete=models.CASCADE,
-        related_name="lessons",
-        help_text=_("Lesson module"),
-    )
-    name = models.CharField(
-        max_length=64,
-        db_index=True,
-        help_text=_("Lesson name"),
-    )
-    description = models.CharField(
-        max_length=256,
+    description = StreamField(
+        TextContentBlock(),
         help_text=_("Lesson description"),
     )
-    order = models.SmallIntegerField(
-        default=0,
-        help_text=_("Module order in the course"),
+
+    # Dashboard UI config
+    context_object_name = "lesson"
+    template = "ui/previews/lesson.html"
+    content_panels = Page.content_panels + [
+        FieldPanel("description"),
+        FieldPanel("order"),
+    ]
+    page_description = _(
+        "Lessons form the core instructional content of a module and may include "
+        "text-based materials, videos, quizzes, or interactive exercises."
     )
 
+    # Search fields
+    search_fields = Page.search_fields + [index.SearchField("description")]
+
+    # API fields
+    api_fields = [APIField("description"), APIField("order")]
+
+    parent_page_types = ["modules.Module"]
+    subpage_types = ["assignments.Assignment", "items.Item"]
+
     def __str__(self) -> str:
-        return self.name
+        return self.title

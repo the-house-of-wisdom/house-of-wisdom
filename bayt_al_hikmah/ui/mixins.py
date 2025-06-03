@@ -38,7 +38,7 @@ class InstructorOrStudentMixin(InstructorMixin):
         return (
             super().test_func()
             or Enrollment.objects.filter(
-                user_id=self.request.user.id, course_id=self.kwargs["course_id"]
+                owner_id=self.request.user.id, course_id=self.kwargs["course_id"]
             ).exists()
         )
 
@@ -50,79 +50,6 @@ class OwnerMixin:
         """Add the owner of the object automatically"""
 
         object = form.save(commit=False)
-        object.user = self.request.user
+        object.owner_id = self.request.user.id
 
         return super().form_valid(form)
-
-
-class UserFilterMixin:
-    """Filters queryset by user"""
-
-    def get_queryset(self) -> QuerySet[Any]:
-        return super().get_queryset().filter(user_id=self.request.user.id)
-
-
-class UserModulesMixin:
-    """Filter modules by user"""
-
-    def get_queryset(self) -> QuerySet[Any]:
-        return super().get_queryset().filter(course__user_id=self.request.user.id)
-
-
-class UserLessonsMixin:
-    """Filter lessons by user"""
-
-    def get_queryset(self) -> QuerySet[Any]:
-        return (
-            super().get_queryset().filter(module__course__user_id=self.request.user.id)
-        )
-
-
-class UserAIMixin:
-    """Filter assignments and items by user"""
-
-    def get_queryset(self) -> QuerySet[Any]:
-        return (
-            super()
-            .get_queryset()
-            .filter(lesson__module__course__user_id=self.request.user.id)
-        )
-
-
-class UserAssignmentsMixin:
-    """Filter assignments by user"""
-
-    def get_queryset(self) -> QuerySet[Any]:
-        return (
-            super()
-            .get_queryset()
-            .filter(lesson__module__course__user_id=self.request.user.id)
-        )
-
-
-class UserItemsMixin(UserAIMixin):
-    """Filter items by user"""
-
-
-class UserQuestionsMixin:
-    """Filter questions by user"""
-
-    def get_queryset(self) -> QuerySet[Any]:
-        return (
-            super()
-            .get_queryset()
-            .filter(assignment__lesson__module__course__user_id=self.request.user.id)
-        )
-
-
-class UserAnswersMixin:
-    """Filter answers by user"""
-
-    def get_queryset(self) -> QuerySet[Any]:
-        return (
-            super()
-            .get_queryset()
-            .filter(
-                question__assignment__lesson__module__course__user_id=self.request.user.id
-            )
-        )

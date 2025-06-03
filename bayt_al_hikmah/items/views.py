@@ -1,5 +1,6 @@
 """API endpoints for bayt_al_hikmah.items"""
 
+from ast import Module
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.request import Request
@@ -7,31 +8,32 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
+from bayt_al_hikmah.courses.models import Course
 from bayt_al_hikmah.items.models import Item
 from bayt_al_hikmah.items.serializers import ItemSerializer
-from bayt_al_hikmah.mixins.views import ActionPermissionsMixin
+from bayt_al_hikmah.lessons.models import Lesson
+from bayt_al_hikmah.mixins.views import ActionPermissionsMixin, UserFilterMixin
 from bayt_al_hikmah.permissions import (
     DenyAll,
     IsEnrolledOrInstructor,
     IsInstructor,
-    IsItemOwner,
+    IsOwner,
 )
-from bayt_al_hikmah.ui.mixins import UserItemsMixin
 
 
 # Create your views here.
 class BaseItemVS(ActionPermissionsMixin, ModelViewSet):
     """Base ViewSet for extension"""
 
-    queryset = Item.objects.all()
+    queryset = Item.objects.live()
     serializer_class = ItemSerializer
     permission_classes = [IsAuthenticated, IsInstructor]
     search_fields = ["title", "content"]
     ordering_fields = ["order", "created_at", "updated_at"]
-    filterset_fields = ["lesson__module__course", "lesson__module", "lesson", "type"]
+    filterset_fields = ["type"]
     action_permissions = {
         "default": permission_classes,
-        "create": permission_classes + [IsItemOwner],
+        "create": permission_classes + [IsOwner],
     }
 
     @action(methods=["post"], detail=True)
@@ -58,7 +60,7 @@ class BaseItemVS(ActionPermissionsMixin, ModelViewSet):
         )
 
 
-class ItemViewSet(UserItemsMixin, BaseItemVS):
+class ItemViewSet(UserFilterMixin, BaseItemVS):
     """
     API endpoints for managing Items.
 
@@ -123,14 +125,14 @@ class ItemViewSet(UserItemsMixin, BaseItemVS):
     **List Lesson Items:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/items \\
+    curl -X GET /api/items \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
     **Create a Lesson Item:**
 
     ```bash
-    curl -X POST http://localhost:8000/api/items \\
+    curl -X POST /api/items \\
         -H "Content-Type: application/json" \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE" \\
         -d '{
@@ -145,7 +147,7 @@ class ItemViewSet(UserItemsMixin, BaseItemVS):
     **Mark Item as Completed:**
 
     ```bash
-    curl -X POST http://localhost:8000/api/items/1/mark
+    curl -X POST /api/items/1/mark
     ```
     """
 
@@ -221,14 +223,14 @@ class LessonItems(BaseItemVS):
     **List Lesson Items:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/courses/1/modules/1/lessons/1/items \\
+    curl -X GET /api/courses/1/modules/1/lessons/1/items \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
     **Create a Lesson Item (Reading):**
 
     ```bash
-    curl -X POST http://localhost:8000/api/courses/1/modules/1/lessons/1/items \\
+    curl -X POST /api/courses/1/modules/1/lessons/1/items \\
         -H "Content-Type: application/json" \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE" \\
         -d '{
@@ -241,13 +243,13 @@ class LessonItems(BaseItemVS):
     **Mark Item as Completed:**
 
     ```bash
-    curl -X POST http://localhost:8000/api/courses/1/modules/1/lessons/1/items/1/mark \\
+    curl -X POST /api/courses/1/modules/1/lessons/1/items/1/mark \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
     """
 
     action_permissions = {
-        "default": [IsAuthenticated, IsInstructor, IsItemOwner],
+        "default": [IsAuthenticated, IsInstructor, IsOwner],
         "list": [IsAuthenticated, IsEnrolledOrInstructor],
         "retrieve": [IsAuthenticated, IsEnrolledOrInstructor],
         "mark": [IsAuthenticated, IsEnrolledOrInstructor],
@@ -256,7 +258,9 @@ class LessonItems(BaseItemVS):
     def perform_create(self, serializer):
         """Add lesson to item automatically"""
 
-        serializer.save(lesson_id=self.kwargs["lesson_id"])
+        Lesson.objects.get(pk=self.kwargs["lesson_id"]).add_child(
+            instance=Item(**serializer.validated_data, owner_id=self.request.user.pk)
+        )
 
     def get_queryset(self):
         """Filter queryset by lesson"""
@@ -264,9 +268,7 @@ class LessonItems(BaseItemVS):
         return (
             super()
             .get_queryset()
-            .filter(
-                lesson_id=self.kwargs["lesson_id"],
-                lesson__module_id=self.kwargs["module_id"],
-                lesson__module__course_id=self.kwargs["course_id"],
-            )
+            .descendant_of(Course.objects.get(pk=self.kwargs["course_id"]))
+            .descendant_of(Module.objects.get(pk=self.kwargs["module_id"]))
+            .child_of(Lesson.objects.get(pk=self.kwargs["lesson_id"]))
         )

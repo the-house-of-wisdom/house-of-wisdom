@@ -1,26 +1,30 @@
 """Data Models for bayt_al_hikmah.tags"""
 
 from django.db import models
-from django.utils.translation import gettext_lazy as _
-
-from bayt_al_hikmah.mixins.models import DateTimeMixin
+from modelcluster.fields import ParentalKey
+from taggit.models import TaggedItemBase
 
 
 # Create your models here.
-class Tag(DateTimeMixin, models.Model):
-    """Tags"""
-
-    name = models.CharField(
-        max_length=64,
-        unique=True,
-        db_index=True,
-        help_text=_("Tag name"),
-    )
-    description = models.CharField(
-        max_length=256,
-        db_index=True,
-        help_text=_("Tag description"),
+class ArticleTag(TaggedItemBase):
+    content_object = ParentalKey(
+        "blog.Article",
+        related_name="tagged_items",
+        on_delete=models.CASCADE,
     )
 
-    def __str__(self) -> str:
-        return self.name
+
+class LearningPathTag(TaggedItemBase):
+    content_object = ParentalKey(
+        "paths.LearningPath",
+        related_name="tagged_items",
+        on_delete=models.CASCADE,
+    )
+
+
+class CourseTag(TaggedItemBase):
+    content_object = ParentalKey(
+        "courses.Course",
+        related_name="tagged_items",
+        on_delete=models.CASCADE,
+    )

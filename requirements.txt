@@ -10,3 +10,4 @@ huggingface-hub
 pillow
 python-dotenv
 wagtail
+wagtail-localize

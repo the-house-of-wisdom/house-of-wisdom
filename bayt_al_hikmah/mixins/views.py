@@ -1,6 +1,6 @@
 """View Mixins"""
 
-from typing import Any, Dict, List, Optional
+from typing import Any, List, Mapping, Optional
 
 
 # Create your mixins here.
@@ -10,7 +10,7 @@ class OwnerMixin:
     def perform_create(self, serializer):
         """Save the object with owner"""
 
-        serializer.save(user=self.request.user)
+        serializer.save(owner_id=self.request.user.pk)
 
 
 class UserFilterMixin:
@@ -19,13 +19,13 @@ class UserFilterMixin:
     def get_queryset(self):
         """Perform the filter"""
 
-        return super().get_queryset().filter(user_id=self.request.user.id)
+        return super().get_queryset().filter(owner_id=self.request.user.id)
 
 
 class ActionPermissionsMixin:
     """Allows you to set permissions for each action using a dict"""
 
-    action_permissions: Optional[Dict[str, List[Any]]] = None
+    action_permissions: Optional[Mapping[str, List[Any]]] = None
 
     def get_permissions(self) -> List[Any]:
         """Set permissions based on each action"""
@@ -41,7 +41,7 @@ class ActionPermissionsMixin:
 class ActionSerializersMixin:
     """Allows you to set Serializers for each action using a dict"""
 
-    action_serializers: Optional[Dict[str, Any]] = None
+    action_serializers: Optional[Mapping[str, Any]] = None
 
     def get_serializer_class(self):
         """Set serializer class based on action"""

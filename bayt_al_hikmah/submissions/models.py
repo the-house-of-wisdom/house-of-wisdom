@@ -15,7 +15,7 @@ User = get_user_model()
 class Submission(DateTimeMixin, models.Model):
     """Assignment Submissions"""
 
-    user = models.ForeignKey(
+    owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name="submissions",
@@ -61,4 +61,4 @@ class Submission(DateTimeMixin, models.Model):
         )
 
     def __str__(self) -> str:
-        return f"{self.assignment}: Submission {self.id}"
+        return f"{self.assignment}: Submission {self.pk} by {self.owner}"

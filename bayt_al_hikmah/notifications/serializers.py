@@ -13,11 +13,11 @@ class NotificationSerializer(ModelSerializer):
         """Meta data"""
 
         model = Notification
-        read_only_fields = ["user"]
+        read_only_fields = ["owner"]
         fields = [
             "id",
             "url",
-            "user",
+            "owner",
             "content",
             "created_at",
             "updated_at",

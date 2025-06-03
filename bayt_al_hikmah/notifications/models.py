@@ -15,7 +15,7 @@ User = get_user_model()
 class Notification(DateTimeMixin, models.Model):
     """Notifications"""
 
-    user = models.ForeignKey(
+    owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name="notifications",

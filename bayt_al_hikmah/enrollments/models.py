@@ -16,7 +16,7 @@ User = get_user_model()
 class Enrollment(DateTimeMixin, models.Model):
     """Course Enrollments"""
 
-    user = models.ForeignKey(
+    owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name="enrollments",
@@ -53,9 +53,9 @@ class Enrollment(DateTimeMixin, models.Model):
         constraints = [
             models.UniqueConstraint(
                 name="unique_course_enrollment",
-                fields=["user", "course"],
+                fields=["owner", "course"],
             )
         ]
 
     def __str__(self) -> str:
-        return f"{self.user}-{self.course}-{ENROLLMENT_ROLES[self.role][1]}"
+        return f"{self.owner}-{self.course}-{ENROLLMENT_ROLES[self.role][1]}"

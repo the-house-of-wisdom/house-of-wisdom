@@ -3,7 +3,8 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
-from bayt_al_hikmah.mixins.views import ActionPermissionsMixin
+from bayt_al_hikmah.courses.models import Course
+from bayt_al_hikmah.mixins.views import ActionPermissionsMixin, UserFilterMixin
 from bayt_al_hikmah.posts.models import Post
 from bayt_al_hikmah.posts.serializers import PostSerializer
 from bayt_al_hikmah.permissions import (
@@ -11,21 +12,19 @@ from bayt_al_hikmah.permissions import (
     IsEnrolledOrInstructor,
     IsInstructor,
     IsOwner,
-    IsPostOwner,
 )
-from bayt_al_hikmah.ui.mixins import UserFilterMixin
 
 
 # Create your views here.
 class BasePostVS(ActionPermissionsMixin, ModelViewSet):
     """Base ViewSet for extension"""
 
-    queryset = Post.objects.all()
+    queryset = Post.objects.live()
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated, IsInstructor]
     search_fields = ["title", "content"]
     ordering_fields = ["created_at", "updated_at"]
-    filterset_fields = ["user", "course", "type"]
+    filterset_fields = ["owner", "type"]
     action_permissions = {
         "default": [IsAuthenticated, IsInstructor, IsOwner],
         "list": permission_classes,
@@ -94,14 +93,14 @@ class PostViewSet(UserFilterMixin, BasePostVS):
     **List Course Posts:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/posts \\
+    curl -X GET /api/posts \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
     **Partial Update (e.g., Update Content):**
 
     ```bash
-    curl -X PATCH http://localhost:8000/api/posts/5 \\
+    curl -X PATCH /api/posts/5 \\
         -H "Content-Type: application/json" \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE" \\
         -d '{
@@ -112,7 +111,7 @@ class PostViewSet(UserFilterMixin, BasePostVS):
     **Delete a Course Post:**
 
     ```bash
-    curl -X DELETE http://localhost:8000/api/posts/5 \\
+    curl -X DELETE /api/posts/5 \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
@@ -191,13 +190,13 @@ class CoursePosts(BasePostVS):
     **List Course Posts:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/courses/1/posts
+    curl -X GET /api/courses/1/posts
     ```
 
     **Create a Course Post:**
 
     ```bash
-    curl -X POST http://localhost:8000/api/courses/1/posts \\
+    curl -X POST /api/courses/1/posts \\
         -H "Content-Type: application/json" \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE" \\
         -d '{
@@ -210,7 +209,7 @@ class CoursePosts(BasePostVS):
     **Partial Update (e.g., Update Content):**
 
     ```bash
-    curl -X PATCH http://localhost:8000/api/posts/5 \\
+    curl -X PATCH /api/posts/5 \\
         -H "Content-Type: application/json" \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE" \\
         -d '{
@@ -221,7 +220,7 @@ class CoursePosts(BasePostVS):
     **Delete a Course Post:**
 
     ```bash
-    curl -X DELETE http://localhost:8000/api/posts/5 \\
+    curl -X DELETE /api/posts/5 \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
@@ -234,7 +233,7 @@ class CoursePosts(BasePostVS):
 
     action_permissions = {
         **BasePostVS.action_permissions,
-        "default": [IsAuthenticated, IsInstructor, IsPostOwner],
+        "default": [IsAuthenticated, IsInstructor],
         "list": [IsAuthenticated, IsEnrolledOrInstructor],
         "retrieve": [IsAuthenticated, IsEnrolledOrInstructor],
     }
@@ -242,11 +241,15 @@ class CoursePosts(BasePostVS):
     def perform_create(self, serializer):
         """Add course to post automatically"""
 
-        serializer.save(
-            user_id=self.request.user.id, course_id=self.kwargs["course_id"]
+        Course.objects.get(pk=self.kwargs["assignment_id"]).add_child(
+            instance=Post(**serializer.validated_data, owner_id=self.request.user.pk)
         )
 
     def get_queryset(self):
         """Filter queryset by course"""
 
-        return super().get_queryset().filter(course_id=self.kwargs["course_id"])
+        return (
+            super()
+            .get_queryset()
+            .child_of(Course.objects.get(course_id=self.kwargs["course_id"]))
+        )

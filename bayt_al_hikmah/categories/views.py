@@ -48,10 +48,10 @@ class CategoryViewSet(ActionPermissionsMixin, ModelViewSet):
     ## Query Parameters
 
     - **search:**
-      Filter categories by name or description (e.g., `?search=technology`).
+      Filter categories by title or description (e.g., `?search=technology`).
 
     - **ordering:**
-      Order categories by a specific field (e.g., `?ordering=name` for alphabetical order).
+      Order categories by a specific field (e.g., `?ordering=title` for alphabetical order).
 
     ## Permissions
 
@@ -66,18 +66,18 @@ class CategoryViewSet(ActionPermissionsMixin, ModelViewSet):
     **List Categories:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/categories \\
+    curl -X GET /api/categories \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
     **Create a Category:**
 
     ```bash
-    curl -X POST http://localhost:8000/api/categories \\
+    curl -X POST /api/categories \\
         -H "Content-Type: application/json" \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE" \\
         -d '{
-                "name": "Technology",
+                "title": "Technology",
                 "description": "Courses related to technology, programming, and IT."
             }'
     ```
@@ -85,17 +85,16 @@ class CategoryViewSet(ActionPermissionsMixin, ModelViewSet):
     **Retrieve Category Details:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/categories/1 \\
+    curl -X GET /api/categories/1 \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
     """
 
-    queryset = Category.objects.all()
+    queryset = Category.objects.live()
     serializer_class = CategorySerializer
     permission_classes = [IsAuthenticated]
-    search_fields = ["name", "headline", "description"]
+    search_fields = ["title", "headline", "description"]
     ordering_fields = ["created_at", "updated_at"]
-    filterset_fields = ["name"]
     action_permissions = {
         "default": [IsAuthenticated, IsAdminUser],
         "list": permission_classes,

@@ -3,7 +3,12 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
+from modelcluster.contrib.taggit import ClusterTaggableManager
+from wagtail.admin.panels import FieldPanel
+from wagtail.api import APIField
 from wagtail.fields import StreamField
+from wagtail.models import Page
+from wagtail.search import index
 
 from bayt_al_hikmah.mixins.models import DateTimeMixin
 from bayt_al_hikmah.ui.cms.blocks import PathPrerequisitesBlock, TextContentBlock
@@ -13,29 +18,13 @@ from bayt_al_hikmah.ui.cms.blocks import PathPrerequisitesBlock, TextContentBloc
 User = get_user_model()
 
 
-class Path(DateTimeMixin, models.Model):
+class LearningPath(DateTimeMixin, Page):
     """Learning Paths, Paths of related courses"""
 
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name="paths",
-        help_text=_("Learning Path instructor"),
-    )
-    category = models.ForeignKey(
-        "categories.Category",
-        on_delete=models.CASCADE,
-        related_name="paths",
-        help_text=_("Learning Path category"),
-    )
-    image = models.ImageField(
+    image = models.ForeignKey(
+        "wagtailimages.Image",
+        on_delete=models.PROTECT,
         help_text=_("Learning Path image"),
-        upload_to="images/paths/",
-    )
-    name = models.CharField(
-        max_length=64,
-        db_index=True,
-        help_text=_("Learning Path name"),
     )
     headline = models.CharField(
         max_length=128,
@@ -63,16 +52,52 @@ class Path(DateTimeMixin, models.Model):
         db_index=True,
         help_text=_("Learning Path rating"),
     )
-    tags = models.ManyToManyField(
-        "tags.Tag",
+    tags = ClusterTaggableManager(
         blank=True,
-        help_text=_("Learning Path tags"),
+        through="tags.LearningPathTag",
+        help_text=_("LearningPath tags"),
     )
-    courses = models.ManyToManyField(
-        "courses.Course",
-        blank=True,
-        help_text=_("Learning Path Courses"),
+
+    # Dashboard UI config
+    show_in_menus = True
+    context_object_name = "path"
+    template = "ui/previews/path.html"
+    content_panels = Page.content_panels + [
+        FieldPanel("image"),
+        FieldPanel("headline"),
+        FieldPanel("description"),
+        FieldPanel("prerequisites"),
+        FieldPanel("duration"),
+        FieldPanel("tags"),
+    ]
+    page_description = _(
+        "A learning path is a curated sequence of courses designed to guide learners through a specific subject "
+        "area or to help them achieve defined career goals. Learning paths can include prerequisites, recommended courses, "
+        "and sequencing information to ensure a cohesive learning experience."
     )
+
+    # Search fields
+    search_fields = Page.search_fields + [
+        index.FilterField("rating"),
+        index.FilterField("tags"),
+        index.SearchField("headline"),
+        index.SearchField("description"),
+        index.SearchField("prerequisites"),
+    ]
+
+    # API fields
+    api_fields = [
+        APIField("image"),
+        APIField("rating"),
+        APIField("headline"),
+        APIField("description"),
+        APIField("prerequisites"),
+        APIField("duration"),
+        APIField("tags"),
+    ]
+
+    parent_page_types = ["categories.Category"]
+    subpage_types = ["courses.Course"]
 
     class Meta:
         """Meta data"""
@@ -80,4 +105,4 @@ class Path(DateTimeMixin, models.Model):
         verbose_name = "Learning path"
 
     def __str__(self) -> str:
-        return self.name
+        return self.title

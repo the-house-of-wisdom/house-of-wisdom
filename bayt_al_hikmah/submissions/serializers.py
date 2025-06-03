@@ -13,11 +13,11 @@ class SubmissionCreateSerializer(ModelSerializer):
         """Meta data"""
 
         model = Submission
-        read_only_fields = ["user", "assignment", "grade", "feedback"]
+        read_only_fields = ["owner", "assignment", "grade", "feedback"]
         fields = [
             "id",
             "url",
-            "user",
+            "owner",
             "assignment",
             "grade",
             "status",

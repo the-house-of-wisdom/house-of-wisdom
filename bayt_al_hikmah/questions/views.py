@@ -4,30 +4,33 @@ import random
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
-from bayt_al_hikmah.mixins.views import ActionPermissionsMixin
-from bayt_al_hikmah.permissions import DenyAll, IsInstructor, IsQuestionOwner
+from bayt_al_hikmah.assignments.models import Assignment
+from bayt_al_hikmah.courses.models import Course
+from bayt_al_hikmah.lessons.models import Lesson
+from bayt_al_hikmah.mixins.views import ActionPermissionsMixin, UserFilterMixin
+from bayt_al_hikmah.modules.models import Module
+from bayt_al_hikmah.permissions import DenyAll, IsInstructor, IsOwner
 from bayt_al_hikmah.questions.models import Question
 from bayt_al_hikmah.questions.serializers import QuestionSerializer
-from bayt_al_hikmah.ui.mixins import UserQuestionsMixin
 
 
 # Create your views here.
 class BaseQuestionVS(ActionPermissionsMixin, ModelViewSet):
     """Base ViewSet for extension"""
 
-    queryset = Question.objects.all()
+    queryset = Question.objects.live()
     serializer_class = QuestionSerializer
     permission_classes = [IsAuthenticated, IsInstructor]
     search_fields = ["text"]
     ordering_fields = ["order", "created_at", "updated_at"]
-    filterset_fields = ["assignment", "type"]
+    filterset_fields = ["type"]
     action_permissions = {
         "default": permission_classes,
-        "create": permission_classes + [IsQuestionOwner],
+        "create": permission_classes + [IsOwner],
     }
 
 
-class QuestionViewSet(UserQuestionsMixin, BaseQuestionVS):
+class QuestionViewSet(UserFilterMixin, BaseQuestionVS):
     """
     API endpoints for managing Questions.
 
@@ -83,14 +86,14 @@ class QuestionViewSet(UserQuestionsMixin, BaseQuestionVS):
     **List Assignment Questions:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/questions \\
+    curl -X GET /api/questions \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
     **Retrieve an Assignment Question:**
 
     ```bash
-    curl -X POST http://localhost:8000/api/questions/1 \\
+    curl -X POST /api/questions/1 \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
@@ -159,14 +162,14 @@ class AssignmentQuestions(BaseQuestionVS):
     **List Assignment Questions:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/courses/1/modules/1/lessons/1/assignments/1/questions \\
+    curl -X GET /api/courses/1/modules/1/lessons/1/assignments/1/questions \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
     **Create an Assignment Question:**
 
     ```bash
-    curl -X POST http://localhost:8000/api/courses/1/modules/1/lessons/1/assignments/1/questions \\
+    curl -X POST /api/courses/1/modules/1/lessons/1/assignments/1/questions \\
         -H "Content-Type: application/json" \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE" \\
         -d '{
@@ -176,12 +179,16 @@ class AssignmentQuestions(BaseQuestionVS):
     ```
     """
 
-    action_permissions = {"default": [IsAuthenticated, IsInstructor, IsQuestionOwner]}
+    action_permissions = {"default": [IsAuthenticated, IsInstructor, IsOwner]}
 
     def perform_create(self, serializer):
         """Add assignment to question automatically"""
 
-        serializer.save(assignment_id=self.kwargs["assignment_id"])
+        Assignment.objects.get(pk=self.kwargs["assignment_id"]).add_child(
+            instance=Question(
+                **serializer.validated_data, owner_id=self.request.user.pk
+            )
+        )
 
     def get_queryset(self):
         """Filter queryset by assignment"""
@@ -189,12 +196,10 @@ class AssignmentQuestions(BaseQuestionVS):
         queryset = (
             super()
             .get_queryset()
-            .filter(
-                assignment_id=self.kwargs["assignment_id"],
-                assignment__lesson_id=self.kwargs["lesson_id"],
-                assignment__lesson__module_id=self.kwargs["module_id"],
-                assignment__lesson__module__course_id=self.kwargs["course_id"],
-            )
+            .descendant_of(Course.objects.get(pk=self.kwargs["course_id"]))
+            .descendant_of(Module.objects.get(pk=self.kwargs["module_id"]))
+            .descendant_of(Lesson.objects.get(pk=self.kwargs["lesson_id"]))
+            .child_of(Assignment.objects.get(pk=self.kwargs["assignment_id"]))
         )
 
         if self.request.GET.get("randomize"):

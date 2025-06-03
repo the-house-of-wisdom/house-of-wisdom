@@ -24,6 +24,7 @@ class AssignmentSerializer(ModelSerializer):
             "min_percentage",
             "content",
             "is_auto_graded",
+            "order",
             "created_at",
             "updated_at",
         ]

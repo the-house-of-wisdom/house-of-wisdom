@@ -12,7 +12,7 @@ from bayt_al_hikmah.mixins.views import ActionPermissionsMixin
 class ArticleViewSet(ActionPermissionsMixin, ModelViewSet):
     """Base ViewSet for extension"""
 
-    queryset = Article.objects.all()
+    queryset = Article.objects.live()
     serializer_class = ArticleSerializer
     permission_classes = [IsAuthenticated]
     search_fields = ["title", "headline", "content"]

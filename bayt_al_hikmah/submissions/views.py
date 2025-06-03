@@ -1,10 +1,17 @@
 """API endpoints for bayt_al_hikmah.submissions"""
 
-from django.db.models import Q
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
-from bayt_al_hikmah.mixins.views import ActionPermissionsMixin, ActionSerializersMixin
+from bayt_al_hikmah.assignments.models import Assignment
+from bayt_al_hikmah.courses.models import Course
+from bayt_al_hikmah.lessons.models import Lesson
+from bayt_al_hikmah.mixins.views import (
+    ActionPermissionsMixin,
+    ActionSerializersMixin,
+    UserFilterMixin,
+)
+from bayt_al_hikmah.modules.models import Module
 from bayt_al_hikmah.permissions import DenyAll, IsEnrolledOrInstructor, IsOwner
 from bayt_al_hikmah.submissions.models import Submission
 from bayt_al_hikmah.submissions.serializers import (
@@ -20,9 +27,9 @@ class BaseSubmissionVS(ActionPermissionsMixin, ModelViewSet):
     queryset = Submission.objects.all()
     serializer_class = SubmissionSerializer
     permission_classes = [IsAuthenticated, IsOwner]
-    search_fields = ["user", "assignment"]
+    search_fields = ["owner", "assignment"]
     ordering_fields = ["grade", "created_at", "updated_at"]
-    filterset_fields = ["user", "assignment", "grade"]
+    filterset_fields = ["owner", "assignment", "grade"]
     action_permissions = {"default": permission_classes}
 
     def perform_create(self, serializer) -> None:
@@ -33,7 +40,7 @@ class BaseSubmissionVS(ActionPermissionsMixin, ModelViewSet):
         """
 
         submission = serializer.save(
-            user=self.request.user, assignment_id=self.kwargs["assignment_id"]
+            owner_id=self.request.user.pk, assignment_id=self.kwargs["assignment_id"]
         )
         questions = [
             {
@@ -71,7 +78,7 @@ class BaseSubmissionVS(ActionPermissionsMixin, ModelViewSet):
         submission.save()
 
 
-class SubmissionViewSet(BaseSubmissionVS):
+class SubmissionViewSet(UserFilterMixin, BaseSubmissionVS):
     """
     API endpoints for managing Submissions.
 
@@ -128,34 +135,19 @@ class SubmissionViewSet(BaseSubmissionVS):
     **List Submissions:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/submissions \\
+    curl -X GET /api/submissions \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
     **Retrieve a Submission:**
 
     ```bash
-    curl -X POST http://localhost:8000/api/submissions/1 \\
+    curl -X POST /api/submissions/1 \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
     """
 
     action_permissions = {**BaseSubmissionVS.action_permissions, "create": [DenyAll]}
-
-    def get_queryset(self):
-        """
-        Filter queryset by user to allow users to view their submissions only and
-        allow instructors to view submissions of their assignments.
-        """
-
-        return (
-            super()
-            .get_queryset()
-            .filter(
-                Q(user_id=self.request.user.id)
-                | Q(assignment__lesson__module__course__user_id=self.request.user.id)
-            )
-        )
 
 
 class AssignmentSubmissions(ActionSerializersMixin, BaseSubmissionVS):
@@ -216,14 +208,14 @@ class AssignmentSubmissions(ActionSerializersMixin, BaseSubmissionVS):
     **List Submissions:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/courses/1/modules/1/lessons/1/assignments/1/submissions \\
+    curl -X GET /api/courses/1/modules/1/lessons/1/assignments/1/submissions \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
     **Create a Submission:**
 
     ```bash
-    curl -X POST http://localhost:8000/api/courses/1/modules/1/lessons/1/assignments/1/submissions \\
+    curl -X POST /api/courses/1/modules/1/lessons/1/assignments/1/submissions \\
         -H "Content-Type: application/json" \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE" \\
         -d '{
@@ -255,9 +247,9 @@ class AssignmentSubmissions(ActionSerializersMixin, BaseSubmissionVS):
             .get_queryset()
             .filter(
                 user_id=self.request.user.id,
-                assignment_id=self.kwargs["assignment_id"],
-                assignment__lesson_id=self.kwargs["lesson_id"],
-                assignment__lesson__module_id=self.kwargs["module_id"],
-                assignment__lesson__module__course_id=self.kwargs["course_id"],
+                assignment=Assignment.objects.filter(pk=self.kwargs["assignment_id"])
+                .descendant_of(Course.objects.get(pk=self.kwargs["course_id"]))
+                .descendant_of(Module.objects.get(pk=self.kwargs["module_id"]))
+                .child_of(Lesson.objects.get(pk=self.kwargs["lesson_id"])),
             )
         )

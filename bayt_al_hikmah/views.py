@@ -70,14 +70,14 @@ class HouseOfWisdomAPI(APIRootView):
 
     ## Usage
 
-    Send a GET request to the API root (e.g., `http://localhost:8000/api`) to receive a JSON object listing all
+    Send a GET request to the API root (e.g., `/api`) to receive a JSON object listing all
     available endpoints along with their URLs. This navigational overview makes it simple for developers to explore and
     integrate the various supported features.
 
     ### Sample Request
 
     ```bash
-    curl -X GET http://localhost:8000/api
+    curl -X GET /api
     ```
 
     ### Sample Response
@@ -86,7 +86,6 @@ class HouseOfWisdomAPI(APIRootView):
     {
         "users": "http://127.0.0.1:8000/api/users",
         "categories": "http://127.0.0.1:8000/api/categories",
-        "tags": "http://127.0.0.1:8000/api/tags",
         "paths": "http://127.0.0.1:8000/api/paths",
         "courses": "http://127.0.0.1:8000/api/courses",
         "enrollments": "http://127.0.0.1:8000/api/enrollments",
@@ -136,13 +135,13 @@ class CourseInstanceAPI(APIRootView):
     ## Usage
 
     This API root acts as a navigational map for developers and users to explore course-related functionality.
-    Sending a GET request to the API root (e.g., `http://localhost:8000/api/courses/1/`) returns a JSON object
+    Sending a GET request to the API root (e.g., `/api/courses/1/`) returns a JSON object
     containing all available course-related endpoints.
 
     ### Example Request
 
     ```bash
-    curl -X GET http://localhost:8000/api/courses/1/ \\
+    curl -X GET /api/courses/1 \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
@@ -150,10 +149,10 @@ class CourseInstanceAPI(APIRootView):
 
     ```json
     {
-        "enrollments": "http://localhost:8000/api/courses/1/enrollments",
-        "posts": "http://localhost:8000/api/courses/1/posts",
-        "modules": "http://localhost:8000/api/courses/1/modules",
-        "reviews": "http://localhost:8000/api/courses/1/reviews"
+        "enrollments": "/api/courses/1/enrollments",
+        "posts": "/api/courses/1/posts",
+        "modules": "/api/courses/1/modules",
+        "reviews": "/api/courses/1/reviews"
     }
     ```
 
@@ -186,13 +185,13 @@ class ModuleInstanceAPI(APIRootView):
 
     ## Usage
 
-    Sending a GET request to the API root (e.g., `http://localhost:8000/api/courses/1/modules/1/`) returns a JSON object containing
+    Sending a GET request to the API root (e.g., `/api/courses/1/modules/1/`) returns a JSON object containing
     available module-related endpoints.
 
     ### Example Request
 
     ```bash
-    curl -X GET http://localhost:8000/api/courses/1/modules/1/ \\
+    curl -X GET /api/courses/1/modules/1 \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
@@ -200,7 +199,7 @@ class ModuleInstanceAPI(APIRootView):
 
     ```json
     {
-        "lessons": "http://localhost:8000/api/courses/1/modules/1/lessons"
+        "lessons": "/api/courses/1/modules/1/lessons"
     }
     ```
 
@@ -236,13 +235,13 @@ class LessonInstanceAPI(APIRootView):
 
     ## Usage
 
-    Sending a GET request to the API root (e.g., `http://localhost:8000/api/courses/1/modules/1/lessons/1/`) returns
+    Sending a GET request to the API root (e.g., `/api/courses/1/modules/1/lessons/1/`) returns
     a JSON object containing available lesson-related endpoints.
 
     ### Example Request
 
     ```bash
-    curl -X GET http://localhost:8000/api/courses/1/modules/1/lessons/1/ \\
+    curl -X GET /api/courses/1/modules/1/lessons/1 \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
@@ -250,8 +249,8 @@ class LessonInstanceAPI(APIRootView):
 
     ```json
     {
-        "assignments": "http://localhost:8000/api/courses/1/modules/1/lessons/1/assignments",
-        "items": "http://localhost:8000/api/courses/1/modules/1/lessons/1/items"
+        "assignments": "/api/courses/1/modules/1/lessons/1/assignments",
+        "items": "/api/courses/1/modules/1/lessons/1/items"
     }
     ```
 
@@ -286,13 +285,13 @@ class AssignmentInstanceAPI(APIRootView):
 
     ## Usage
 
-    Sending a GET request to the API root (e.g., `http://localhost:8000/api/courses/1/modules/1/lessons/1/assignments/1/`)
+    Sending a GET request to the API root (e.g., `/api/courses/1/modules/1/lessons/1/assignments/1/`)
     returns a JSON object containing available assignment-related endpoints.
 
     ### Example Request
 
     ```bash
-    curl -X GET http://localhost:8000/api/courses/1/modules/1/lessons/1/assignments/1/ \\
+    curl -X GET /api/courses/1/modules/1/lessons/1/assignments/1 \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
@@ -300,8 +299,8 @@ class AssignmentInstanceAPI(APIRootView):
 
     ```json
     {
-        "questions": "http://localhost:8000/api/courses/1/modules/1/lessons/1/assignments/1/questions",
-        "submissions": "http://localhost:8000/api/courses/1/modules/1/lessons/1/assignments/1/submissions"
+        "questions": "/api/courses/1/modules/1/lessons/1/assignments/1/questions",
+        "submissions": "/api/courses/1/modules/1/lessons/1/assignments/1/submissions"
     }
     ```
 
@@ -334,13 +333,13 @@ class QuestionInstanceAPI(APIRootView):
 
     ## Usage
 
-    Sending a GET request to the API root (e.g., `http://localhost:8000/api/courses/1/modules/1/lessons/1/assignments/1/questions/1/`)
+    Sending a GET request to the API root (e.g., `/api/courses/1/modules/1/lessons/1/assignments/1/questions/1/`)
     returns a JSON object that lists available endpoints under the questions module.
 
     ### Example Request
 
     ```bash
-    curl -X GET http://localhost:8000/api/courses/1/modules/1/lessons/1/assignments/1/questions/1/ \\
+    curl -X GET /api/courses/1/modules/1/lessons/1/assignments/1/questions/1 \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
@@ -348,7 +347,7 @@ class QuestionInstanceAPI(APIRootView):
 
     ```json
     {
-        "answers": "http://localhost:8000/api/questions/answers/"
+        "answers": "/api/questions/answers/"
     }
     ```
 

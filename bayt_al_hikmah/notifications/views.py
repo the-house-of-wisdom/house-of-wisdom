@@ -18,4 +18,4 @@ class NotificationViewSet(UserFilterMixin, ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated, IsOwner]
     search_fields = ["content"]
     ordering_fields = ["created_at", "updated_at"]
-    filterset_fields = ["user", "type"]
+    filterset_fields = ["owner", "type"]

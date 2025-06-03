@@ -233,6 +233,100 @@
 
           <ul class="menu menu-vertical items-center gap-1 p-0 lg:gap-2">
             <li
+              class="tooltip tooltip-right tooltip-accent rtl:tooltip-left"
+              data-tip="{% translate 'Language' %}"
+            >
+              <button
+                popovertarget="language"
+                style="anchor-name: --language"
+                class="btn btn-sm btn-square btn-ghost lg:btn-md"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-languages size-4 lg:size-6"
+                >
+                  <path d="m5 8 6 6" />
+                  <path d="m4 14 6-6 2-3" />
+                  <path d="M2 5h12" />
+                  <path d="M7 2h1" />
+                  <path d="m22 22-5-10-5 10" />
+                  <path d="M14 18h6" />
+                </svg>
+
+                <span class="sr-only">{% translate 'Language' %}</span>
+              </button>
+
+              <ul
+                id="language"
+                popover
+                style="position-anchor: --language"
+                class="menu dropdown dropdown-right dropdown-top rounded-box bg-base-100 shadow-sm"
+              >
+                <li class="menu-title">{% translate 'Language' %}</li>
+                <form
+                  id="lang-form"
+                  class="hidden"
+                  action="{% url 'set_language' %}"
+                  method="post"
+                >
+                  {% csrf_token %}
+                  <input name="next" type="hidden" value="{{ redirect_to }}" />
+                </form>
+
+                <!-- prettier ignore -->
+                {% get_available_languages as LANGUAGES %}
+                <!-- prettier ignore -->
+                {% get_language_info_list for LANGUAGES as languages %}
+                <!-- prettier ignore -->
+                {% for language in languages %}
+                <li>
+                  <label
+                    class="flex flex-row items-center justify-between gap-8"
+                  >
+                    <div class="flex flex-row items-center gap-2">
+                      <input
+                        form="lang-form"
+                        type="submit"
+                        name="language"
+                        value="{{ language.code|upper }}"
+                        aria-label="{{ language.name_local }} ({{ language.code }})"
+                      />
+                      <span
+                        >{{ language.name_local }} ({{ language.code }})</span
+                      >
+                    </div>
+                    <!-- prettier-ignore -->
+                    {% if language.code == LANGUAGE_CODE %}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-check text-primary size-4 lg:size-6"
+                    >
+                      <path d="M20 6 9 17l-5-5" />
+                    </svg>
+                    {% endif %}
+                  </label>
+                </li>
+                {% endfor %}
+              </ul>
+            </li>
+
+            <li
               class="tooltip tooltip-right tooltip-accent"
               data-tip="{% trans 'Profile' %}"
             >

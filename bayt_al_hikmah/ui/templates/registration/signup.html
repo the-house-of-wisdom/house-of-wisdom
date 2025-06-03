@@ -10,19 +10,19 @@
   class="flex col-span-12 size-full items-center justify-center lg:max-h-[calc(100dvh-1rem)] lg:overflow-y-auto"
 >
   <section
-    className="group card relative overflow-hidden rounded-box bg-base-200 shadow-xs hover:bg-primary hover:text-primary-content lg:card-lg xl:card-xl"
+    class="group card relative overflow-hidden rounded-box bg-base-200 shadow-xs hover:bg-primary hover:text-primary-content lg:card-lg xl:card-xl"
   >
     <header
-      className="bg-primary p-4 text-center text-primary-content group-hover:bg-success group-hover:text-success-content"
+      class="bg-primary p-4 text-center text-primary-content group-hover:bg-success group-hover:text-success-content"
     >
-      <h1 className="font-serif text-4xl font-black">
+      <h1 class="font-serif text-2xl font-black lg:text-4xl">
         {% trans 'House Of Wisdom' %}
       </h1>
     </header>
 
-    <main className="card-body gap-6">
+    <main class="card-body gap-6">
       <h2
-        className="text-3xl font-bold text-primary group-hover:text-primary-content"
+        class="text-xl font-bold text-primary group-hover:text-primary-content lg:text-3xl"
       >
         {% trans 'Sign up' %}
       </h2>
@@ -33,23 +33,23 @@
       {% include 'ui/components/form.html' %}
     </main>
 
-    <footer className="grid grid-cols-2">
+    <footer class="grid grid-cols-2">
       <button
         type="submit"
         form="form"
-        className="btn col-span-2 rounded-none font-semibold btn-primary group-hover:btn-success lg:btn-lg"
+        class="btn col-span-2 rounded-none font-semibold btn-primary group-hover:btn-success lg:btn-lg"
       >
         {% trans 'Sign up' %}
       </button>
       <a
         href="{% url 'ui:login' %}"
-        className="btn rounded-none btn-soft btn-primary group-hover:btn-success lg:btn-lg"
+        class="btn rounded-none btn-soft btn-primary group-hover:btn-success lg:btn-lg"
       >
         {% trans 'Log in' %}
       </a>
       <a
         href="{% url 'ui:password_reset' %}"
-        className="btn rounded-none btn-soft btn-primary group-hover:btn-success lg:btn-lg"
+        class="btn rounded-none btn-soft btn-primary group-hover:btn-success lg:btn-lg"
       >
         {% trans 'Forgot password?' %}
       </a>

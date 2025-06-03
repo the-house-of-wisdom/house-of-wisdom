@@ -5,33 +5,35 @@ from rest_framework.permissions import IsAuthenticated
 
 from bayt_al_hikmah.assignments.models import Assignment
 from bayt_al_hikmah.assignments.serializers import AssignmentSerializer
-from bayt_al_hikmah.mixins.views import ActionPermissionsMixin
+from bayt_al_hikmah.courses.models import Course
+from bayt_al_hikmah.lessons.models import Lesson
+from bayt_al_hikmah.mixins.views import ActionPermissionsMixin, UserFilterMixin
+from bayt_al_hikmah.modules.models import Module
 from bayt_al_hikmah.permissions import (
     DenyAll,
-    IsAssignmentOwner,
+    IsOwner,
     IsEnrolledOrInstructor,
     IsInstructor,
 )
-from bayt_al_hikmah.ui.mixins import UserAssignmentsMixin
 
 
 # Create your views here.
 class BaseAssignmentVS(ActionPermissionsMixin, ModelViewSet):
     """Base ViewSet for extension"""
 
-    queryset = Assignment.objects.all()
+    queryset = Assignment.objects.live()
     serializer_class = AssignmentSerializer
     permission_classes = [IsAuthenticated, IsInstructor]
     search_fields = ["title", "content"]
-    ordering_fields = ["created_at", "updated_at"]
-    filterset_fields = ["lesson__module__course", "lesson__module", "lesson", "type"]
+    ordering_fields = ["created_at", "updated_at", "order"]
+    filterset_fields = ["type"]
     action_permissions = {
         "default": permission_classes,
-        "create": permission_classes + [IsAssignmentOwner],
+        "create": permission_classes + [IsOwner],
     }
 
 
-class AssignmentViewSet(UserAssignmentsMixin, BaseAssignmentVS):
+class AssignmentViewSet(UserFilterMixin, BaseAssignmentVS):
     """
     API endpoints for managing Lesson Assignments.
 
@@ -84,14 +86,14 @@ class AssignmentViewSet(UserAssignmentsMixin, BaseAssignmentVS):
     **List Assignments:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/assignments \\
+    curl -X GET /api/assignments \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
     **Retrieve an Assignment:**
 
     ```bash
-    curl -X POST http://localhost:8000/api/assignments/1
+    curl -X POST /api/assignments/1
     ```
 
     > **🔹 Info:** Be sure to check the [`AssignmentInstanceAPI`](/api/courses/1/modules/1/lessons/1/assignments/1/).
@@ -159,14 +161,14 @@ class LessonAssignments(BaseAssignmentVS):
     **List Assignments:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/courses/1/modules/1/lessons/1/assignments \\
+    curl -X GET /api/courses/1/modules/1/lessons/1/assignments \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
     **Create an Assignment with type of Quiz:**
 
     ```bash
-    curl -X POST http://localhost:8000/api/courses/1/modules/1/lessons/1/assignments \\
+    curl -X POST /api/courses/1/modules/1/lessons/1/assignments \\
         -H "Content-Type: application/json" \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE" \\
         -d '{
@@ -179,7 +181,7 @@ class LessonAssignments(BaseAssignmentVS):
     """
 
     action_permissions = {
-        "default": [IsAuthenticated, IsInstructor, IsAssignmentOwner],
+        "default": [IsAuthenticated, IsInstructor, IsOwner],
         "list": [IsAuthenticated, IsEnrolledOrInstructor],
         "retrieve": [IsAuthenticated, IsEnrolledOrInstructor],
     }
@@ -187,7 +189,11 @@ class LessonAssignments(BaseAssignmentVS):
     def perform_create(self, serializer):
         """Add lesson to assignment automatically"""
 
-        serializer.save(lesson_id=self.kwargs["lesson_id"])
+        Lesson.objects.get(pk=self.kwargs["lesson_id"]).add_child(
+            instance=Assignment(
+                **serializer.validated_data, owner_id=self.request.user.pk
+            )
+        )
 
     def get_queryset(self):
         """Filter queryset by lesson"""
@@ -195,9 +201,7 @@ class LessonAssignments(BaseAssignmentVS):
         return (
             super()
             .get_queryset()
-            .filter(
-                lesson_id=self.kwargs["lesson_id"],
-                lesson__module_id=self.kwargs["module_id"],
-                lesson__module__course_id=self.kwargs["course_id"],
-            )
+            .descendant_of(Course.objects.get(pk=self.kwargs["course_id"]))
+            .descendant_of(Module.objects.get(pk=self.kwargs["module_id"]))
+            .child_of(Lesson.objects.get(pk=self.kwargs["lesson_id"]))
         )

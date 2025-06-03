@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from bayt_al_hikmah.enrollments.models import Enrollment
 from bayt_al_hikmah.enrollments.serializers import EnrollmentSerializer
 from bayt_al_hikmah.mixins.views import ActionPermissionsMixin, UserFilterMixin
-from bayt_al_hikmah.permissions import DenyAll, IsInstructor, IsEnrollmentOwner, IsOwner
+from bayt_al_hikmah.permissions import DenyAll, IsInstructor, IsOwner
 
 
 # Create your views here.
@@ -16,9 +16,9 @@ class BaseEnrollmentVS(ActionPermissionsMixin, ModelViewSet):
     queryset = Enrollment.objects.all()
     serializer_class = EnrollmentSerializer
     permission_classes = [IsAuthenticated, IsOwner]
-    search_fields = ["course", "user"]
+    search_fields = ["course", "owner"]
     ordering_fields = ["created_at", "updated_at"]
-    filterset_fields = ["user", "course", "role", "progress", "is_completed"]
+    filterset_fields = ["owner", "course", "role", "progress", "is_completed"]
     action_permissions = {"default": permission_classes}
 
 
@@ -88,7 +88,7 @@ class EnrollmentViewSet(UserFilterMixin, BaseEnrollmentVS):
     **List Course Enrollments:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/enrollments \\
+    curl -X GET /api/enrollments \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
     """
@@ -163,18 +163,18 @@ class CourseEnrollments(BaseEnrollmentVS):
     **List Course Enrollments:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/courses/1/enrollments \\
+    curl -X GET /api/courses/1/enrollments \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
     """
 
-    action_permissions = {"default": [IsAuthenticated, IsInstructor, IsEnrollmentOwner]}
+    action_permissions = {"default": [IsAuthenticated, IsInstructor]}
 
     def perform_create(self, serializer):
         """Add course to enrollment automatically"""
 
         serializer.save(
-            user_id=self.request.user.id, course_id=self.kwargs["course_id"]
+            owner_id=self.request.user.pk, course_id=self.kwargs["course_id"]
         )
 
     def get_queryset(self):

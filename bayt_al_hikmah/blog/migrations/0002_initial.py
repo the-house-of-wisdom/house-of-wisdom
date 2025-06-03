@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("paths", "0001_initial"),
+        ("blog", "0001_initial"),
         (
             "taggit",
             "0006_rename_taggeditem_content_type_object_id_taggit_tagg_content_8fc721_idx",
@@ -19,12 +19,12 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="learningpath",
+            model_name="article",
             name="tags",
             field=modelcluster.contrib.taggit.ClusterTaggableManager(
                 blank=True,
-                help_text="LearningPath tags",
-                through="tags.LearningPathTag",
+                help_text="Course tags",
+                through="tags.ArticleTag",
                 to="taggit.Tag",
                 verbose_name="Tags",
             ),

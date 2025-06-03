@@ -5,28 +5,32 @@ from rest_framework.permissions import IsAuthenticated
 
 from bayt_al_hikmah.answers.models import Answer
 from bayt_al_hikmah.answers.serializers import AnswerSerializer
-from bayt_al_hikmah.mixins.views import ActionPermissionsMixin
-from bayt_al_hikmah.permissions import DenyAll, IsAnswerOwner, IsInstructor
-from bayt_al_hikmah.ui.mixins import UserAnswersMixin
+from bayt_al_hikmah.assignments.models import Assignment
+from bayt_al_hikmah.courses.models import Course
+from bayt_al_hikmah.lessons.models import Lesson
+from bayt_al_hikmah.mixins.views import ActionPermissionsMixin, UserFilterMixin
+from bayt_al_hikmah.modules.models import Module
+from bayt_al_hikmah.permissions import DenyAll, IsInstructor, IsOwner
+from bayt_al_hikmah.questions.models import Question
 
 
 # Create your views here.
 class BaseAnswerVS(ActionPermissionsMixin, ModelViewSet):
     """Base ViewSet for extension"""
 
-    queryset = Answer.objects.all()
+    queryset = Answer.objects.live()
     serializer_class = AnswerSerializer
     permission_classes = [IsAuthenticated, IsInstructor]
     search_fields = ["text"]
     ordering_fields = ["created_at", "updated_at"]
-    filterset_fields = ["question", "is_correct"]
+    filterset_fields = ["is_correct"]
     action_permissions = {
         "default": permission_classes,
-        "create": permission_classes + [IsAnswerOwner],
+        "create": permission_classes + [IsOwner],
     }
 
 
-class AnswerViewSet(UserAnswersMixin, BaseAnswerVS):
+class AnswerViewSet(UserFilterMixin, BaseAnswerVS):
     """
     API endpoints for managing Answers.
 
@@ -78,7 +82,7 @@ class AnswerViewSet(UserAnswersMixin, BaseAnswerVS):
     **List Answers:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/answers \\
+    curl -X GET /api/answers \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
     """
@@ -142,17 +146,19 @@ class QuestionAnswers(BaseAnswerVS):
     **List Answers:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/courses/1/modules/1/lessons/1/assignments/1/questions/1/answers \\
+    curl -X GET /api/courses/1/modules/1/lessons/1/assignments/1/questions/1/answers \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
     """
 
-    action_permissions = {"default": [IsAuthenticated, IsInstructor, IsAnswerOwner]}
+    action_permissions = {"default": [IsAuthenticated, IsInstructor, IsOwner]}
 
     def perform_create(self, serializer):
         """Add question to answer automatically"""
 
-        serializer.save(question_id=self.kwargs["question_id"])
+        Question.objects.get(pk=self.kwargs["assignment_id"]).add_child(
+            instance=Answer(**serializer.validated_data, owner_id=self.request.user.pk)
+        )
 
     def get_queryset(self):
         """Filter queryset by question"""
@@ -160,13 +166,9 @@ class QuestionAnswers(BaseAnswerVS):
         return (
             super()
             .get_queryset()
-            .filter(
-                question_id=self.kwargs["question_id"],
-                question__assignment_id=self.kwargs["assignment_id"],
-                question__assignment__lesson_id=self.kwargs["lesson_id"],
-                question__assignment__lesson__module_id=self.kwargs["module_id"],
-                question__assignment__lesson__module__course_id=self.kwargs[
-                    "course_id"
-                ],
-            )
+            .descendant_of(Course.objects.get(pk=self.kwargs["course_id"]))
+            .descendant_of(Module.objects.get(pk=self.kwargs["module_id"]))
+            .descendant_of(Lesson.objects.get(pk=self.kwargs["lesson_id"]))
+            .descendant_of(Assignment.objects.get(pk=self.kwargs["assignment_id"]))
+            .child_of(Question.objects.get(pk=self.kwargs["question_id"]))
         )

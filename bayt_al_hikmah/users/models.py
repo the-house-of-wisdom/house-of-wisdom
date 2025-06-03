@@ -26,16 +26,16 @@ class User(AbstractUser):
         blank=True,
         help_text=_("Tell us about yourself"),
     )
-    saved = models.ManyToManyField(
-        "paths.Path",
-        related_name="savers",
-        help_text=_("Saved learning paths"),
-    )
     # NOTE: When generating migrations, you need to comment this field
     # generate the migrations then uncomment it to add it to Item model
     # to avoid django.db.migrations.exceptions.CircularDependencyError
-    items = models.ManyToManyField(
-        "items.Item",
-        related_name="completers",
-        help_text=_("Completed items"),
-    )
+    # saved = models.ManyToManyField(
+    #     "paths.LearningPath",
+    #     related_name="savers",
+    #     help_text=_("Saved learning paths"),
+    # )
+    # items = models.ManyToManyField(
+    #     "items.Item",
+    #     related_name="completers",
+    #     help_text=_("Completed items"),
+    # )

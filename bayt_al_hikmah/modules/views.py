@@ -3,32 +3,31 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
-from bayt_al_hikmah.mixins.views import ActionPermissionsMixin
+from bayt_al_hikmah.courses.models import Course
+from bayt_al_hikmah.mixins.views import ActionPermissionsMixin, UserFilterMixin
 from bayt_al_hikmah.modules.models import Module
 from bayt_al_hikmah.modules.serializers import ModuleSerializer
 from bayt_al_hikmah.permissions import (
     DenyAll,
     IsEnrolledOrInstructor,
     IsInstructor,
-    IsModuleOwner,
+    IsOwner,
 )
-from bayt_al_hikmah.ui.mixins import UserModulesMixin
 
 
 # Create your views here.
 class BaseModuleVS(ActionPermissionsMixin, ModelViewSet):
     """Base ViewSet for extension"""
 
-    queryset = Module.objects.all()
+    queryset = Module.objects.live()
     serializer_class = ModuleSerializer
     permission_classes = [IsAuthenticated, IsInstructor]
     search_fields = ["title", "description"]
     ordering_fields = ["title", "order", "created_at", "updated_at"]
-    filterset_fields = ["course"]
     action_permissions = {"default": permission_classes}
 
 
-class ModuleViewSet(UserModulesMixin, BaseModuleVS):
+class ModuleViewSet(UserFilterMixin, BaseModuleVS):
     """
     API endpoints for managing Modules.
 
@@ -80,14 +79,14 @@ class ModuleViewSet(UserModulesMixin, BaseModuleVS):
     **List Modules:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/modules \\
+    curl -X GET /api/modules \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
     **Retrieve a Module:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/modules/1 \\
+    curl -X GET /api/modules/1 \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
@@ -153,14 +152,14 @@ class CourseModules(BaseModuleVS):
     **List Modules:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/courses/1/modules \\
+    curl -X GET /api/courses/1/modules \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
     **Create a Module:**
 
     ```bash
-    curl -X POST http://localhost:8000/api/courses/1/modules \\
+    curl -X POST /api/courses/1/modules \\
         -H "Content-Type: application/json" \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE" \\
         -d '{
@@ -172,7 +171,7 @@ class CourseModules(BaseModuleVS):
     """
 
     action_permissions = {
-        "default": [IsAuthenticated, IsInstructor, IsModuleOwner],
+        "default": [IsAuthenticated, IsInstructor, IsOwner],
         "list": [IsAuthenticated, IsEnrolledOrInstructor],
         "retrieve": [IsAuthenticated, IsEnrolledOrInstructor],
     }
@@ -180,9 +179,15 @@ class CourseModules(BaseModuleVS):
     def perform_create(self, serializer):
         """Create a module with course set automatically"""
 
-        serializer.save(course_id=self.kwargs["course_id"])
+        Course.objects.get(pk=self.kwargs["course_id"]).add_child(
+            instance=Module(**serializer.validated_data, owner_id=self.request.user.pk)
+        )
 
     def get_queryset(self):
         """Filter queryset by course"""
 
-        return super().get_queryset().filter(course_id=self.kwargs["course_id"])
+        return (
+            super()
+            .get_queryset()
+            .child_of(Course.objects.get(pk=self.kwargs["course_id"]))
+        )

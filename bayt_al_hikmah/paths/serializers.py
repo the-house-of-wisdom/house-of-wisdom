@@ -2,7 +2,7 @@
 
 from rest_framework.serializers import ModelSerializer
 
-from bayt_al_hikmah.paths.models import Path
+from bayt_al_hikmah.paths.models import LearningPath
 
 
 # Create your serializers here.
@@ -12,19 +12,16 @@ class PathSerializer(ModelSerializer):
     class Meta:
         """Meta data"""
 
-        model = Path
-        read_only_fields = ["user", "rating"]
+        model = LearningPath
+        read_only_fields = ["owner", "rating"]
         fields = [
             "id",
             "url",
-            "user",
-            "category",
+            "owner",
             "image",
-            "name",
+            "title",
             "headline",
             "description",
             "created_at",
             "updated_at",
-            "courses",
-            "tags",
         ]

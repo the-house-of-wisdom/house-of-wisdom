@@ -14,7 +14,7 @@
 }
 
 @plugin "daisyui" {
-  themes: all;
+  themes: silk --default, luxury --prefers-dark;
 }
 
 @layer base {

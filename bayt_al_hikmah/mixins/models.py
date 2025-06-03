@@ -21,3 +21,17 @@ class DateTimeMixin(models.Model):
         """Meta data"""
 
         abstract = True
+
+
+class Orderable(models.Model):
+    """Add order field for sorting"""
+
+    order = models.SmallIntegerField(
+        default=0,
+        help_text=_("Item order in the collection"),
+    )
+
+    class Meta:
+        """Meta data"""
+
+        abstract = True

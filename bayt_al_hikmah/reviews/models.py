@@ -15,7 +15,7 @@ User = get_user_model()
 class Review(DateTimeMixin, models.Model):
     """Course Reviews"""
 
-    user = models.ForeignKey(
+    owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name="reviews",
@@ -47,8 +47,8 @@ class Review(DateTimeMixin, models.Model):
         """Meta data"""
 
         constraints = [
-            models.UniqueConstraint(name="unique_review", fields=["user", "course"])
+            models.UniqueConstraint(name="unique_review", fields=["owner", "course"])
         ]
 
     def __str__(self) -> str:
-        return f"{self.user}: {self.course}-{self.rating}"
+        return f"{self.owner}: {self.course}-{self.rating}"

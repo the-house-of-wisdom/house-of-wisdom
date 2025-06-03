@@ -8,7 +8,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
 from bayt_al_hikmah.mixins.views import ActionPermissionsMixin, OwnerMixin
-from bayt_al_hikmah.paths.models import Path
+from bayt_al_hikmah.paths.models import LearningPath
 from bayt_al_hikmah.paths.serializers import PathSerializer
 from bayt_al_hikmah.permissions import IsInstructor, IsOwner
 
@@ -91,20 +91,20 @@ class PathViewSet(ActionPermissionsMixin, OwnerMixin, ModelViewSet):
     **List Learning Paths:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/paths \\
+    curl -X GET /api/paths \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
     **Create a Learning Path:**
 
     ```bash
-    curl -X POST http://localhost:8000/api/paths \\
+    curl -X POST /api/paths \\
         -H "Content-Type: application/json" \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE" \\
         -d '{
                 "category": 1,
                 "image": "path/to/image.png",
-                "name": "Data Science Essentials",
+                "title": "Data Science Essentials",
                 "headline": "DS for beginners",
                 "description": "A curated path to start your journey in data science.",
                 "prerequisites": "Basic programming knowledge",
@@ -117,16 +117,16 @@ class PathViewSet(ActionPermissionsMixin, OwnerMixin, ModelViewSet):
     **Save a Learning Path:**
 
     ```bash
-    curl -X POST http://localhost:8000/api/paths/2/save
+    curl -X POST /api/paths/2/save
     ```
     """
 
-    queryset = Path.objects.all()
+    queryset = LearningPath.objects.live()
     serializer_class = PathSerializer
     permission_classes = [IsAuthenticated]
-    search_fields = ["name", "headline", "description"]
-    ordering_fields = ["name", "created_at", "updated_at"]
-    filterset_fields = ["user", "category", "tags"]
+    search_fields = ["title", "headline", "description"]
+    ordering_fields = ["title", "created_at", "updated_at"]
+    filterset_fields = ["owner"]
     action_permissions = {
         "default": [IsAuthenticated, IsInstructor, IsOwner],
         "list": permission_classes,
@@ -139,7 +139,7 @@ class PathViewSet(ActionPermissionsMixin, OwnerMixin, ModelViewSet):
         """Add a path to favorite or saved paths"""
 
         saved: bool = False
-        path: Path = self.get_object()
+        path: LearningPath = self.get_object()
 
         if request.user.saved.contains(path):
             request.user.saved.remove(path)

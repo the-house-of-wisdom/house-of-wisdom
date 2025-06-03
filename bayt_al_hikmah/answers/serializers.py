@@ -13,11 +13,9 @@ class AnswerSerializer(ModelSerializer):
         """Meta data"""
 
         model = Answer
-        read_only_fields = ["question"]
         fields = [
             "id",
             "url",
-            "question",
             "is_correct",
             "text",
             "description",

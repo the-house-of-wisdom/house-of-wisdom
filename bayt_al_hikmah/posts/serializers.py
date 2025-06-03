@@ -13,11 +13,11 @@ class PostSerializer(ModelSerializer):
         """Meta data"""
 
         model = Post
-        read_only_fields = ["user", "course"]
+        read_only_fields = ["owner", "course"]
         fields = [
             "id",
             "url",
-            "user",
+            "owner",
             "course",
             "type",
             "content",

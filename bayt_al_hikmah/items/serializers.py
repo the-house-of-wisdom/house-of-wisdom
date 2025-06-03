@@ -13,11 +13,9 @@ class ItemSerializer(ModelSerializer):
         """Meta data"""
 
         model = Item
-        read_only_fields = ["lesson"]
         fields = [
             "id",
             "url",
-            "lesson",
             "type",
             "title",
             "content",

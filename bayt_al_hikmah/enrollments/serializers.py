@@ -14,7 +14,7 @@ class EnrollmentSerializer(ModelSerializer):
 
         model = Enrollment
         read_only_fields = [
-            "user",
+            "owner",
             "course",
             "role",
             "progress",
@@ -23,7 +23,7 @@ class EnrollmentSerializer(ModelSerializer):
         fields = [
             "id",
             "url",
-            "user",
+            "owner",
             "course",
             "role",
             "progress",

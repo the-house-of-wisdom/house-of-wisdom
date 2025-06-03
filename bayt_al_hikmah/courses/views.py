@@ -80,20 +80,20 @@ class CourseViewSet(ActionPermissionsMixin, OwnerMixin, ModelViewSet):
     **List Courses:**
 
     ```bash
-    curl -X GET http://localhost:8000/api/courses \\
+    curl -X GET /api/courses \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE"
     ```
 
     **Create a Course:**
 
     ```bash
-    curl -X POST http://localhost:8000/api/courses \\
+    curl -X POST /api/courses \\
         -H "Content-Type: application/json" \\
         -H "Authorization: Bearer YOUR_TOKEN_HERE" \\
         -d '{
                 "category": 1,
                 "image": "path/to/image.png",
-                "name": "Introduction to Python",
+                "title": "Introduction to Python",
                 "headline": "Master Python Basics",
                 "description": "Learn the basics of Python programming.",
                 "tags": [1, 3, 5]  // Array of tag IDs associated with the course
@@ -103,12 +103,12 @@ class CourseViewSet(ActionPermissionsMixin, OwnerMixin, ModelViewSet):
     > **🔹 Info:** Be sure to check the [`CourseInstanceAPI`](/api/courses/1/).
     """
 
-    queryset = Course.objects.all()
+    queryset = Course.objects.live()
     serializer_class = CourseSerializer
     permission_classes = [IsAuthenticated]
-    search_fields = ["name", "headline", "description"]
+    search_fields = ["title", "headline", "description"]
     ordering_fields = ["created_at", "updated_at"]
-    filterset_fields = ["user", "category", "tags"]
+    filterset_fields = ["owner"]
     instructor_permissions = permission_classes + [IsInstructor, IsOwner]
     action_permissions = {
         "default": permission_classes,

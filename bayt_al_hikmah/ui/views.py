@@ -8,7 +8,7 @@ from django.views import generic
 
 from bayt_al_hikmah.blog.models import Article
 from bayt_al_hikmah.courses.models import Course
-from bayt_al_hikmah.paths.models import Path
+from bayt_al_hikmah.paths.models import LearningPath
 from bayt_al_hikmah.ui import mixins
 from bayt_al_hikmah.ui.forms import UserCreateForm
 
@@ -92,7 +92,7 @@ class ArticleDetailView(generic.DetailView):
 class PathListView(generic.ListView):
     """Learning path list"""
 
-    model = Path
+    model = LearningPath
     paginate_by = 15
     template_name = "ui/paths/list.html"
 
@@ -100,7 +100,7 @@ class PathListView(generic.ListView):
 class PathDetailView(generic.DetailView):
     """Learning path details"""
 
-    model = Path
+    model = LearningPath
     slug_field = "slug"
     template_name = "ui/paths/id.html"
 
