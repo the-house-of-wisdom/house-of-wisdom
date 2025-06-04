@@ -1,0 +1,43 @@
+<!-- prettier ignore -->
+{% extends 'registration/base.html' %}{% load i18n %}
+
+<!-- prettier ignore -->
+{% block title %}{{ block.super }} | {% trans 'Logged out' %}{% endblock %}
+
+<!-- prettier ignore -->
+{% block main %}
+<div
+  class="flex overflow-y-auto col-span-12 size-full items-center justify-center rounded-box bg-base-100"
+>
+  <section
+    class="group card relative overflow-hidden max-w-3xl rounded-box bg-base-200 shadow-xs hover:bg-primary hover:text-primary-content lg:card-lg xl:card-xl"
+  >
+    <header
+      class="bg-primary p-4 text-center text-primary-content group-hover:bg-success group-hover:text-success-content"
+    >
+      <h1 class="font-serif text-2xl font-black lg:text-4xl">
+        {% trans 'House Of Wisdom' %}
+      </h1>
+    </header>
+
+    <main class="card-body gap-6">
+      <h2
+        class="text-xl font-bold text-primary group-hover:text-primary-content lg:text-3xl"
+      >
+        {% trans 'Logged Out' %}
+      </h2>
+
+      <p>{% trans 'Thanks for spending some quality time with us today.' %}</p>
+    </main>
+
+    <footer class="grid">
+      <a
+        href="{% url 'ui:login' %}"
+        class="btn rounded-none btn-primary group-hover:btn-success lg:btn-lg"
+      >
+        Log in
+      </a>
+    </footer>
+  </section>
+</div>
+{% endblock %}

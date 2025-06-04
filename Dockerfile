@@ -15,32 +15,32 @@ RUN pip install -r requirements.txt
 
 # Create new Django project and configure the settings
 RUN django-admin startproject core
-RUN cp -r bayt_al_hikmah core
+RUN cp -r how core
 
 # Configure settings
 RUN echo "AUTH_USER_MODEL = 'users.User'" >> core/settings.py
 RUN echo "INSTALLED_APPS += [" >> core/settings.py
-RUN echo "    # Bayt al Hikmah" >> core/settings.py
-RUN echo "    'bayt_al_hikmah'," >> core/settings.py
-RUN echo "    'bayt_al_hikmah.answers'," >> core/settings.py
-RUN echo "    'bayt_al_hikmah.assignments'," >> core/settings.py
-RUN echo "    'bayt_al_hikmah.blog'," >> core/settings.py
-RUN echo "    'bayt_al_hikmah.categories'," >> core/settings.py
-RUN echo "    'bayt_al_hikmah.ui.cms'," >> core/settings.py
-RUN echo "    'bayt_al_hikmah.courses'," >> core/settings.py
-RUN echo "    'bayt_al_hikmah.enrollments'," >> core/settings.py
-RUN echo "    'bayt_al_hikmah.items'," >> core/settings.py
-RUN echo "    'bayt_al_hikmah.lessons'," >> core/settings.py
-RUN echo "    'bayt_al_hikmah.modules'," >> core/settings.py
-RUN echo "    'bayt_al_hikmah.notifications'," >> core/settings.py
-RUN echo "    'bayt_al_hikmah.paths'," >> core/settings.py
-RUN echo "    'bayt_al_hikmah.posts'," >> core/settings.py
-RUN echo "    'bayt_al_hikmah.questions'," >> core/settings.py
-RUN echo "    'bayt_al_hikmah.reviews'," >> core/settings.py
-RUN echo "    'bayt_al_hikmah.submissions'," >> core/settings.py
-RUN echo "    'bayt_al_hikmah.tags'," >> core/settings.py
-RUN echo "    'bayt_al_hikmah.ui'," >> core/settings.py
-RUN echo "    'bayt_al_hikmah.users'," >> core/settings.py
+RUN echo "    # House of wisdom" >> core/settings.py
+RUN echo "    'how'," >> core/settings.py
+RUN echo "    'how.answers'," >> core/settings.py
+RUN echo "    'how.assignments'," >> core/settings.py
+RUN echo "    'how.blog'," >> core/settings.py
+RUN echo "    'how.categories'," >> core/settings.py
+RUN echo "    'how.ui.cms'," >> core/settings.py
+RUN echo "    'how.courses'," >> core/settings.py
+RUN echo "    'how.enrollments'," >> core/settings.py
+RUN echo "    'how.items'," >> core/settings.py
+RUN echo "    'how.lessons'," >> core/settings.py
+RUN echo "    'how.modules'," >> core/settings.py
+RUN echo "    'how.notifications'," >> core/settings.py
+RUN echo "    'how.paths'," >> core/settings.py
+RUN echo "    'how.posts'," >> core/settings.py
+RUN echo "    'how.questions'," >> core/settings.py
+RUN echo "    'how.reviews'," >> core/settings.py
+RUN echo "    'how.submissions'," >> core/settings.py
+RUN echo "    'how.tags'," >> core/settings.py
+RUN echo "    'how.ui'," >> core/settings.py
+RUN echo "    'how.users'," >> core/settings.py
 RUN echo "    # Deps" >> core/settings.py
 RUN echo "    'rest_wind'," >> core/settings.py
 RUN echo "    'rest_framework'," >> core/settings.py
@@ -61,7 +61,7 @@ RUN echo "]" >> core/settings.py
 
 # Setup URLConf
 RUN echo "from django.urls import include" >> core/urls.py
-RUN echo "urlpatterns += [path('', include('bayt_al_hikmah.urls'))]" >> core/urls.py
+RUN echo "urlpatterns += [path('', include('how.urls'))]" >> core/urls.py
 
 # Run migrations
 RUN cd core && python manage.py migrate

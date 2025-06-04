@@ -1,8 +1,8 @@
-# House of Wisdom
+# House of Wisdom - `بيت الحكمة`
 
-[![Django CI](https://github.com/youzarsiph/bayt-al-hikmah/actions/workflows/django.yml/badge.svg)](https://github.com/youzarsiph/bayt-al-hikmah/actions/workflows/django.yml)
-[![Black](https://github.com/youzarsiph/bayt-al-hikmah/actions/workflows/black.yml/badge.svg)](https://github.com/youzarsiph/bayt-al-hikmah/actions/workflows/black.yml)
-[![Ruff](https://github.com/youzarsiph/bayt-al-hikmah/actions/workflows/ruff.yml/badge.svg)](https://github.com/youzarsiph/bayt-al-hikmah/actions/workflows/ruff.yml)
+[![Django CI](https://github.com/youzarsiph/house-of-wisdom/actions/workflows/django.yml/badge.svg)](https://github.com/youzarsiph/house-of-wisdom/actions/workflows/django.yml)
+[![Black](https://github.com/youzarsiph/house-of-wisdom/actions/workflows/black.yml/badge.svg)](https://github.com/youzarsiph/house-of-wisdom/actions/workflows/black.yml)
+[![Ruff](https://github.com/youzarsiph/house-of-wisdom/actions/workflows/ruff.yml/badge.svg)](https://github.com/youzarsiph/house-of-wisdom/actions/workflows/ruff.yml)
 
 **House of Wisdom** is an open source, AI-powered Learning Management System (LMS) designed to transform how education is delivered online. Built with Python, Django, and Django Rest Framework (DRF), and styled using TailwindCSS, House of Wisdom offers a robust, scalable, and visually appealing platform for personalized and adaptive learning experiences.
 
@@ -10,7 +10,7 @@
 
 ## Table of Contents
 
-- [House of Wisdom](#house-of-wisdom)
+- [House of Wisdom - `بيت الحكمة`](#house-of-wisdom---بيت-الحكمة)
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Features](#features)
@@ -108,8 +108,8 @@ House of Wisdom employs a modular architecture to ensure scalability, maintainab
 1. **Clone the Repository:**
 
     ```bash
-    git clone https://github.com/yourusername/bayt-al-hikmah.git
-    cd bayt-al-hikmah
+    git clone https://github.com/yourusername/house-of-wisdom.git
+    cd house-of-wisdom
     ```
 
 2. **Setup the Python Environment:**
@@ -193,7 +193,7 @@ Upcoming features and improvements include:
 - Improved integrations with external academic resources.
 - Advanced analytics dashboards.
 
-Visit our [Issues](<https://github.com/yourusername/bayt-al-hikmah/issues>) page for current feature requests and development discussions.
+Visit our [Issues](<https://github.com/yourusername/house-of-wisdom/issues>) page for current feature requests and development discussions.
 
 ---
 

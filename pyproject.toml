@@ -1,12 +1,12 @@
 [tool.poetry]
 package-mode = false
-name = "bayt-al-hikmah"
+name = "house-of-wisdom"
 version = "0.1.0"
 description = "Bayt al-Hikmah, an innovative Learning Management System (LMS)."
 authors = ["Yousef Abu Shanab <josephyousef249@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-packages = [{ include = "bayt_al_hikmah" }]
+packages = [{ include = "how" }]
 
 [tool.poetry.dependencies]
 python = ">=3.10"

@@ -1,0 +1,115 @@
+<!-- prettier ignore -->
+{% extends "registration/base.html" %}{% load i18n %}
+
+<!-- prettier ignore -->
+{% block title %}{{ block.super }} | {% trans 'Login' %}{% endblock %}
+
+<!-- prettier ignore -->
+{% block main %}
+<div
+  class="flex overflow-y-auto col-span-12 size-full items-center justify-center rounded-box bg-base-100"
+>
+  <section
+    class="group card relative overflow-hidden max-w-3xl rounded-box bg-base-200 shadow-xs hover:bg-primary hover:text-primary-content lg:card-lg xl:card-xl"
+  >
+    <header
+      class="bg-primary p-4 text-center text-primary-content group-hover:bg-success group-hover:text-success-content"
+    >
+      <h1 class="font-serif text-2xl font-black lg:text-4xl">
+        {% trans 'House Of Wisdom' %}
+      </h1>
+    </header>
+
+    <main class="card-body gap-6">
+      <h2
+        class="text-xl font-bold text-primary group-hover:text-primary-content lg:text-3xl"
+      >
+        {% trans 'Log in' %}
+      </h2>
+
+      <p>{% trans 'Welcome, please login to continue.' %}</p>
+
+      {% if form.errors %}
+      <div role="alert" class="alert alert-horizontal alert-error">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-circle-x-icon lucide-circle-x size-4 lg:size-6"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <path d="m15 9-6 6" />
+          <path d="m9 9 6 6" />
+        </svg>
+
+        <p>
+          <!-- prettier ignore -->
+          {% trans 'Your username and password did not match. Please try again.' %}
+        </p>
+      </div>
+      {% endif %}
+
+      <!-- prettier ignore -->
+      {% if next %}{% if user.is_authenticated %}
+      <div role="alert" class="alert alert-horizontal alert-warning">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-triangle-alert-icon lucide-triangle-alert"
+        >
+          <path
+            d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"
+          />
+          <path d="M12 9v4" />
+          <path d="M12 17h.01" />
+        </svg>
+        <p>
+          {% blocktranslate %}Your account doesn't have access to this page. To
+          proceed, please login with an account that has access.
+          {% endblocktranslate %}
+        </p>
+      </div>
+      <!-- prettier ignore -->
+      {% endif %}{% endif %}
+
+      <!-- prettier ignore -->
+      {% include 'ui/components/form.html' %}
+    </main>
+
+    <footer class="grid grid-cols-2">
+      <button
+        form="form"
+        type="submit"
+        class="btn col-span-2 rounded-none font-semibold btn-primary group-hover:btn-success lg:btn-lg"
+      >
+        {% trans 'Log in' %}
+      </button>
+      <a
+        href="{% url 'ui:signup' %}"
+        class="btn rounded-none btn-soft btn-primary group-hover:btn-success lg:btn-lg"
+      >
+        {% trans 'Sign up' %}
+      </a>
+      <a
+        href="{% url 'ui:password_reset' %}"
+        class="btn rounded-none btn-soft btn-primary group-hover:btn-success lg:btn-lg"
+      >
+        {% trans 'Forgot password?' %}
+      </a>
+    </footer>
+  </section>
+</div>
+{% endblock %}

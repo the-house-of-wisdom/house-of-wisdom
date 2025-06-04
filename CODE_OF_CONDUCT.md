@@ -1,6 +1,6 @@
 # Code of Conduct
 
-**`bayt-al-hikmah`** values the participation of every member of our community and is dedicated to providing a welcoming, friendly, and respectful environment. To uphold this commitment, we have established the following code of conduct that all contributors, users, and participants must adhere to.
+**`house-of-wisdom`** values the participation of every member of our community and is dedicated to providing a welcoming, friendly, and respectful environment. To uphold this commitment, we have established the following code of conduct that all contributors, users, and participants must adhere to.
 
 ## Our Pledge
 
@@ -29,7 +29,7 @@ In the interest of fostering an open and welcoming environment, we as contributo
 
 ## Enforcing Our Standards
 
-**Violations** of the community standards may result in a warning, temporary or permanent suspension, or ban from all `bayt-al-hikmah`-related communities, including repositories, discussion boards, and other platforms.
+**Violations** of the community standards may result in a warning, temporary or permanent suspension, or ban from all `house-of-wisdom`-related communities, including repositories, discussion boards, and other platforms.
 
 - **Reporting Violations**: If you witness behavior that violates our standards or feel unsafe, please report it to the maintainers by opening an issue in the appropriate repository or contacting the maintainers directly. Your report will be treated with confidentiality.
 
@@ -39,7 +39,7 @@ This Code of Conduct is adapted from the [Contributor Covenant](https://www.cont
 
 ## Contact Information
 
-For any inquiries regarding the Code of Conduct or concerns that are not addressed within our guidelines, please contact the maintainers of the `bayt-al-hikmah` through the [GitHub Issues](https://github.com/youzarsiph/bayt-al-hikmah/issues) page or by reaching out via email.
+For any inquiries regarding the Code of Conduct or concerns that are not addressed within our guidelines, please contact the maintainers of the `house-of-wisdom` through the [GitHub Issues](https://github.com/youzarsiph/house-of-wisdom/issues) page or by reaching out via email.
 
 ---
 
