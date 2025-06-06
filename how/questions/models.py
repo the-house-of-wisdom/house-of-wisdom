@@ -1,22 +1,38 @@
 """Data Models for how.questions"""
 
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from wagtail.admin.panels import FieldPanel
-from wagtail.api import APIField
+from modelcluster.fields import ParentalKey
+from modelcluster.models import ClusterableModel
+from wagtail.admin.panels import FieldPanel, InlinePanel
 from wagtail.fields import StreamField
-from wagtail.models import Page
-from wagtail.search import index
+from wagtail.models import Orderable
 
-from how.mixins.models import DateTimeMixin, Orderable
+from how.mixins.models import DateTimeMixin
 from how.questions import QUESTION_TYPES
 from how.ui.cms.blocks import TextContentBlock
 
 
 # Create your models here.
-class Question(DateTimeMixin, Orderable, Page):
+User = get_user_model()
+
+
+class Question(DateTimeMixin, Orderable, ClusterableModel, models.Model):
     """Questions"""
 
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="questions",
+        help_text=_("Question owner"),
+    )
+    assignment = ParentalKey(
+        "assignments.Assignment",
+        on_delete=models.CASCADE,
+        related_name="questions",
+        help_text=_("Question assignment"),
+    )
     type = models.PositiveSmallIntegerField(
         default=0,
         choices=QUESTION_TYPES,
@@ -28,29 +44,11 @@ class Question(DateTimeMixin, Orderable, Page):
     )
 
     # Dashboard UI config
-    context_object_name = "question"
-    template = "ui/previews/question.html"
-    content_panels = Page.content_panels + [
+    panels = [
         FieldPanel("type"),
         FieldPanel("text"),
-        FieldPanel("order"),
+        InlinePanel("answers", heading="Answers", label="Answer"),
     ]
-    page_description = _(
-        "Questions can be structured as multiple-choice, short answer, "
-        "coding exercises, or other formats depending on the assignment type."
-    )
-
-    # Search fields
-    search_fields = Page.search_fields + [
-        index.FilterField("type"),
-        index.SearchField("text"),
-    ]
-
-    # API fields
-    api_fields = [APIField("type"), APIField("text"), APIField("order")]
-
-    parent_page_types = ["assignments.Assignment"]
-    subpage_types = ["answers.Answer"]
 
     def __str__(self) -> str:
-        return self.title
+        return f"{self.assignment}: Question {self.sort_order}"

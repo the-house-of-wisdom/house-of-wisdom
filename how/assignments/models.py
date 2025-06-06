@@ -3,7 +3,7 @@
 from django.db import models
 from django.core import validators
 from django.utils.translation import gettext_lazy as _
-from wagtail.admin.panels import FieldPanel
+from wagtail.admin.panels import FieldPanel, InlinePanel
 from wagtail.api import APIField
 from wagtail.fields import StreamField
 from wagtail.models import Page
@@ -62,6 +62,7 @@ class Assignment(DateTimeMixin, Orderable, Page):
         FieldPanel("min_percentage"),
         FieldPanel("content"),
         FieldPanel("is_auto_graded"),
+        InlinePanel("questions", heading="Questions", label="Question"),
     ]
     page_description = _(
         "Lesson Assignments serve as assessments for learners and can include written tasks, "
@@ -86,7 +87,7 @@ class Assignment(DateTimeMixin, Orderable, Page):
     ]
 
     parent_page_types = ["lessons.Lesson"]
-    subpage_types = ["questions.Question"]
+    subpage_types = []
 
     def __str__(self) -> str:
         return self.title

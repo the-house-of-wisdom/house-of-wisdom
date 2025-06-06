@@ -5,25 +5,20 @@ from rest_framework.permissions import IsAuthenticated
 
 from how.answers.models import Answer
 from how.answers.serializers import AnswerSerializer
-from how.assignments.models import Assignment
-from how.courses.models import Course
-from how.lessons.models import Lesson
 from how.mixins.views import ActionPermissionsMixin, UserFilterMixin
-from how.modules.models import Module
 from how.permissions import DenyAll, IsInstructor, IsOwner
-from how.questions.models import Question
 
 
 # Create your views here.
 class BaseAnswerVS(ActionPermissionsMixin, ModelViewSet):
     """Base ViewSet for extension"""
 
-    queryset = Answer.objects.live()
+    queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
     permission_classes = [IsAuthenticated, IsInstructor]
     search_fields = ["text"]
     ordering_fields = ["created_at", "updated_at"]
-    filterset_fields = ["is_correct"]
+    filterset_fields = ["question", "is_correct"]
     action_permissions = {
         "default": permission_classes,
         "create": permission_classes + [IsOwner],
@@ -156,8 +151,8 @@ class QuestionAnswers(BaseAnswerVS):
     def perform_create(self, serializer):
         """Add question to answer automatically"""
 
-        Question.objects.get(pk=self.kwargs["assignment_id"]).add_child(
-            instance=Answer(**serializer.validated_data, owner_id=self.request.user.pk)
+        serializer.save(
+            owner_id=self.request.user.pk, question_id=self.kwargs["question_id"]
         )
 
     def get_queryset(self):
@@ -166,9 +161,7 @@ class QuestionAnswers(BaseAnswerVS):
         return (
             super()
             .get_queryset()
-            .descendant_of(Course.objects.get(pk=self.kwargs["course_id"]))
-            .descendant_of(Module.objects.get(pk=self.kwargs["module_id"]))
-            .descendant_of(Lesson.objects.get(pk=self.kwargs["lesson_id"]))
-            .descendant_of(Assignment.objects.get(pk=self.kwargs["assignment_id"]))
-            .child_of(Question.objects.get(pk=self.kwargs["question_id"]))
+            .filter(
+                owner_id=self.request.user.pk, question_id=self.kwargs["question_id"]
+            )
         )
