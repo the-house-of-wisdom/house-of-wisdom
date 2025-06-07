@@ -20,7 +20,7 @@ class AnswerSerializer(ModelSerializer):
             "question",
             "is_correct",
             "text",
-            "description",
+            "feedback",
             "created_at",
             "updated_at",
         ]

@@ -1,6 +1,5 @@
 """API endpoints for how.reviews"""
 
-from django.db.models import Q
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 

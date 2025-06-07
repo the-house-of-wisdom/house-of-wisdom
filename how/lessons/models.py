@@ -3,22 +3,18 @@
 from django.utils.translation import gettext_lazy as _
 from wagtail.admin.panels import FieldPanel
 from wagtail.api import APIField
-from wagtail.fields import StreamField
+from wagtail.fields import RichTextField
 from wagtail.models import Page
 from wagtail.search import index
 
 from how.mixins.models import DateTimeMixin, Orderable
-from how.ui.cms.blocks import TextContentBlock
 
 
 # Create your models here.
 class Lesson(DateTimeMixin, Orderable, Page):
     """Lessons"""
 
-    description = StreamField(
-        TextContentBlock(),
-        help_text=_("Lesson description"),
-    )
+    description = RichTextField(help_text=_("Lesson description"))
 
     # Dashboard UI config
     context_object_name = "lesson"

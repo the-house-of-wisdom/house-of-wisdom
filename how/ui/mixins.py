@@ -1,8 +1,7 @@
 """Generic View Mixins for how.ui"""
 
-from typing import Any, Optional
+from typing import Optional
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.db.models.query import QuerySet
 from django.forms import BaseModelForm
 from django.http import HttpResponse
 
@@ -49,7 +48,7 @@ class OwnerMixin:
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         """Add the owner of the object automatically"""
 
-        object = form.save(commit=False)
-        object.owner_id = self.request.user.id
+        obj = form.save(commit=False)
+        obj.owner_id = self.request.user.id
 
         return super().form_valid(form)

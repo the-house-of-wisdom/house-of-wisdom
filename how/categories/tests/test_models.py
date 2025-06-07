@@ -9,5 +9,3 @@ class CategoryTests(TestCase):
 
     def setUp(self) -> None:
         """Setup before running tests"""
-
-        return super().setUp()

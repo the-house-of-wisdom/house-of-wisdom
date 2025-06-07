@@ -1,17 +1,17 @@
 """API endpoints for how.submissions"""
 
+from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.request import Request
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
-from how.assignments.models import Assignment
-from how.courses.models import Course
-from how.lessons.models import Lesson
 from how.mixins.views import (
     ActionPermissionsMixin,
     ActionSerializersMixin,
     UserFilterMixin,
 )
-from how.modules.models import Module
 from how.permissions import DenyAll, IsEnrolledOrInstructor, IsOwner
 from how.submissions.models import Submission
 from how.submissions.serializers import (
@@ -39,43 +39,30 @@ class BaseSubmissionVS(ActionPermissionsMixin, ModelViewSet):
             serializer (Serializer): The validated data
         """
 
-        submission = serializer.save(
-            owner_id=self.request.user.pk, assignment_id=self.kwargs["assignment_id"]
-        )
-        questions = [
-            {
-                "question": q.id,
-                # Check if ids of answers and ids of submission answers are equal
-                "is_correct": [
-                    i[0] for i in q.answers.filter(is_correct=True).values_list("id")
-                ]
-                == list(filter(lambda a: a["question"] == q.id, submission.answers))[0][
-                    "answers"
-                ],
-                # Generate question feedback
-                "feedback": [
-                    {
-                        "id": a.id,
-                        "text": a.text,
-                        "content": a.description,
-                    }
-                    for a in q.answers.filter(
-                        id__in=list(
-                            filter(lambda a: a["question"] == q.id, submission.answers)
-                        )[0]["answers"]
-                    )
-                ],
-            }
-            for q in submission.assignment.questions.all()
-        ]
+        graded = serializer.save(
+            owner_id=self.request.user.pk,
+            assignment_id=self.kwargs["assignment_id"],
+        ).calc_grade()
 
-        submission.feedback = questions
-        submission.grade = (
-            len(list(filter(lambda q: q["is_correct"], questions)))
-            / submission.assignment.questions.count()
-            * 100
+        if graded:
+            graded.save()
+
+    @action(methods=["post"], detail=True)
+    def grade(self, request: Request, pk: int) -> Response:
+        """Grade a submission"""
+
+        submission = self.get_object()
+
+        if submission.assignment.is_auto_graded:
+            submission.calc_grade().save()
+
+            return Response(
+                self.get_serializer()(instance=submission), status=status.HTTP_200_OK
+            )
+
+        return Response(
+            {"details": "This assignment is not auto graded"}, status=status.HTTP_200_OK
         )
-        submission.save()
 
 
 class SubmissionViewSet(UserFilterMixin, BaseSubmissionVS):
@@ -246,10 +233,7 @@ class AssignmentSubmissions(ActionSerializersMixin, BaseSubmissionVS):
             super()
             .get_queryset()
             .filter(
-                user_id=self.request.user.id,
-                assignment=Assignment.objects.filter(pk=self.kwargs["assignment_id"])
-                .descendant_of(Course.objects.get(pk=self.kwargs["course_id"]))
-                .descendant_of(Module.objects.get(pk=self.kwargs["module_id"]))
-                .child_of(Lesson.objects.get(pk=self.kwargs["lesson_id"])),
+                owner_id=self.request.user.id,
+                assignment_id=self.kwargs["assignment_id"],
             )
         )

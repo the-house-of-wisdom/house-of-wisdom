@@ -6,12 +6,12 @@ from django.utils.translation import gettext_lazy as _
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from wagtail.admin.panels import FieldPanel
 from wagtail.api import APIField
-from wagtail.fields import StreamField
+from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Page
 from wagtail.search import index
 
 from how.mixins.models import DateTimeMixin
-from how.ui.cms.blocks import PathPrerequisitesBlock, TextContentBlock
+from how.ui.cms.blocks import PathPrerequisitesBlock
 
 
 # Create your models here.
@@ -31,10 +31,7 @@ class LearningPath(DateTimeMixin, Page):
         db_index=True,
         help_text=_("Learning Path headline"),
     )
-    description = StreamField(
-        TextContentBlock(),
-        help_text=_("Learning Path description"),
-    )
+    description = RichTextField(help_text=_("Learning Path description"))
     prerequisites = StreamField(
         PathPrerequisitesBlock(),
         null=True,

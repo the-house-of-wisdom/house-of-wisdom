@@ -6,12 +6,11 @@ from django.utils.translation import gettext_lazy as _
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 from wagtail.admin.panels import FieldPanel, InlinePanel
-from wagtail.fields import StreamField
+from wagtail.fields import RichTextField
 from wagtail.models import Orderable
 
 from how.mixins.models import DateTimeMixin
 from how.questions import QUESTION_TYPES
-from how.ui.cms.blocks import TextContentBlock
 
 
 # Create your models here.
@@ -19,14 +18,8 @@ User = get_user_model()
 
 
 class Question(DateTimeMixin, Orderable, ClusterableModel, models.Model):
-    """Questions"""
+    """Assignment Questions"""
 
-    owner = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name="questions",
-        help_text=_("Question owner"),
-    )
     assignment = ParentalKey(
         "assignments.Assignment",
         on_delete=models.CASCADE,
@@ -38,10 +31,7 @@ class Question(DateTimeMixin, Orderable, ClusterableModel, models.Model):
         choices=QUESTION_TYPES,
         help_text=_("Question type"),
     )
-    text = StreamField(
-        TextContentBlock(),
-        help_text=_("Question text"),
-    )
+    text = RichTextField(help_text=_("Question text"))
 
     # Dashboard UI config
     panels = [

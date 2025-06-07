@@ -4,7 +4,7 @@ import random
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
-from how.mixins.views import ActionPermissionsMixin, UserFilterMixin
+from how.mixins.views import ActionPermissionsMixin
 from how.permissions import DenyAll, IsInstructor, IsOwner
 from how.questions.models import Question
 from how.questions.serializers import QuestionSerializer
@@ -18,7 +18,7 @@ class BaseQuestionVS(ActionPermissionsMixin, ModelViewSet):
     serializer_class = QuestionSerializer
     permission_classes = [IsAuthenticated, IsInstructor]
     search_fields = ["text"]
-    ordering_fields = ["order", "created_at", "updated_at"]
+    ordering_fields = ["sort_order", "created_at", "updated_at"]
     filterset_fields = ["assignment", "type"]
     action_permissions = {
         "default": permission_classes,
@@ -26,7 +26,7 @@ class BaseQuestionVS(ActionPermissionsMixin, ModelViewSet):
     }
 
 
-class QuestionViewSet(UserFilterMixin, BaseQuestionVS):
+class QuestionViewSet(BaseQuestionVS):
     """
     API endpoints for managing Questions.
 
@@ -97,6 +97,11 @@ class QuestionViewSet(UserFilterMixin, BaseQuestionVS):
     """
 
     action_permissions = {**BaseQuestionVS.action_permissions, "create": [DenyAll]}
+
+    def get_queryset(self):
+        """Filter queryset by owner"""
+
+        return super().get_queryset().filter(assignment__owner_id=self.request.user)
 
 
 class AssignmentQuestions(BaseQuestionVS):
@@ -180,9 +185,7 @@ class AssignmentQuestions(BaseQuestionVS):
     def perform_create(self, serializer):
         """Add assignment to question automatically"""
 
-        serializer.save(
-            owner_id=self.request.user.pk, question_id=self.kwargs["question_id"]
-        )
+        serializer.save(assignment_id=self.kwargs["assignment_id"])
 
     def get_queryset(self):
         """Filter queryset by assignment"""
@@ -191,7 +194,8 @@ class AssignmentQuestions(BaseQuestionVS):
             super()
             .get_queryset()
             .filter(
-                owner_id=self.request.user.pk, question_id=self.kwargs["question_id"]
+                assignment__owner_id=self.request.user.pk,
+                assignment_id=self.kwargs["assignment_id"],
             )
         )
 

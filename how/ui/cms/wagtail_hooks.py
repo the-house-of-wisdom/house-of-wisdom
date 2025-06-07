@@ -12,6 +12,8 @@ from how.ui.cms.views.reports import UnpublishedChangesReportView
 # Create your hooks here.
 @hooks.register("register_admin_viewset")
 def register_views():
+    """Register the views"""
+
     return [*viewsets.values()]
 
 
@@ -23,7 +25,7 @@ def show_my_pages_only(parent_page, pages, request):
 
     if page:
         if isinstance(page, Category):
-            return pages
+            return pages.filter(content_type__app_label="categories")
 
     return pages.filter(owner=request.user)
 
@@ -44,6 +46,8 @@ def show_my_uploaded_images_only(images, request):
 
 @hooks.register("register_reports_menu_item")
 def register_unpublished_changes_report_menu_item():
+    """Register extra menu items"""
+
     return MenuItem(
         "Unpublished changes",
         reverse_lazy("unpublished_changes_report"),
@@ -54,6 +58,8 @@ def register_unpublished_changes_report_menu_item():
 
 @hooks.register("register_admin_urls")
 def register_unpublished_changes_report_url():
+    """Register extra urlpatterns"""
+
     return [
         path(
             "reports/unpublished-changes/",

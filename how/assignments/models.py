@@ -5,13 +5,12 @@ from django.core import validators
 from django.utils.translation import gettext_lazy as _
 from wagtail.admin.panels import FieldPanel, InlinePanel
 from wagtail.api import APIField
-from wagtail.fields import StreamField
+from wagtail.fields import RichTextField
 from wagtail.models import Page
 from wagtail.search import index
 
 from how.assignments import ASSIGNMENT_TYPES
 from how.mixins.models import DateTimeMixin, Orderable
-from how.ui.cms.blocks import TextContentBlock
 
 
 # Create your models here.
@@ -43,10 +42,7 @@ class Assignment(DateTimeMixin, Orderable, Page):
             ),
         ],
     )
-    content = StreamField(
-        TextContentBlock(),
-        help_text=_("Assignment instructions or more info"),
-    )
+    content = RichTextField(help_text=_("Assignment instructions or more info"))
     is_auto_graded = models.BooleanField(
         default=True,
         help_text=_("Designates if the assignment is auto graded"),

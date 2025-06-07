@@ -6,12 +6,12 @@ from django.utils.translation import gettext_lazy as _
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from wagtail.admin.panels import FieldPanel
 from wagtail.api import APIField
-from wagtail.fields import StreamField
+from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Page
 from wagtail.search import index
 
 from how.mixins.models import DateTimeMixin
-from how.ui.cms.blocks import CoursePrerequisitesBlock, TextContentBlock
+from how.ui.cms.blocks import CoursePrerequisitesBlock
 
 
 # Create your models here.
@@ -37,10 +37,7 @@ class Course(DateTimeMixin, Page):
         db_index=True,
         help_text=_("Course rating"),
     )
-    description = StreamField(
-        TextContentBlock(),
-        help_text=_("Course description"),
-    )
+    description = RichTextField(help_text=_("Course description"))
     prerequisites = StreamField(
         CoursePrerequisitesBlock(),
         null=True,

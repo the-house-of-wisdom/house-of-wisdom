@@ -13,11 +13,9 @@ class AssignmentSerializer(ModelSerializer):
         """Meta data"""
 
         model = Assignment
-        read_only_fields = ["lesson"]
         fields = [
             "id",
             "url",
-            "lesson",
             "title",
             "description",
             "question_count",

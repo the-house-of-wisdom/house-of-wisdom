@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from how.answers.models import Answer
 from how.answers.serializers import AnswerSerializer
-from how.mixins.views import ActionPermissionsMixin, UserFilterMixin
+from how.mixins.views import ActionPermissionsMixin
 from how.permissions import DenyAll, IsInstructor, IsOwner
 
 
@@ -16,7 +16,7 @@ class BaseAnswerVS(ActionPermissionsMixin, ModelViewSet):
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
     permission_classes = [IsAuthenticated, IsInstructor]
-    search_fields = ["text"]
+    search_fields = ["text", "description"]
     ordering_fields = ["created_at", "updated_at"]
     filterset_fields = ["question", "is_correct"]
     action_permissions = {
@@ -25,7 +25,7 @@ class BaseAnswerVS(ActionPermissionsMixin, ModelViewSet):
     }
 
 
-class AnswerViewSet(UserFilterMixin, BaseAnswerVS):
+class AnswerViewSet(BaseAnswerVS):
     """
     API endpoints for managing Answers.
 
@@ -83,6 +83,15 @@ class AnswerViewSet(UserFilterMixin, BaseAnswerVS):
     """
 
     action_permissions = {**BaseAnswerVS.action_permissions, "create": [DenyAll]}
+
+    def get_queryset(self):
+        """Filter queryset by owner"""
+
+        return (
+            super()
+            .get_queryset()
+            .filter(question__assignment__owner_id=self.request.user.pk)
+        )
 
 
 class QuestionAnswers(BaseAnswerVS):
@@ -151,9 +160,7 @@ class QuestionAnswers(BaseAnswerVS):
     def perform_create(self, serializer):
         """Add question to answer automatically"""
 
-        serializer.save(
-            owner_id=self.request.user.pk, question_id=self.kwargs["question_id"]
-        )
+        serializer.save(question_id=self.kwargs["question_id"])
 
     def get_queryset(self):
         """Filter queryset by question"""
@@ -162,6 +169,7 @@ class QuestionAnswers(BaseAnswerVS):
             super()
             .get_queryset()
             .filter(
-                owner_id=self.request.user.pk, question_id=self.kwargs["question_id"]
+                question__assignment__owner_id=self.request.user.pk,
+                question_id=self.kwargs["question_id"],
             )
         )
