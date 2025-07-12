@@ -4,7 +4,7 @@ from django.apps import AppConfig
 
 
 # Create your config here.
-class BaytAlHikamhUIConfig(AppConfig):
+class HouseOfWisdomUIConfig(AppConfig):
     """App configuration for how.ui"""
 
     name = "how.ui"

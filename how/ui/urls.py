@@ -1,10 +1,9 @@
 """URLConf for how.ui"""
 
-from django.urls import path
 from django.contrib.auth import views as auth
+from django.urls import path
 
 from how.ui import views
-
 
 # Create your URLConf here.
 app_name = "ui"
@@ -52,9 +51,9 @@ auth_urls = [
 
 urlpatterns = [
     path("", views.HomeView.as_view(), name="home"),
+    path("about/", views.HomeView.as_view(), name="about"),
+    path("contact/", views.HomeView.as_view(), name="contact"),
     *auth_urls,
-    path("articles/", views.ArticleListView.as_view(), name="articles"),
-    path("articles/<slug:slug>/", views.ArticleDetailView.as_view(), name="article"),
     path("courses/", views.CourseListView.as_view(), name="courses"),
     path("courses/<slug:slug>/", views.CourseDetailView.as_view(), name="course"),
     path("learning-paths/", views.PathListView.as_view(), name="paths"),

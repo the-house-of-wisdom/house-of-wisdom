@@ -1,28 +1,265 @@
-<!-- prettier ignore -->
-{% extends 'ui/base.html' %}{% load i18n %}
+{% extends 'ui/base.html' %}{% load i18n wagtailcore_tags wagtailimages_tags %}
 
-<!-- prettier ignore -->
-{% block title %}{% trans 'House Of Wisdom' %}{% endblock %}
+<!---->
+{% block content %}
+<section class="grid gap-8 px-4 pb-4 pt-16">
+  <div class="grid grid-cols-12 grid-rows-12 gap-4">
+    <div class="col-span-12 row-span-12 lg:col-span-8">
+      <ol class="carousel carousel-center rounded-box relative size-full">
+        <li role="heading" aria-level="{2}" class="absolute left-4 top-4 z-10">
+          <span
+            class="badge md:badge-lg lg:badge-xl badge-primary font-semibold shadow-sm"
+          >
+            {% trans 'Trending' %}
+          </span>
+        </li>
 
-<!-- prettier ignore -->
-{% block main %}
-<div
-  class="flex flex-col col-span-12 items-center justify-center gap-4 size-full"
->
-  <h1 class="text-5xl font-black font-serif">
-    {% trans 'Welcome to House Of Wisdom' %}
-  </h1>
-  <p class="font-light text-xl">
-    <!-- prettier ignore -->
-    {% blocktranslate %}House Of Wisdom is an innovative Learning Management
-    System (LMS) dedicated to nurturing intellectual growth{% endblocktranslate %}
-  </p>
+        {% for product in products %}
+        <li class="carousel-item skeleton relative size-full">
+          {% image product.image fill-1920x1080 %}
 
-  <div class="alert alert-info">
-    <span class="badge badge-info badge-soft text-bold"
-      >{% trans 'Info' %}</span
-    >
-    <p>{% trans 'House Of Wisdom is under heavy development' %}</p>
+          <div class="absolute bottom-4 left-4">
+            <div class="flex flex-col items-center gap-1 xl:flex-row">
+              <div
+                class="tooltip tooltip-primary tooltip-top"
+                data-tip="Details"
+              >
+                <a
+                  href="{% pageurl product %}"
+                  class="badge badge-primary md:badge-lg lg:badge-xl text-shadow-lg font-bold shadow-sm"
+                >
+                  {{ product.title }}
+                </a>
+              </div>
+
+              <div
+                class="tooltip tooltip-success tooltip-open tooltip-right rtl:tooltip-left"
+                data-tip="{{ product.price }}"
+              >
+                <span
+                  class="badge badge-sm badge-primary shadow-sm md:badge-md lg:badge-lg 2xl:badge-lg"
+                >
+                  <span class="sr-only"
+                    >{% trans 'Price:' %} {{ product.price }}</span
+                  >
+                  <i data-lucide="dollar-sign" class="size-4"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <nav class="absolute bottom-4 right-4">
+            <div class="flex flex-col items-center gap-1 xl:flex-row">
+              <div
+                class="tooltip tooltip-left rtl:tooltip-right lg:tooltip-top tooltip-primary"
+                data-tip="{% trans 'Prev' %}"
+              >
+                <button
+                  class="btn btn-primary btn-soft btn-sm btn-circle lg:btn-md xl:btn-lg 2xl:btn-xl"
+                >
+                  <i
+                    data-lucide="move-left"
+                    class="size-4 lg:size-6 2xl:size-8"
+                  ></i>
+                  <span class="sr-only">{% trans 'Previous' %}</span>
+                </button>
+              </div>
+              <div
+                class="tooltip tooltip-left rtl:tooltip-right lg:tooltip-top tooltip-primary"
+                data-tip="{% trans 'Next' %}"
+              >
+                <button
+                  class="btn btn-primary btn-soft btn-sm btn-circle lg:btn-md xl:btn-lg 2xl:btn-xl"
+                >
+                  <i
+                    data-lucide="move-right"
+                    class="size-4 lg:size-6 2xl:size-8"
+                  ></i>
+                  <span class="sr-only">{% trans 'Next' %}</span>
+                </button>
+              </div>
+            </div>
+          </nav>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+
+    <div class="col-span-12 row-span-6 lg:col-span-4">
+      <ol class="carousel carousel-center rounded-box relative size-full">
+        <li role="heading" aria-level="{2}" class="absolute left-4 top-4 z-10">
+          <span
+            class="badge md:badge-lg lg:badge-xl badge-primary font-semibold shadow-sm"
+          >
+            {% trans 'Popular' %}
+          </span>
+        </li>
+
+        {% for product in products %}
+        <li class="carousel-item skeleton relative size-full">
+          {% image product.image fill-1920x1080 %}
+
+          <div class="absolute bottom-4 left-4">
+            <div class="flex flex-col items-center gap-1 xl:flex-row">
+              <div
+                class="tooltip tooltip-primary tooltip-top"
+                data-tip="Details"
+              >
+                <a
+                  href="{% pageurl product %}"
+                  class="badge badge-primary md:badge-lg lg:badge-xl text-shadow-lg font-bold shadow-sm"
+                >
+                  {{ product.title }}
+                </a>
+              </div>
+
+              <div
+                class="tooltip tooltip-success tooltip-open tooltip-right rtl:tooltip-left"
+                data-tip="{{ product.price }}"
+              >
+                <span
+                  class="badge badge-sm badge-primary shadow-sm md:badge-md lg:badge-lg 2xl:badge-lg"
+                >
+                  <span class="sr-only"
+                    >{% trans 'Price:' %} {{ product.price }}</span
+                  >
+                  <i data-lucide="dollar-sign" class="size-4"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <nav class="absolute bottom-4 right-4">
+            <div class="flex flex-col items-center gap-1 xl:flex-row">
+              <div
+                class="tooltip tooltip-left rtl:tooltip-right lg:tooltip-top tooltip-primary"
+                data-tip="{% trans 'Prev' %}"
+              >
+                <button
+                  class="btn btn-primary btn-soft btn-sm btn-circle lg:btn-md xl:btn-lg 2xl:btn-xl"
+                >
+                  <i
+                    data-lucide="move-left"
+                    class="size-4 lg:size-6 2xl:size-8"
+                  ></i>
+                  <span class="sr-only">{% trans 'Previous' %}</span>
+                </button>
+              </div>
+              <div
+                class="tooltip tooltip-left rtl:tooltip-right lg:tooltip-top tooltip-primary"
+                data-tip="{% trans 'Next' %}"
+              >
+                <button
+                  class="btn btn-primary btn-soft btn-sm btn-circle lg:btn-md xl:btn-lg 2xl:btn-xl"
+                >
+                  <i
+                    data-lucide="move-right"
+                    class="size-4 lg:size-6 2xl:size-8"
+                  ></i>
+                  <span class="sr-only">{% trans 'Next' %}</span>
+                </button>
+              </div>
+            </div>
+          </nav>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+
+    <div class="col-span-12 row-span-6 lg:col-span-4">
+      <ol class="carousel carousel-center rounded-box relative size-full">
+        <li role="heading" aria-level="{2}" class="absolute left-4 top-4 z-10">
+          <span
+            class="badge md:badge-lg lg:badge-xl badge-primary font-semibold shadow-sm"
+          >
+            {% trans 'Trending' %}
+          </span>
+        </li>
+
+        {% for product in products %}
+        <li class="carousel-item skeleton relative size-full">
+          {% image product.image fill-1920x1080 %}
+
+          <div class="absolute bottom-4 left-4">
+            <div class="flex flex-col items-center gap-1 xl:flex-row">
+              <div
+                class="tooltip tooltip-primary tooltip-top"
+                data-tip="Details"
+              >
+                <a
+                  href="{% pageurl product %}"
+                  class="badge badge-primary md:badge-lg lg:badge-xl text-shadow-lg font-bold shadow-sm"
+                >
+                  {{ product.title }}
+                </a>
+              </div>
+
+              <div
+                class="tooltip tooltip-success tooltip-open tooltip-right rtl:tooltip-left"
+                data-tip="{{ product.price }}"
+              >
+                <span
+                  class="badge badge-sm badge-primary shadow-sm md:badge-md lg:badge-lg 2xl:badge-lg"
+                >
+                  <span class="sr-only"
+                    >{% trans 'Price:' %} {{ product.price }}</span
+                  >
+                  <i data-lucide="dollar-sign" class="size-4"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <nav class="absolute bottom-4 right-4">
+            <div class="flex flex-col items-center gap-1 xl:flex-row">
+              <div
+                class="tooltip tooltip-left rtl:tooltip-right lg:tooltip-top tooltip-primary"
+                data-tip="{% trans 'Prev' %}"
+              >
+                <button
+                  class="btn btn-primary btn-soft btn-sm btn-circle lg:btn-md xl:btn-lg 2xl:btn-xl"
+                >
+                  <i
+                    data-lucide="move-left"
+                    class="size-4 lg:size-6 2xl:size-8"
+                  ></i>
+                  <span class="sr-only">{% trans 'Previous' %}</span>
+                </button>
+              </div>
+              <div
+                class="tooltip tooltip-left rtl:tooltip-right lg:tooltip-top tooltip-primary"
+                data-tip="{% trans 'Next' %}"
+              >
+                <button
+                  class="btn btn-primary btn-soft btn-sm btn-circle lg:btn-md xl:btn-lg 2xl:btn-xl"
+                >
+                  <i
+                    data-lucide="move-right"
+                    class="size-4 lg:size-6 2xl:size-8"
+                  ></i>
+                  <span class="sr-only">{% trans 'Next' %}</span>
+                </button>
+              </div>
+            </div>
+          </nav>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
   </div>
-</div>
+
+  <section class="grid gap-8">
+    <h1 class="text-primary text-2xl font-semibold lg:text-4xl">
+      {% trans 'New products' %}
+    </h1>
+
+    <ol class="grid grid-cols-12 gap-4">
+      {% for product in products %}
+      <li class="col-span-12 md:col-span-6 lg:col-span-4 2xl:col-span-3">
+        {% include 'ui/components/product.html' %}
+      </li>
+      {% endfor %}
+    </ol>
+  </section>
+</section>
 {% endblock %}

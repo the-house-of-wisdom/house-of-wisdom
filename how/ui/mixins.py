@@ -1,11 +1,12 @@
 """Generic View Mixins for how.ui"""
 
 from typing import Optional
+
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.forms import BaseModelForm
 from django.http import HttpResponse
 
-from how.enrollments.models import Enrollment
+from how.apps.enrollments.models import Enrollment
 
 
 # Create your mixins here.

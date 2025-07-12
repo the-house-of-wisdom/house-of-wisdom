@@ -1,1 +1,1 @@
-"""House of wisdom Blog"""
+"""House Of Wisdom Blog"""

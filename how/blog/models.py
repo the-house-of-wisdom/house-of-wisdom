@@ -3,17 +3,36 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from modelcluster.contrib.taggit import ClusterTaggableManager
+from modelcluster.fields import ParentalKey
+from taggit.models import TaggedItemBase
 from wagtail.admin.panels import FieldPanel
 from wagtail.api import APIField
 from wagtail.fields import StreamField
 from wagtail.models import Page
 from wagtail.search import index
 
-from how.mixins.models import DateTimeMixin
-from how.ui.cms.blocks import CommonContentBlock
+from how.apps.mixins import DateTimeMixin
+from how.cms.blocks import CommonContentBlock
 
 
 # Create your models here.
+class Index(DateTimeMixin, Page):
+    """Blog index page"""
+
+    # Dashboard UI config
+    context_object_name = "article"
+    template = "ui/blog/index.html"
+    page_description = _("Blog index page")
+
+    parent_page_types = ["home.Home"]
+    subpage_types = ["blog.Article"]
+
+    class Meta(Page.Meta):
+        """Meta data"""
+
+        verbose_name = _("Blog index page")
+
+
 class Article(DateTimeMixin, Page):
     """Blog articles"""
 
@@ -51,10 +70,20 @@ class Article(DateTimeMixin, Page):
     # API fields
     api_fields = [APIField("headline"), APIField("content"), APIField("tags")]
 
+    parent_page_types = ["blog.Index"]
+    subpage_types = ["self"]
+
     class Meta(Page.Meta):
         """Meta data"""
 
         verbose_name = _("News article")
 
-    def __str__(self) -> str:
-        return self.title
+
+class ArticleTag(TaggedItemBase):
+    """Through model for defining m2m rel between Articles and Tags"""
+
+    content_object = ParentalKey(
+        Article,
+        related_name="tagged_items",
+        on_delete=models.CASCADE,
+    )

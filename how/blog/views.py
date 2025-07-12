@@ -1,11 +1,11 @@
 """API endpoints for how.blog"""
 
-from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.viewsets import ModelViewSet
 
+from how.api.mixins import ActionPermissionsMixin
 from how.blog.models import Article
 from how.blog.serializers import ArticleSerializer
-from how.mixins.views import ActionPermissionsMixin
 
 
 # Create your views here.

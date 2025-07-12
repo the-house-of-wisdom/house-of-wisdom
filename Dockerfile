@@ -20,27 +20,27 @@ RUN cp -r how core
 # Configure settings
 RUN echo "AUTH_USER_MODEL = 'users.User'" >> core/settings.py
 RUN echo "INSTALLED_APPS += [" >> core/settings.py
-RUN echo "    # House of wisdom" >> core/settings.py
+RUN echo "    # House Of Wisdom" >> core/settings.py
 RUN echo "    'how'," >> core/settings.py
-RUN echo "    'how.answers'," >> core/settings.py
-RUN echo "    'how.assignments'," >> core/settings.py
-RUN echo "    'how.blog'," >> core/settings.py
-RUN echo "    'how.categories'," >> core/settings.py
-RUN echo "    'how.ui.cms'," >> core/settings.py
-RUN echo "    'how.courses'," >> core/settings.py
-RUN echo "    'how.enrollments'," >> core/settings.py
-RUN echo "    'how.items'," >> core/settings.py
-RUN echo "    'how.lessons'," >> core/settings.py
-RUN echo "    'how.modules'," >> core/settings.py
-RUN echo "    'how.notifications'," >> core/settings.py
-RUN echo "    'how.paths'," >> core/settings.py
-RUN echo "    'how.posts'," >> core/settings.py
-RUN echo "    'how.questions'," >> core/settings.py
-RUN echo "    'how.reviews'," >> core/settings.py
-RUN echo "    'how.submissions'," >> core/settings.py
-RUN echo "    'how.tags'," >> core/settings.py
+RUN echo "    'how.apps.answers'," >> core/settings.py
+RUN echo "    'how.apps.assignments'," >> core/settings.py
+RUN echo "    'how.apps.blog'," >> core/settings.py
+RUN echo "    'how.apps.categories'," >> core/settings.py
+RUN echo "    'how.cms'," >> core/settings.py
+RUN echo "    'how.apps.courses'," >> core/settings.py
+RUN echo "    'how.apps.enrollments'," >> core/settings.py
+RUN echo "    'how.apps.items'," >> core/settings.py
+RUN echo "    'how.apps.lessons'," >> core/settings.py
+RUN echo "    'how.apps.modules'," >> core/settings.py
+RUN echo "    'how.apps.notifications'," >> core/settings.py
+RUN echo "    'how.apps.paths'," >> core/settings.py
+RUN echo "    'how.apps.posts'," >> core/settings.py
+RUN echo "    'how.apps.questions'," >> core/settings.py
+RUN echo "    'how.apps.reviews'," >> core/settings.py
+RUN echo "    'how.apps.submissions'," >> core/settings.py
+RUN echo "    'how.apps.tags'," >> core/settings.py
 RUN echo "    'how.ui'," >> core/settings.py
-RUN echo "    'how.users'," >> core/settings.py
+RUN echo "    'how.apps.users'," >> core/settings.py
 RUN echo "    # Deps" >> core/settings.py
 RUN echo "    'rest_wind'," >> core/settings.py
 RUN echo "    'rest_framework'," >> core/settings.py

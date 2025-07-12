@@ -1,16 +1,16 @@
-# House of Wisdom - `بيت الحكمة`
+# House Of Wisdom - `بيت الحكمة`
 
 [![Django CI](https://github.com/youzarsiph/house-of-wisdom/actions/workflows/django.yml/badge.svg)](https://github.com/youzarsiph/house-of-wisdom/actions/workflows/django.yml)
 [![Black](https://github.com/youzarsiph/house-of-wisdom/actions/workflows/black.yml/badge.svg)](https://github.com/youzarsiph/house-of-wisdom/actions/workflows/black.yml)
 [![Ruff](https://github.com/youzarsiph/house-of-wisdom/actions/workflows/ruff.yml/badge.svg)](https://github.com/youzarsiph/house-of-wisdom/actions/workflows/ruff.yml)
 
-**House of Wisdom** is an open source, AI-powered Learning Management System (LMS) designed to transform how education is delivered online. Built with Python, Django, and Django Rest Framework (DRF), and styled using TailwindCSS, House of Wisdom offers a robust, scalable, and visually appealing platform for personalized and adaptive learning experiences.
+**House Of Wisdom** is an open source, AI-powered Learning Management System (LMS) designed to transform how education is delivered online. Built with Python, Django, and Django Rest Framework (DRF), and styled using TailwindCSS, House Of Wisdom offers a robust, scalable, and visually appealing platform for personalized and adaptive learning experiences.
 
 ---
 
 ## Table of Contents
 
-- [House of Wisdom - `بيت الحكمة`](#house-of-wisdom---بيت-الحكمة)
+- [House Of Wisdom - `بيت الحكمة`](#house-of-wisdom---بيت-الحكمة)
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Features](#features)
@@ -28,7 +28,7 @@
 
 ## Introduction
 
-House of Wisdom redefines online education by moving beyond mere content delivery. With intelligent virtual tutoring, adaptive assessments, automated content generation, and AI-driven analytics, our project aims to create a next-generation LMS that adapts to each learner's needs while providing educators with powerful tools to track and enhance student performance.
+House Of Wisdom redefines online education by moving beyond mere content delivery. With intelligent virtual tutoring, adaptive assessments, automated content generation, and AI-driven analytics, our project aims to create a next-generation LMS that adapts to each learner's needs while providing educators with powerful tools to track and enhance student performance.
 
 Key highlights include:
 
@@ -75,7 +75,7 @@ Key highlights include:
 
 ## Architecture
 
-House of Wisdom employs a modular architecture to ensure scalability, maintainability, and extensibility:
+House Of Wisdom employs a modular architecture to ensure scalability, maintainability, and extensibility:
 
 - **Backend:**
   Developed in Python with Django, the backend handles core application logic, authentication, and serves RESTful endpoints using DRF.
@@ -149,7 +149,7 @@ House of Wisdom employs a modular architecture to ensure scalability, maintainab
 
 ## Usage
 
-Once installed, you can access House of Wisdom by opening your web browser and navigating to `http://localhost:8000` (or your configured port).
+Once installed, you can access House Of Wisdom by opening your web browser and navigating to `http://localhost:8000` (or your configured port).
 
 - **Admin Interface:**
   Log in to the admin panel at `http://localhost:8000/admin` to manage courses, users, and site configurations.
@@ -199,7 +199,7 @@ Visit our [Issues](<https://github.com/yourusername/house-of-wisdom/issues>) pag
 
 ## License
 
-House of Wisdom is released under the [MIT License](LICENSE), ensuring that it remains open, free, and accessible to developers and educators worldwide.
+House Of Wisdom is released under the [MIT License](LICENSE), ensuring that it remains open, free, and accessible to developers and educators worldwide.
 
 ---
 
@@ -212,4 +212,4 @@ For questions, feedback, or collaboration, please reach out:
 
 ---
 
-*House of Wisdom is committed to pushing the boundaries of digital education through innovative AI technologies. We thank all contributors and users for their continuous support and feedback!*
+*House Of Wisdom is committed to pushing the boundaries of digital education through innovative AI technologies. We thank all contributors and users for their continuous support and feedback!*

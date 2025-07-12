@@ -1,4 +1,4 @@
-"""Views for how.tags"""
+"""Views for how.apps.tags"""
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -6,9 +6,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.views import generic
 
-from how.blog.models import Article
-from how.courses.models import Course
-from how.paths.models import LearningPath
+from how.apps.courses.models import Course
+from how.apps.paths.models import LearningPath
 from how.ui import mixins
 from how.ui.forms import UserCreateForm
 
@@ -67,25 +66,6 @@ class UserDeleteView(
     template_name = "registration/delete.html"
     success_url = reverse_lazy("ui:index")
     success_message = "Your account was deleted successfully!"
-
-
-# Articles
-class ArticleListView(generic.ListView):
-    """Article list"""
-
-    paginate_by = 25
-    ordering = "-created_at"
-    template_name = "ui/articles/list.html"
-    queryset = Article.objects.live().public()
-
-
-class ArticleDetailView(generic.DetailView):
-    """Article list"""
-
-    slug_field = "slug"
-    slug_url_kwarg = "slug"
-    template_name = "ui/articles/id.html"
-    queryset = Article.objects.live().public()
 
 
 # Learning Paths

@@ -2,7 +2,7 @@
 package-mode = false
 name = "house-of-wisdom"
 version = "0.1.0"
-description = "Bayt al-Hikmah, an innovative Learning Management System (LMS)."
+description = "House Of Wisdom, an innovative Learning Management System (LMS)."
 authors = ["Yousef Abu Shanab <josephyousef249@gmail.com>"]
 license = "MIT"
 readme = "README.md"
@@ -23,6 +23,7 @@ pillow = ">=11.2.1"
 python-dotenv = ">=1.1.0"
 wagtail = ">=7.0"
 wagtailcodeblock = ">=1.29.0.2"
+wagtail-localize = ">=1.12.1"
 
 [tool.poetry.group.dev.dependencies]
 black = ">=25.1.0"

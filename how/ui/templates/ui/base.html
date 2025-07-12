@@ -1,659 +1,729 @@
-<!-- prettier ignore -->
-{% load i18n static %}
-
+{% load i18n static wagtailcore_tags wagtailimages_tags wagtailuserbar %}
 <!doctype html>
-<html lang="en" data-theme="{% block theme %}silk{% endblock %}">
+<html
+  lang="{{ LANGUAGE_CODE }}"
+  dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}"
+>
   <head>
-    <!-- prettier ignore -->
     {% block head %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- prettier ignore -->
     <title>{% block title %}{% trans 'House Of Wisdom' %}{% endblock %}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
+    {% block meta %}
+    <meta
+      name="description"
+      content="{% trans 'House Of Wisdom - Journalism with Certainty' %}"
     />
+    <meta property="og:url" content="https://almatjar.pythonanywhere.com" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="{% trans 'House Of Wisdom - Journalism with Certainty' %}"
+    />
+    <meta
+      property="og:description"
+      content="{% trans 'House Of Wisdom - Journalism with Certainty' %}"
+    />
+    <meta
+      property="og:image"
+      content="https://almatjar.pythonanywhere.com/banner.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="almatjar.pythonanywhere.com" />
+    <meta
+      property="twitter:url"
+      content="https://almatjar.pythonanywhere.com"
+    />
+    <meta
+      name="twitter:title"
+      content="{% trans 'House Of Wisdom - Journalism with Certainty' %}"
+    />
+    <meta
+      name="twitter:description"
+      content="{% trans 'House Of Wisdom - Journalism with Certainty' %}"
+    />
+    <meta
+      name="twitter:image"
+      content="https://almatjar.pythonanywhere.com/banner.png"
+    />
+    {% endblock %}
 
     <link
       href="{% static 'ui/css/styles.css' %}"
       rel="stylesheet"
       type="text/css"
     />
-
-    <!-- Dev only -->
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&family=Noto+Naskh+Arabic:wght@400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
     {% endblock %}
   </head>
 
-  <body class="flex h-dvh bg-base-300 overflow-hidden">
-    <!-- prettier ignore -->
-    {% block nav %}
-    <section id="nav" class="h-full z-30 {% block nav_styles %}{% endblock %}">
-      <header class="h-full">
-        <nav
-          class="menu menu-vertical h-full items-center justify-between gap-4 lg:w-auto"
-        >
-          <ul class="menu menu-vertical items-center gap-1 p-0 lg:gap-2">
-            <!-- prettier ignore -->
-            {% block branding %}
-            <li
-              class="tooltip tooltip-right tooltip-primary"
-              data-tip="{% trans 'House Of Wisdom' %}"
-            >
-              <a
-                href="{% url 'ui:home' %}"
-                class="btn btn-square btn-primary lg:btn-lg"
+  <body class="rtl:font-kufi font-sans antialiased">
+    {% if request.user.is_staff %}{% wagtailuserbar %}{% endif %}
+    <div class="drawer">
+      <input id="nav-drawer" type="checkbox" class="drawer-toggle" />
+
+      <section id="content" class="drawer-content">
+        <div class="bg-base-300 relative h-dvh overflow-hidden p-1 lg:p-2">
+          <div class="flex size-full items-center gap-1">
+            <!-- Sidebar -->
+            <aside class="z-50 hidden h-full p-1 sm:block">
+              <nav
+                class="navbar h-full flex-col items-center justify-between gap-4 p-0"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-school-icon lucide-school lg:size-8"
-                >
-                  <path d="M14 22v-4a2 2 0 1 0-4 0v4" />
-                  <path
-                    d="m18 10 3.447 1.724a1 1 0 0 1 .553.894V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7.382a1 1 0 0 1 .553-.894L6 10"
-                  />
-                  <path d="M18 5v17" />
-                  <path d="m4 6 7.106-3.553a2 2 0 0 1 1.788 0L20 6" />
-                  <path d="M6 5v17" />
-                  <circle cx="12" cy="9" r="2" />
-                </svg>
-
-                <span class="sr-only"> {% trans 'House Of Wisdom' %} </span>
-              </a>
-            </li>
-            {% endblock %}
-
-            <!-- prettier ignore -->
-            {% block nav_links %}
-            <li
-              class="tooltip tooltip-right tooltip-secondary"
-              data-tip="{% trans 'Home' %}"
-            >
-              <a
-                href="{% url 'ui:home' %}"
-                class="btn btn-sm btn-square btn-ghost lg:btn-md"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-house size-4 lg:size-6"
-                >
-                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
-                  <path
-                    d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
-                  />
-                </svg>
-
-                <span class="sr-only">{% trans 'Home' %}</span>
-              </a>
-            </li>
-            <li
-              class="tooltip tooltip-right tooltip-secondary"
-              data-tip="{% trans 'My learning' %}"
-            >
-              <a
-                href="{% url 'ui:home' %}"
-                class="btn btn-sm btn-square btn-ghost lg:btn-md"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-graduation-cap-icon lucide-graduation-cap size-4 lg:size-6"
-                >
-                  <path
-                    d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"
-                  />
-                  <path d="M22 10v6" />
-                  <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
-                </svg>
-
-                <span class="sr-only">{% trans 'My learning' %}</span>
-              </a>
-            </li>
-            <li
-              class="tooltip tooltip-right tooltip-secondary"
-              data-tip="{% trans 'Courses' %}"
-            >
-              <a
-                href="{% url 'ui:courses' %}"
-                class="btn btn-sm btn-square btn-ghost lg:btn-md"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-library-icon lucide-library size-4 lg:size-6"
-                >
-                  <path d="m16 6 4 14" />
-                  <path d="M12 6v14" />
-                  <path d="M8 8v12" />
-                  <path d="M4 4v16" />
-                </svg>
-
-                <span class="sr-only">{% trans 'Courses' %}</span>
-              </a>
-            </li>
-            <li
-              class="tooltip tooltip-right tooltip-secondary"
-              data-tip="{% trans 'Learning paths' %}"
-            >
-              <a
-                href="{% url 'ui:paths' %}"
-                class="btn btn-sm btn-square btn-ghost lg:btn-md"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-route-icon lucide-route size-4 lg:size-6"
-                >
-                  <circle cx="6" cy="19" r="3" />
-                  <path
-                    d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"
-                  />
-                  <circle cx="18" cy="5" r="3" />
-                </svg>
-
-                <span class="sr-only">{% trans 'Learning paths' %}</span>
-              </a>
-            </li>
-            <li
-              class="tooltip tooltip-right tooltip-secondary"
-              data-tip="{% trans 'News' %}"
-            >
-              <a
-                href="/pages/"
-                class="btn btn-sm btn-square btn-ghost lg:btn-md"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-scroll-text-icon lucide-scroll-text size-4 lg:size-6"
-                >
-                  <path d="M15 12h-5" />
-                  <path d="M15 8h-5" />
-                  <path d="M19 17V5a2 2 0 0 0-2-2H4" />
-                  <path
-                    d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"
-                  />
-                </svg>
-
-                <span class="sr-only">{% trans 'News' %}</span>
-              </a>
-            </li>
-            {% endblock %}
-          </ul>
-
-          <ul class="menu menu-vertical items-center gap-1 p-0 lg:gap-2">
-            <li
-              class="tooltip tooltip-right tooltip-accent rtl:tooltip-left"
-              data-tip="{% translate 'Language' %}"
-            >
-              <button
-                popovertarget="language"
-                style="anchor-name: --language"
-                class="btn btn-sm btn-square btn-ghost lg:btn-md"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-languages size-4 lg:size-6"
-                >
-                  <path d="m5 8 6 6" />
-                  <path d="m4 14 6-6 2-3" />
-                  <path d="M2 5h12" />
-                  <path d="M7 2h1" />
-                  <path d="m22 22-5-10-5 10" />
-                  <path d="M14 18h6" />
-                </svg>
-
-                <span class="sr-only">{% translate 'Language' %}</span>
-              </button>
-
-              <ul
-                id="language"
-                popover
-                style="position-anchor: --language"
-                class="menu dropdown dropdown-right dropdown-top rounded-box bg-base-100 shadow-sm"
-              >
-                <li class="menu-title">{% translate 'Language' %}</li>
-                <form
-                  id="lang-form"
-                  class="hidden"
-                  action="{% url 'set_language' %}"
-                  method="post"
-                >
-                  {% csrf_token %}
-                  <input name="next" type="hidden" value="{{ redirect_to }}" />
-                </form>
-
-                <!-- prettier ignore -->
-                {% get_available_languages as LANGUAGES %}
-                <!-- prettier ignore -->
-                {% get_language_info_list for LANGUAGES as languages %}
-                <!-- prettier ignore -->
-                {% for language in languages %}
-                <li>
-                  <label
-                    class="flex flex-row items-center justify-between gap-8"
+                <ol class="navbar-start flex-col gap-4">
+                  <li
+                    class="tooltip tooltip-right rtl:tooltip-left tooltip-primary aspect-square"
+                    data-tip="{% trans 'House Of Wisdom' %}"
                   >
-                    <div class="flex flex-row items-center gap-2">
-                      <input
-                        form="lang-form"
-                        type="submit"
-                        name="language"
-                        value="{{ language.code|upper }}"
-                        aria-label="{{ language.name_local }} ({{ language.code }})"
-                      />
-                      <span
-                        >{{ language.name_local }} ({{ language.code }})</span
+                    <h1 class="relative">
+                      <a href="/" class="btn btn-square btn-primary lg:btn-lg">
+                        <div
+                          class="bg-primary rounded-field text-primary-content absolute inset-0 size-full flex rotate-45 items-center justify-center"
+                        >
+                          <i
+                            data-lucide="school"
+                            class="-rotate-45 lg:size-8 2xl:size-10"
+                          ></i>
+                        </div>
+                        <span class="sr-only"
+                          >{% trans 'House Of Wisdom' %}</span
+                        >
+                      </a>
+                    </h1>
+                  </li>
+
+                  <li
+                    class="tooltip tooltip-right rtl:tooltip-left tooltip-primary aspect-square"
+                    data-tip="{% trans 'Open drawer' %}"
+                  >
+                    <label
+                      for="nav-drawer"
+                      aria-label="{% trans 'close sidebar' %}"
+                      class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                    >
+                      <i
+                        data-lucide="menu"
+                        class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                      ></i>
+                      <span class="sr-only">{% trans 'Open drawer' %}</span>
+                    </label>
+                  </li>
+
+                  <li
+                    class="tooltip tooltip-right rtl:tooltip-left tooltip-primary aspect-square"
+                    data-tip="{% trans 'Stores' %}"
+                  >
+                    <button
+                      class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                    >
+                      <i
+                        data-lucide="building"
+                        class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                      ></i>
+                      <span class="sr-only">{% trans 'Stores' %}</span>
+                    </button>
+                  </li>
+
+                  <li
+                    class="tooltip tooltip-right rtl:tooltip-left tooltip-primary aspect-square"
+                    data-tip="{% trans 'Categories' %}"
+                  >
+                    <button
+                      class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                    >
+                      <i
+                        data-lucide="group"
+                        class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                      ></i>
+                      <span class="sr-only">{% trans 'Categories' %}</span>
+                    </button>
+                  </li>
+
+                  <li
+                    class="tooltip tooltip-right rtl:tooltip-left tooltip-primary aspect-square"
+                    data-tip="{% trans 'Trending' %}"
+                  >
+                    <button
+                      class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                    >
+                      <i
+                        data-lucide="flame"
+                        class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                      ></i>
+                      <span class="sr-only">{% trans 'Trending' %}</span>
+                    </button>
+                  </li>
+                </ol>
+
+                <ol class="navbar-end w-full flex-col gap-2">
+                  <li
+                    class="tooltip tooltip-right rtl:tooltip-left tooltip-primary"
+                    data-tip="{% translate 'Language' %}"
+                  >
+                    <button
+                      popovertarget="language"
+                      style="anchor-name: --language"
+                      class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                    >
+                      <i data-lucide="languages" class="size-4 lg:size-6"></i>
+
+                      <span class="sr-only">{% translate 'Language' %}</span>
+                    </button>
+
+                    <ul
+                      id="language"
+                      popover
+                      style="position-anchor: --language"
+                      class="menu dropdown dropdown-top dropdown-right rounded-box bg-base-100/50 backdrop-blur-3xl text-base-content shadow-sm rtl:dropdown-left rtl:dropdown-top"
+                    >
+                      <li class="menu-title">{% translate 'Language' %}</li>
+                      <form
+                        id="lang-form"
+                        class="hidden"
+                        action="{% url 'set_language' %}"
+                        method="post"
                       >
+                        {% csrf_token %}
+                        <input
+                          name="next"
+                          type="hidden"
+                          value="{{ redirect_to }}"
+                        />
+                      </form>
+                      <!---->
+                      {% get_available_languages as LANGUAGES %}
+                      <!---->
+                      {% get_language_info_list for LANGUAGES as languages %}
+                      <!---->
+                      {% for language in languages %}
+                      <li>
+                        <label
+                          class="flex flex-row items-center justify-between gap-6"
+                        >
+                          <div class="flex flex-row items-center gap-2">
+                            <input
+                              form="lang-form"
+                              type="submit"
+                              name="language"
+                              value="{{ language.code|upper }}"
+                              aria-label="{{ language.name_local }} ({{ language.code }})"
+                            />
+                            <span>
+                              {{ language.name_local }} ({{ language.code }})
+                            </span>
+                          </div>
+                          {% if language.code == LANGUAGE_CODE %}
+                          <i data-lucide="check" class="size-4 lg:size-6"></i>
+                          {% endif %}
+                        </label>
+                      </li>
+                      {% endfor %}
+                    </ul>
+                  </li>
+
+                  <li class="collapse max-w-10 overflow-visible">
+                    <input
+                      type="checkbox"
+                      class="sr-only"
+                      id="account-collapse"
+                    />
+
+                    <div
+                      class="tooltip tooltip-right rtl:tooltip-left tooltip-primary aspect-square"
+                      data-tip="{% trans 'Account' %}"
+                    >
+                      <label
+                        for="account-collapse"
+                        class="collapse-title btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                      >
+                        <i
+                          data-lucide="user-circle"
+                          class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                        ></i>
+                        <span class="sr-only">{% trans 'Account' %}</span>
+                      </label>
                     </div>
-                    <!-- prettier-ignore -->
-                    {% if language.code == LANGUAGE_CODE %}
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-check text-primary size-4 lg:size-6"
-                    >
-                      <path d="M20 6 9 17l-5-5" />
-                    </svg>
-                    {% endif %}
-                  </label>
-                </li>
-                {% endfor %}
-              </ul>
-            </li>
 
-            <li
-              class="tooltip tooltip-right tooltip-accent"
-              data-tip="{% trans 'Profile' %}"
+                    <div
+                      class="collapse-content flex flex-col items-center gap-1 p-0 pt-1"
+                    >
+                      {% if request.user.is_authenticated %}
+                      <div
+                        class="tooltip tooltip-top tooltip-success"
+                        data-tip="{% trans 'Profile' %}"
+                      >
+                        <a
+                          href="{% url 'ui:profile' %}"
+                          class="btn btn-square btn-sm btn-soft btn-success"
+                        >
+                          <i data-lucide="user" class="size-4 md:size-5"></i>
+                          <span class="sr-only">{% trans 'Profile' %}</span>
+                        </a>
+                      </div>
+                      <div
+                        class="tooltip tooltip-top tooltip-error"
+                        data-tip="{% trans 'Log out' %}"
+                      >
+                        <button
+                          type="submit"
+                          form="logout"
+                          class="btn btn-square btn-sm btn-soft btn-error"
+                        >
+                          <i data-lucide="log-out" class="size-4 md:size-5"></i>
+                          <span class="sr-only">{% trans 'Log out' %}</span>
+                        </button>
+                      </div>
+                      {% else %}
+                      <div
+                        class="tooltip tooltip-top tooltip-success"
+                        data-tip="{% trans 'Sign up' %}"
+                      >
+                        <a
+                          href="{% url 'ui:signup' %}"
+                          class="btn btn-square btn-sm btn-soft btn-success"
+                        >
+                          <i
+                            data-lucide="heart-handshake"
+                            class="size-4 md:size-5"
+                          ></i>
+                          <span class="sr-only">{% trans 'Sign up' %}</span>
+                        </a>
+                      </div>
+                      <div
+                        class="tooltip tooltip-top tooltip-primary"
+                        data-tip="{% trans 'Log in' %}"
+                      >
+                        <a
+                          href="{% url 'ui:login' %}"
+                          class="btn btn-square btn-sm btn-soft btn-primary"
+                        >
+                          <i data-lucide="log-in" class="size-4 md:size-5"></i>
+                          <span class="sr-only">{% trans 'Log in' %}</span>
+                        </a>
+                      </div>
+                      {% endif %}
+                    </div>
+                  </li>
+                </ol>
+              </nav>
+            </aside>
+
+            <section
+              class="rounded-box bg-base-100 relative h-full max-h-[calc(100dvh-0.5rem)] max-w-[calc(100dvw-3.5)] grow overflow-hidden lg:max-h-[calc(100dvh-1rem)] lg:max-w-[calc(100dvw-4rem)]"
             >
-              <button
-                popovertarget="profile"
-                style="anchor-name: --profile"
-                class="btn btn-sm btn-square btn-ghost lg:btn-md"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-user size-4 lg:size-6"
+              <div class="drawer drawer-end size-full">
+                <input id="cart-drawer" type="checkbox" class="drawer-toggle" />
+
+                <section
+                  id="cart-content"
+                  class="drawer-content max-h-[calc(100dvh-0.5rem)] overflow-y-auto lg:max-h-[calc(100dvh-1rem)]"
                 >
-                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                  <circle cx="12" cy="7" r="4" />
-                </svg>
-
-                <span class="sr-only">{% trans 'Profile' %}</span>
-              </button>
-
-              <ul
-                popover
-                id="profile"
-                style="position-anchor: --profile"
-                class="menu dropdown dropdown-top dropdown-right bg-base-200 rounded-box shadow-lg"
-              >
-                <li class="menu-title">{% trans 'Profile' %}</li>
-                <li>
-                  <a
-                    href="{% url 'ui:profile' %}"
-                    class="flex items-center gap-4"
+                  <!-- Navbar -->
+                  <header
+                    class="rounded-field absolute inset-x-0 top-0 z-40 px-2 backdrop-blur-3xl lg:px-4"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-circle-user size-4 lg:size-6"
-                    >
-                      <circle cx="12" cy="12" r="10" />
-                      <circle cx="12" cy="10" r="3" />
-                      <path
-                        d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"
-                      />
-                    </svg>
+                    <nav class="navbar p-0">
+                      <div class="navbar-start gap-4">
+                        <div
+                          class="tooltip tooltip-right rtl:tooltip-left tooltip-primary z-10 sm:hidden"
+                          data-tip="{% trans 'Open drawer' %}"
+                        >
+                          <label
+                            for="nav-drawer"
+                            aria-label="{% trans 'close sidebar' %}"
+                            class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                          >
+                            <i
+                              data-lucide="menu"
+                              class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                            ></i>
+                            <span class="sr-only"
+                              >{% trans 'Open drawer' %}</span
+                            >
+                          </label>
+                        </div>
 
-                    <span>{% trans 'Profile' %}</span>
-                  </a>
-                </li>
-                <!-- prettier ignore -->
-                {% if request.user.is_authenticated %}
-                <!-- prettier ignore -->
-                {% if request.user.is_instructor %}
-                <li>
-                  <a href="/dashboard/" class="flex items-center gap-4">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-layout-dashboard-icon lucide-layout-dashboard size-4 lg:size-6"
-                    >
-                      <rect width="7" height="9" x="3" y="3" rx="1" />
-                      <rect width="7" height="5" x="14" y="3" rx="1" />
-                      <rect width="7" height="9" x="14" y="12" rx="1" />
-                      <rect width="7" height="5" x="3" y="16" rx="1" />
-                    </svg>
+                        {% block brand %}
+                        <div
+                          class="tooltip tooltip-open tooltip-right rtl:tooltip-left tooltip-success before:font-bold"
+                          data-tip="{% trans 'SyriaStore' %}"
+                        >
+                          <a
+                            href="{% url 'ui:profile' %}"
+                            class="btn btn-square btn-sm btn-success md:btn-md 2xl:btn-lg"
+                          >
+                            <i
+                              data-lucide="building2"
+                              class="md:size-8 2xl:size-10"
+                            ></i>
+                            <span class="sr-only"
+                              >{% trans 'SyriaStore' %}</span
+                            >
+                          </a>
+                        </div>
+                        {% endblock %}
+                      </div>
 
-                    <span>{% trans 'Dashboard' %}</span>
-                  </a>
-                </li>
-                {% endif %}
-                <li>
-                  <button
-                    type="submit"
-                    form="logout"
-                    class="flex items-center gap-4"
+                      <div class="navbar-end gap-2">
+                        <div
+                          class="tooltip tooltip-left rtl:tooltip-right tooltip-primary"
+                          data-tip="{% trans 'Search' %}"
+                        >
+                          <button
+                            class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                          >
+                            <i
+                              data-lucide="search"
+                              class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                            ></i>
+                            <span class="sr-only">{% trans 'Search' %}</span>
+                          </button>
+                        </div>
+
+                        <div
+                          class="tooltip tooltip-left rtl:tooltip-right tooltip-primary"
+                          data-tip="{% trans 'Notifications' %}"
+                        >
+                          <button
+                            class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                          >
+                            <i
+                              data-lucide="bell"
+                              class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                            ></i>
+                            <span class="sr-only"
+                              >{% trans 'Notifications' %}</span
+                            >
+                          </button>
+                        </div>
+
+                        <div
+                          class="tooltip tooltip-left rtl:tooltip-right tooltip-primary"
+                          data-tip="{% trans 'My Cart' %}"
+                        >
+                          <label
+                            for="cart-drawer"
+                            class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                          >
+                            <i
+                              data-lucide="shopping-bag"
+                              class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                            ></i>
+                            <span class="sr-only">{% trans 'Cart' %}</span>
+                          </label>
+                        </div>
+                      </div>
+                    </nav>
+                  </header>
+
+                  <div class="container mx-auto">
+                    {% block content %}{% endblock %}
+                  </div>
+                </section>
+
+                <section id="cart-sidebar" class="drawer-side z-50">
+                  <label
+                    for="cart-drawer"
+                    aria-label="{% trans 'close sidebar' %}"
+                    class="drawer-overlay"
+                  ></label>
+
+                  <section
+                    class="rounded-box bg-base-100/50 relative m-1 flex h-full max-h-[calc(100dvh-0.5rem)] w-full max-w-[calc(100dvw-0.5rem)] flex-col overflow-hidden backdrop-blur-3xl sm:w-10/12 md:w-8/12 lg:m-2 lg:max-h-[calc(100dvh-1rem)] lg:w-1/3 lg:max-w-[calc(100dvw-1rem)] 2xl:w-1/4"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-log-out-icon lucide-log-out size-4 lg:size-6"
-                    >
-                      <path d="m16 17 5-5-5-5" />
-                      <path d="M21 12H9" />
-                      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                    </svg>
+                    <header class="p-4">
+                      <nav class="flex items-center justify-between gap-4">
+                        <div
+                          class="tooltip tooltip-right tooltip-open rtl:tooltip-left tooltip-primary aspect-square"
+                          data-tip="{% trans 'My Cart' %}"
+                        >
+                          <button
+                            class="btn btn-square btn-soft btn-primary lg:btn-lg"
+                          >
+                            <i data-lucide="shopping-bag" class="lg:size-8"></i>
+                            <span class="sr-only">{% trans 'Cart' %}</span>
+                          </button>
+                        </div>
 
-                    <span>{% trans 'Log out' %}</span>
-                  </button>
-                </li>
-                {% else %}
-                <li>
-                  <a
-                    href="{% url 'ui:login' %}"
-                    class="flex items-center gap-4"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-log-in-icon lucide-log-in size-4 lg:size-6"
-                    >
-                      <path d="m10 17 5-5-5-5" />
-                      <path d="M15 12H3" />
-                      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-                    </svg>
+                        <div
+                          class="tooltip tooltip-left rtl:tooltip-right hover:tooltip-error"
+                          data-tip="{% trans 'Close' %}"
+                        >
+                          <label
+                            for="cart-drawer"
+                            aria-label="{% trans 'close sidebar' %}"
+                            class="btn btn-square btn-soft btn-sm btn-primary hover:btn-error md:btn-md 2xl:btn-lg"
+                          >
+                            <i
+                              data-lucide="x"
+                              class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                            ></i>
+                            <span class="sr-only">{% trans 'Close' %}</span>
+                          </label>
+                        </div>
+                      </nav>
+                    </header>
 
-                    <span>{% trans 'Log in' %}</span>
-                  </a>
-                </li>
-                {% endif %}
-              </ul>
-            </li>
-          </ul>
-        </nav>
-      </header>
-    </section>
-    {% endblock %}
+                    <div class="overflow-y-auto px-4 pb-24">
+                      <ol class="grid gap-2 lg:gap-4">
+                        {% for item in request.user.cart.items.all %}
+                        <li
+                          className="card image-full card-sm lg:card-md xl:card-lg 2xl:card-xl bg-base-200 size-full shadow-sm"
+                        >
+                          <figure class="skeleton overflow-clip">
+                            {% image item.product.image fill-1920x1080 %}
+                          </figure>
+                          <div className="card-body justify-end gap-4">
+                            <h2
+                              className="card-title text-primary flex items-center gap-4"
+                            >
+                              {{ item.product }}
+                              <div
+                                className="tooltip tooltip-right rtl:tooltip-left tooltip-open tooltip-success"
+                                data-tip="{{ item.product.price }}"
+                              >
+                                <div
+                                  className="badge badge-sm md:badge-md lg:badge-lg 2xl:badge-xl badge-success"
+                                >
+                                  <span className="sr-only"
+                                    >{% trans 'Price:' %} {{ item.product.price
+                                    }}</span
+                                  >
+                                  <DollarSign className="size-4" />
+                                </div>
+                              </div>
+                            </h2>
 
-    <section
-      id="content"
-      class="relative flex h-dvh max-h-dvh w-full flex-col gap-2 py-2 pr-2 overflow-hidden"
-    >
-      <!-- prettier ignore -->
-      {% block searchbar %}
-      <section
-        id="searchbar"
-        class="z-20 w-full {% block searchbar_styles %}{% endblock %}"
-      >
-        <nav class="flex items-center justify-between w-full gap-2 lg:gap-4">
-          <h1 class="hidden text-xl font-semibold text-primary lg:block">
-            {% trans 'House Of Wisdom' %}
-          </h1>
+                            <a
+                              href="{% pageurl item.product %}"
+                              className="btn btn-sm btn-error lg:btn-md xl:btn-lg 2xl:btn-xl"
+                            >
+                              {% trans 'Remove' %}
+                            </a>
+                          </div>
+                        </li>
+                        {% empty %}
+                        <li
+                          class="flex size-full flex-col items-center justify-center gap-4"
+                        >
+                          <i
+                            data-lucide="shopping-bag"
+                            class="text-primary aspect-square size-1/3 lg:size-1/2"
+                          ></i>
+                          <h1
+                            class="text-primary text-xl font-semibold lg:text-3xl"
+                          >
+                            {% trans 'Your cart is empty' %}
+                          </h1>
+                        </li>
+                        {% endfor %}
+                      </ol>
+                    </div>
 
-          <form method="get" class="join w-full lg:max-w-lg">
-            <label
-              class="input input-sm input-primary w-full join-item lg:input-md"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-search opacity-50 size-4 lg:size-6"
-              >
-                <circle cx="11" cy="11" r="8" />
-                <path d="m21 21-4.3-4.3" />
-              </svg>
-
-              <input
-                type="search"
-                class="grow"
-                name="search"
-                value="{{ request.GET.search }}"
-                placeholder="{% trans 'Search...' %}"
-              />
-            </label>
-
-            <div class="tooltip tooltip-bottom" data-tip="{% trans 'Search' %}">
-              <button
-                class="btn btn-sm btn-primary join-item lg:btn-md"
-                type="submit"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-circle-check-icon lucide-circle-check size-4 lg:size-6"
-                >
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="m9 12 2 2 4-4" />
-                </svg>
-
-                <span class="sr-only"> {% trans "Search" %} </span>
-              </button>
-            </div>
-          </form>
-
-          <ul class="flex items-center gap-2 p-0 lg:gap-4">
-            <li
-              class="tooltip tooltip-left tooltip-accent"
-              data-tip="{% trans 'Toggle theme' %}"
-            >
-              <label
-                class="swap swap-rotate btn btn-sm btn-square btn-ghost lg:btn-md"
-              >
-                <input
-                  type="checkbox"
-                  class="theme-controller"
-                  value="{% block toggle_theme %}luxury{% endblock %}"
-                />
-
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-sun-icon lucide-sun size-4 lg:size-6 fill-current swap-off"
-                >
-                  <circle cx="12" cy="12" r="4" />
-                  <path d="M12 2v2" />
-                  <path d="M12 20v2" />
-                  <path d="m4.93 4.93 1.41 1.41" />
-                  <path d="m17.66 17.66 1.41 1.41" />
-                  <path d="M2 12h2" />
-                  <path d="M20 12h2" />
-                  <path d="m6.34 17.66-1.41 1.41" />
-                  <path d="m19.07 4.93-1.41 1.41" />
-                </svg>
-
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-moon-star-icon lucide-moon-star size-4 lg:size-6 fill-current swap-on"
-                >
-                  <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9" />
-                  <path d="M20 3v4" />
-                  <path d="M22 5h-4" />
-                </svg>
-              </label>
-            </li>
-          </ul>
-        </nav>
+                    <div class="absolute inset-x-0 bottom-0">
+                      <button
+                        class="btn btn-block btn-sm btn-primary lg:btn-md xl:btn-lg 2xl:btn-xl"
+                      >
+                        <i
+                          data-lucide="check-circle2"
+                          class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                        ></i>
+                        {% trans 'Checkout' %}
+                      </button>
+                    </div>
+                  </section>
+                </section>
+              </div>
+            </section>
+          </div>
+        </div>
       </section>
-      {% endblock %}
 
-      <main
-        class="grid gap-4 grow grid-cols-12 rounded-box bg-base-100 overflow-y-auto lg:overflow-y-visible lg:gap-0"
-      >
-        <!-- prettier ignore -->
-        {% block main %}
-        <section
-          id="sidebar"
-          class="col-span-12 h-full lg:col-span-3 {% block sidebar_height %} lg:h-[calc(100dvh-4rem)] lg:max-h-[calc(100dvh-4rem)] {% endblock %} {% block sidebar_styles %}{% endblock %}"
-        >
-          <!-- prettier ignore -->
-          {% block sidebar %}
-          <section id="sidebar-content" class="relative h-full">
-            <header class="absolute inset-x-0 top-0 z-10">
-              <nav
-                class="flex items-center justify-between p-4 gap-4 backdrop-blur-3xl rounded-t-box"
-              ></nav>
-            </header>
-
-            <main
-              class="flex flex-col gap-4 gap-4 h-full px-4 py-20 lg:max-h-dvh lg:overflow-y-auto"
-            ></main>
-          </section>
-          {% endblock %}
-        </section>
+      <section id="sidebar" class="drawer-side z-50">
+        <label
+          for="nav-drawer"
+          aria-label="{% trans 'close sidebar' %}"
+          class="drawer-overlay"
+        ></label>
 
         <section
-          id="content"
-          class="col-span-12 h-full lg:col-span-9 {% block content_height %} lg:h-[calc(100dvh-4rem)] lg:max-h-[calc(100dvh-4rem)] {% endblock %} {% block content_styles %}{% endblock %}"
+          class="rounded-box bg-base-100/50 m-1 flex h-full max-h-[calc(100dvh-0.5rem)] w-full max-w-[calc(100dvw-0.5rem)] flex-col justify-between overflow-hidden overflow-y-auto backdrop-blur-3xl sm:w-10/12 md:w-8/12 lg:m-2 lg:max-h-[calc(100dvh-1rem)] lg:w-1/3 lg:max-w-[calc(100dvw-1rem)] xl:w-1/4"
         >
-          <!-- prettier ignore -->
-          {% block content %}
-          <section id="main-content" class="relative h-full">
-            <header class="absolute inset-x-0 top-0 z-10">
-              <nav
-                class="navbar items-center justify-between gap-4 rounded-t-box backdrop-blur-3xl px-4"
-              ></nav>
+          <div class="grid">
+            <header class="flex items-center justify-between gap-4 p-4">
+              <div
+                class="tooltip tooltip-right rtl:tooltip-left tooltip-primary tooltip-open aspect-square"
+                data-tip="{% trans 'House Of Wisdom' %}"
+              >
+                <h1 class="relative">
+                  <a href="/" class="btn btn-square btn-primary lg:btn-lg">
+                    <div
+                      class="bg-primary rounded-field text-primary-content absolute inset-0 size-full flex rotate-45 items-center justify-center"
+                    >
+                      <i
+                        data-lucide="school"
+                        class="-rotate-45 lg:size-8 2xl:size-10"
+                      ></i>
+                    </div>
+                    <span class="sr-only">{% trans 'House Of Wisdom' %}</span>
+                  </a>
+                </h1>
+              </div>
+
+              <div
+                class="tooltip tooltip-left rtl:tooltip-right hover:tooltip-error"
+                data-tip="{% trans 'Close' %}"
+              >
+                <label
+                  for="nav-drawer"
+                  aria-label="{% trans 'close sidebar' %}"
+                  class="btn btn-square btn-soft btn-sm btn-primary hover:btn-error md:btn-md 2xl:btn-lg"
+                >
+                  <i
+                    data-lucide="x"
+                    class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                  ></i>
+                  <span class="sr-only">{% trans 'Close' %}</span>
+                </label>
+              </div>
             </header>
 
-            <main
-              class="flex flex-col gap-4 h-full p-4 pt-20 lg:max-h-dvh lg:overflow-y-auto"
-            ></main>
-          </section>
-          {% endblock %}
+            <ol class="grid size-full grow gap-4 overflow-y-auto px-4">
+              <li>
+                <a
+                  href="/"
+                  class="btn btn-sm btn-soft btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
+                >
+                  <i
+                    data-lucide="home"
+                    class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                  ></i>
+                  <span>{% trans 'Home' %}</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/dashboard/"
+                  class="btn btn-sm btn-soft btn-primary md:btn-md btn-block 2xl:btn-xl justify-between"
+                >
+                  <span class="flex items-center gap-[inherit]">
+                    <i
+                      data-lucide="building2"
+                      class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                    ></i>
+                    <span>{% trans 'My Store' %}</span>
+                  </span>
+
+                  <i
+                    data-lucide="chevron-right"
+                    class="size-4 md:size-6 2xl:size-8 rtl:rotate-180"
+                  ></i>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="btn btn-sm btn-soft btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
+                >
+                  <i
+                    data-lucide="hand-heart"
+                    class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                  ></i>
+                  <span>{% trans 'Become a seller' %}</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="{% url 'ui:about' %}"
+                  class="btn btn-sm btn-soft btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
+                >
+                  <i
+                    data-lucide="info"
+                    class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                  ></i>
+                  <span>{% trans 'About us' %}</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="{% url 'ui:contact' %}"
+                  class="btn btn-sm btn-soft btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
+                >
+                  <i
+                    data-lucide="contact"
+                    class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                  ></i>
+                  <span>{% trans 'Contact us' %}</span>
+                </a>
+              </li>
+            </ol>
+          </div>
+
+          <ol class="grid gap-4 p-4">
+            {% if request.user.is_authenticated %}
+            <li>
+              <a
+                href="{% url 'ui:profile' %}"
+                class="btn btn-sm btn-soft btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
+              >
+                <i
+                  data-lucide="user"
+                  class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                ></i>
+                <span>{% trans 'Profile' %}</span>
+              </a>
+            </li>
+            <li>
+              <button
+                type="submit"
+                form="logout"
+                class="btn btn-sm btn-soft btn-error md:btn-md btn-block 2xl:btn-xl justify-start"
+              >
+                <i
+                  data-lucide="log-out"
+                  class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                ></i>
+                <span>{% trans 'Log out' %}</span>
+              </button>
+            </li>
+            {% else %}
+            <li>
+              <a
+                href="{% url 'ui:login' %}"
+                class="btn btn-sm btn-soft btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
+              >
+                <i
+                  data-lucide="user"
+                  class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                ></i>
+                <span>{% trans 'Log in' %}</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="{% url 'ui:signup' %}"
+                class="btn btn-sm btn-soft btn-success md:btn-md btn-block 2xl:btn-xl justify-start"
+              >
+                <i
+                  data-lucide="heart-handshake"
+                  class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                ></i>
+                <span>{% trans 'Sign up' %}</span>
+              </a>
+            </li>
+            {% endif %}
+          </ol>
         </section>
-        {% endblock %}
-      </main>
-    </section>
+      </section>
+    </div>
 
     <form
       id="logout"
@@ -663,5 +733,10 @@
     >
       {% csrf_token %}
     </form>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      lucide.createIcons();
+    </script>
   </body>
 </html>

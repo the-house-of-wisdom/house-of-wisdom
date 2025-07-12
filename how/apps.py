@@ -4,7 +4,7 @@ from django.apps import AppConfig
 
 
 # Create your config here.
-class BaytAlHikamhConfig(AppConfig):
+class HouseOfWisdomConfig(AppConfig):
     """App configuration for how"""
 
     name = "how"
