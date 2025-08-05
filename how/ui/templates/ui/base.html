@@ -49,13 +49,14 @@
       name="twitter:image"
       content="https://almatjar.pythonanywhere.com/banner.png"
     />
-    {% endblock %}
-
+    {% endblock %} {% block styles %}
     <link
       href="{% static 'ui/css/styles.css' %}"
       rel="stylesheet"
       type="text/css"
     />
+    {% endblock %}
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -66,12 +67,18 @@
   </head>
 
   <body class="rtl:font-kufi font-sans antialiased">
+    <div class="hidden lg:pr-0"></div>
+
     {% if request.user.is_staff %}{% wagtailuserbar %}{% endif %}
+
     <div class="drawer">
       <input id="nav-drawer" type="checkbox" class="drawer-toggle" />
 
       <section id="content" class="drawer-content">
-        <div class="bg-base-300 relative h-dvh overflow-hidden p-1 lg:p-2">
+        <div
+          id="main"
+          class="bg-base-300 relative h-dvh overflow-hidden p-1 lg:p-2"
+        >
           <div class="flex size-full items-center gap-1">
             <!-- Sidebar -->
             <aside class="z-50 hidden h-full p-1 sm:block">
@@ -119,48 +126,87 @@
 
                   <li
                     class="tooltip tooltip-right rtl:tooltip-left tooltip-primary aspect-square"
-                    data-tip="{% trans 'Stores' %}"
+                    data-tip="{% trans 'Home' %}"
                   >
-                    <button
+                    <a
+                      href="{% slugurl 'home' %}"
                       class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
                     >
                       <i
-                        data-lucide="building"
+                        data-lucide="home"
                         class="size-4 md:size-6 xl:size-7 2xl:size-8"
                       ></i>
-                      <span class="sr-only">{% trans 'Stores' %}</span>
-                    </button>
+                      <span class="sr-only">{% trans 'Home' %}</span>
+                    </a>
                   </li>
+
+                  {% if request.user.is_staff %}
+                  <li
+                    class="tooltip tooltip-right rtl:tooltip-left tooltip-primary aspect-square"
+                    data-tip="{% trans 'Dashboard' %}"
+                  >
+                    <a
+                      href="{% url 'wagtailadmin_home' %}"
+                      class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                    >
+                      <i
+                        data-lucide="layout-dashboard"
+                        class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                      ></i>
+                      <span class="sr-only">{% trans 'Dashboard' %}</span>
+                    </a>
+                  </li>
+                  {% endif %}
 
                   <li
                     class="tooltip tooltip-right rtl:tooltip-left tooltip-primary aspect-square"
-                    data-tip="{% trans 'Categories' %}"
+                    data-tip="{% trans 'My Learning' %}"
                   >
-                    <button
+                    <a
+                      href="{% url 'ui:learn' %}"
                       class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
                     >
                       <i
-                        data-lucide="group"
+                        data-lucide="graduation-cap"
                         class="size-4 md:size-6 xl:size-7 2xl:size-8"
                       ></i>
-                      <span class="sr-only">{% trans 'Categories' %}</span>
-                    </button>
+                      <span class="sr-only">{% trans 'My Learning' %}</span>
+                    </a>
                   </li>
 
+                  {% if blog %}
                   <li
                     class="tooltip tooltip-right rtl:tooltip-left tooltip-primary aspect-square"
-                    data-tip="{% trans 'Trending' %}"
+                    data-tip="{% trans 'Blog' %}"
                   >
-                    <button
+                    <a
+                      href="{% pageurl blog %}"
                       class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
                     >
                       <i
-                        data-lucide="flame"
+                        data-lucide="scroll-text"
                         class="size-4 md:size-6 xl:size-7 2xl:size-8"
                       ></i>
-                      <span class="sr-only">{% trans 'Trending' %}</span>
-                    </button>
+                      <span class="sr-only">{% trans 'Blog' %}</span>
+                    </a>
                   </li>
+                  {% else %}
+                  <li
+                    class="tooltip tooltip-right rtl:tooltip-left tooltip-primary aspect-square"
+                    data-tip="{% trans 'Blog' %}"
+                  >
+                    <a
+                      href="{% slugurl 'blog' %}"
+                      class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                    >
+                      <i
+                        data-lucide="scroll-text"
+                        class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                      ></i>
+                      <span class="sr-only">{% trans 'Blog' %}</span>
+                    </a>
+                  </li>
+                  {% endif %}
                 </ol>
 
                 <ol class="navbar-end w-full flex-col gap-2">
@@ -317,16 +363,14 @@
             </aside>
 
             <section
-              class="rounded-box bg-base-100 relative h-full max-h-[calc(100dvh-0.5rem)] max-w-[calc(100dvw-3.5)] grow overflow-hidden lg:max-h-[calc(100dvh-1rem)] lg:max-w-[calc(100dvw-4rem)]"
+              class="rounded-box bg-base-100 relative size-full grow overflow-hidden"
             >
-              <div class="drawer drawer-end size-full">
-                <input id="cart-drawer" type="checkbox" class="drawer-toggle" />
+              <div id="chat-container" class="drawer drawer-end size-full">
+                <input id="chat-drawer" type="checkbox" class="drawer-toggle" />
 
-                <section
-                  id="cart-content"
-                  class="drawer-content max-h-[calc(100dvh-0.5rem)] overflow-y-auto lg:max-h-[calc(100dvh-1rem)]"
-                >
+                <section class="drawer-content overflow-y-auto">
                   <!-- Navbar -->
+                  {% block navbar %}
                   <header
                     class="rounded-field absolute inset-x-0 top-0 z-40 px-2 backdrop-blur-3xl lg:px-4"
                   >
@@ -345,34 +389,106 @@
                               data-lucide="menu"
                               class="size-4 md:size-6 xl:size-7 2xl:size-8"
                             ></i>
-                            <span class="sr-only"
-                              >{% trans 'Open drawer' %}</span
-                            >
+                            <span class="sr-only">
+                              {% trans 'Open drawer' %}
+                            </span>
                           </label>
                         </div>
 
                         {% block brand %}
                         <div
-                          class="tooltip tooltip-open tooltip-right rtl:tooltip-left tooltip-success before:font-bold"
-                          data-tip="{% trans 'SyriaStore' %}"
+                          class="tooltip tooltip-right rtl:tooltip-left tooltip-primary sm:hidden"
+                          data-tip="{% trans 'House Of Wisdom' %}"
                         >
-                          <a
-                            href="{% url 'ui:profile' %}"
-                            class="btn btn-square btn-sm btn-success md:btn-md 2xl:btn-lg"
-                          >
-                            <i
-                              data-lucide="building2"
-                              class="md:size-8 2xl:size-10"
-                            ></i>
-                            <span class="sr-only"
-                              >{% trans 'SyriaStore' %}</span
+                          <h1 class="relative">
+                            <a
+                              href="/"
+                              class="btn btn-square btn-primary lg:btn-lg"
                             >
-                          </a>
+                              <div
+                                class="bg-primary rounded-field text-primary-content absolute inset-0 size-full flex rotate-45 items-center justify-center"
+                              >
+                                <i
+                                  data-lucide="school"
+                                  class="-rotate-45 lg:size-8 2xl:size-10"
+                                ></i>
+                              </div>
+                              <span class="sr-only">
+                                {% trans 'House Of Wisdom' %}
+                              </span>
+                            </a>
+                          </h1>
                         </div>
                         {% endblock %}
                       </div>
 
                       <div class="navbar-end gap-2">
+                        {% if request.user.is_authenticated %}
+                        <div
+                          class="tooltip tooltip-left rtl:tooltip-right tooltip-primary sm:hidden"
+                          data-tip="{% trans 'Profile' %}"
+                        >
+                          <a
+                            href="{% url 'ui:profile' %}"
+                            class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                          >
+                            <i
+                              data-lucide="user"
+                              class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                            ></i>
+                            <span class="sr-only">{% trans 'Profile' %}</span>
+                          </a>
+                        </div>
+                        <div
+                          class="tooltip tooltip-left rtl:tooltip-right tooltip-primary sm:hidden"
+                          data-tip="{% trans 'My Learning' %}"
+                        >
+                          <a
+                            href="{% url 'ui:learn' %}"
+                            class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                          >
+                            <i
+                              data-lucide="graduation-cap"
+                              class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                            ></i>
+                            <span class="sr-only"
+                              >{% trans 'My Learning' %}</span
+                            >
+                          </a>
+                        </div>
+                        {% else %}
+                        <div
+                          class="tooltip tooltip-left rtl:tooltip-right tooltip-primary"
+                          data-tip="{% trans 'Log in' %}"
+                        >
+                          <a
+                            href="{% url 'ui:login' %}"
+                            class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                          >
+                            <i
+                              data-lucide="log-in"
+                              class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                            ></i>
+                            <span class="sr-only">{% trans 'Log in' %}</span>
+                          </a>
+                        </div>
+                        <div
+                          class="tooltip tooltip-left rtl:tooltip-right tooltip-primary"
+                          data-tip="{% trans 'Sign up' %}"
+                        >
+                          <a
+                            href="{% url 'ui:signup' %}"
+                            class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                          >
+                            <i
+                              data-lucide="heart-handshake"
+                              class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                            ></i>
+                            <span class="sr-only">{% trans 'Sign up' %}</span>
+                          </a>
+                        </div>
+                        {% endif %}
+
                         <div
                           class="tooltip tooltip-left rtl:tooltip-right tooltip-primary"
                           data-tip="{% trans 'Search' %}"
@@ -389,155 +505,155 @@
                         </div>
 
                         <div
-                          class="tooltip tooltip-left rtl:tooltip-right tooltip-primary"
-                          data-tip="{% trans 'Notifications' %}"
-                        >
-                          <button
-                            class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
-                          >
-                            <i
-                              data-lucide="bell"
-                              class="size-4 md:size-6 xl:size-7 2xl:size-8"
-                            ></i>
-                            <span class="sr-only"
-                              >{% trans 'Notifications' %}</span
-                            >
-                          </button>
-                        </div>
-
-                        <div
-                          class="tooltip tooltip-left rtl:tooltip-right tooltip-primary"
-                          data-tip="{% trans 'My Cart' %}"
+                          class="tooltip tooltip-left rtl:tooltip-right tooltip-success"
+                          data-tip="{% trans 'Al-Wazeer' %}"
                         >
                           <label
-                            for="cart-drawer"
-                            class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                            for="chat-drawer"
+                            class="btn btn-square btn-soft btn-sm btn-success md:btn-md 2xl:btn-lg"
                           >
                             <i
-                              data-lucide="shopping-bag"
+                              data-lucide="brain-circuit"
                               class="size-4 md:size-6 xl:size-7 2xl:size-8"
                             ></i>
-                            <span class="sr-only">{% trans 'Cart' %}</span>
+                            <span class="sr-only">{% trans 'Al-Wazeer' %}</span>
                           </label>
                         </div>
                       </div>
                     </nav>
                   </header>
+                  {% endblock %}
 
-                  <div class="container mx-auto">
-                    {% block content %}{% endblock %}
-                  </div>
+                  <!---->
+                  {% include 'ui/components/messages.html' %}
+
+                  <!---->
+                  {% block content %}{% endblock %}
                 </section>
 
-                <section id="cart-sidebar" class="drawer-side z-50">
+                <section
+                  class="drawer-side z-50 lg:min-w-sm xl:min-w-md 2xl:min-w-lg"
+                >
                   <label
-                    for="cart-drawer"
+                    id="chat-label"
+                    for="chat-drawer"
                     aria-label="{% trans 'close sidebar' %}"
                     class="drawer-overlay"
                   ></label>
 
                   <section
-                    class="rounded-box bg-base-100/50 relative m-1 flex h-full max-h-[calc(100dvh-0.5rem)] w-full max-w-[calc(100dvw-0.5rem)] flex-col overflow-hidden backdrop-blur-3xl sm:w-10/12 md:w-8/12 lg:m-2 lg:max-h-[calc(100dvh-1rem)] lg:w-1/3 lg:max-w-[calc(100dvw-1rem)] 2xl:w-1/4"
+                    id="chat-drawer-container"
+                    class="my-auto border border-base-200 bg-base-100/50 flex size-full flex-col overflow-hidden backdrop-blur-3xl sm:w-10/12 md:w-8/12 lg:w-1/3 2xl:w-1/4 lg:max-h-[calc(100dvh-1rem)]"
                   >
                     <header class="p-4">
                       <nav class="flex items-center justify-between gap-4">
                         <div
-                          class="tooltip tooltip-right tooltip-open rtl:tooltip-left tooltip-primary aspect-square"
-                          data-tip="{% trans 'My Cart' %}"
+                          class="tooltip tooltip-right tooltip-open rtl:tooltip-left tooltip-success aspect-square"
+                          data-tip="{% trans 'Al-Wazeer' %}"
                         >
-                          <button
-                            class="btn btn-square btn-soft btn-primary lg:btn-lg"
-                          >
-                            <i data-lucide="shopping-bag" class="lg:size-8"></i>
-                            <span class="sr-only">{% trans 'Cart' %}</span>
+                          <button class="btn btn-square btn-success lg:btn-lg">
+                            <i
+                              data-lucide="brain-circuit"
+                              class="lg:size-8"
+                            ></i>
+                            <span class="sr-only">{% trans 'Al-Wazeer' %}</span>
                           </button>
                         </div>
 
-                        <div
-                          class="tooltip tooltip-left rtl:tooltip-right hover:tooltip-error"
-                          data-tip="{% trans 'Close' %}"
-                        >
-                          <label
-                            for="cart-drawer"
-                            aria-label="{% trans 'close sidebar' %}"
-                            class="btn btn-square btn-soft btn-sm btn-primary hover:btn-error md:btn-md 2xl:btn-lg"
+                        <div class="flex items-center gap-2">
+                          <div
+                            id="pin-btn"
+                            class="hidden tooltip tooltip-left rtl:tooltip-right tooltip-primary sm:flex"
+                            data-tip="{% trans 'Un/Pin' %}"
                           >
-                            <i
-                              data-lucide="x"
-                              class="size-4 md:size-6 xl:size-7 2xl:size-8"
-                            ></i>
-                            <span class="sr-only">{% trans 'Close' %}</span>
-                          </label>
+                            <button
+                              onclick="pinChat()"
+                              class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                            >
+                              <i
+                                id="pin"
+                                data-lucide="pin"
+                                class="size-4 md:size-6"
+                              ></i>
+                              <i
+                                id="unpin"
+                                data-lucide="pin-off"
+                                class="hidden size-4 md:size-6"
+                              ></i>
+                              <span class="sr-only">{% trans 'Un/Pin' %}</span>
+                            </button>
+                          </div>
+
+                          <div
+                            id="chat-close"
+                            class="tooltip tooltip-left rtl:tooltip-right hover:tooltip-error"
+                            data-tip="{% trans 'Close' %}"
+                          >
+                            <label
+                              for="chat-drawer"
+                              aria-label="{% trans 'close sidebar' %}"
+                              class="btn btn-square btn-soft btn-sm btn-primary hover:btn-error md:btn-md 2xl:btn-lg"
+                            >
+                              <i
+                                data-lucide="x"
+                                class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                              ></i>
+                              <span class="sr-only">{% trans 'Close' %}</span>
+                            </label>
+                          </div>
                         </div>
                       </nav>
                     </header>
 
-                    <div class="overflow-y-auto px-4 pb-24">
-                      <ol class="grid gap-2 lg:gap-4">
-                        {% for item in request.user.cart.items.all %}
-                        <li
-                          className="card image-full card-sm lg:card-md xl:card-lg 2xl:card-xl bg-base-200 size-full shadow-sm"
-                        >
-                          <figure class="skeleton overflow-clip">
-                            {% image item.product.image fill-1920x1080 %}
-                          </figure>
-                          <div className="card-body justify-end gap-4">
-                            <h2
-                              className="card-title text-primary flex items-center gap-4"
-                            >
-                              {{ item.product }}
-                              <div
-                                className="tooltip tooltip-right rtl:tooltip-left tooltip-open tooltip-success"
-                                data-tip="{{ item.product.price }}"
-                              >
-                                <div
-                                  className="badge badge-sm md:badge-md lg:badge-lg 2xl:badge-xl badge-success"
-                                >
-                                  <span className="sr-only"
-                                    >{% trans 'Price:' %} {{ item.product.price
-                                    }}</span
-                                  >
-                                  <DollarSign className="size-4" />
-                                </div>
-                              </div>
-                            </h2>
-
-                            <a
-                              href="{% pageurl item.product %}"
-                              className="btn btn-sm btn-error lg:btn-md xl:btn-lg 2xl:btn-xl"
-                            >
-                              {% trans 'Remove' %}
-                            </a>
-                          </div>
-                        </li>
-                        {% empty %}
+                    <div class="relative grow overflow-y-auto px-4 pb-16">
+                      <ol class="grid gap-2 size-full lg:gap-4">
                         <li
                           class="flex size-full flex-col items-center justify-center gap-4"
                         >
                           <i
-                            data-lucide="shopping-bag"
+                            data-lucide="bot-message-square"
                             class="text-primary aspect-square size-1/3 lg:size-1/2"
                           ></i>
                           <h1
                             class="text-primary text-xl font-semibold lg:text-3xl"
                           >
-                            {% trans 'Your cart is empty' %}
+                            {% trans 'Hi, I am Al-Wazeer' %}
                           </h1>
+                          <p>{% trans 'How I can help you today?' %}</p>
                         </li>
-                        {% endfor %}
                       </ol>
-                    </div>
 
-                    <div class="absolute inset-x-0 bottom-0">
-                      <button
-                        class="btn btn-block btn-sm btn-primary lg:btn-md xl:btn-lg 2xl:btn-xl"
+                      <div
+                        class="absolute inset-x-0 bottom-0 rounded-t-box bg-base-200/50 flex items-center gap-4 p-4"
                       >
-                        <i
-                          data-lucide="check-circle2"
-                          class="size-4 md:size-6 xl:size-7 2xl:size-8"
-                        ></i>
-                        {% trans 'Checkout' %}
-                      </button>
+                        <label
+                          class="grow input input-ghost input-primary bg-transparent"
+                        >
+                          <input
+                            id="message"
+                            type="text"
+                            name="message"
+                            class="grow"
+                            placeholder="{% trans 'Message Al-Wazeer' %}"
+                          />
+
+                          <div
+                            class="tooltip tooltip-primary"
+                            data-tip="{% trans 'Send' %}"
+                          >
+                            <button
+                              type="submit"
+                              class="btn btn-circle btn-primary"
+                            >
+                              <i
+                                data-lucide="arrow-up-from-dot"
+                                class="size-4 md:size-6"
+                              ></i>
+                              <span class="sr-only">{% trans 'Send' %}</span>
+                            </button>
+                          </div>
+                        </label>
+                      </div>
                     </div>
                   </section>
                 </section>
@@ -555,7 +671,7 @@
         ></label>
 
         <section
-          class="rounded-box bg-base-100/50 m-1 flex h-full max-h-[calc(100dvh-0.5rem)] w-full max-w-[calc(100dvw-0.5rem)] flex-col justify-between overflow-hidden overflow-y-auto backdrop-blur-3xl sm:w-10/12 md:w-8/12 lg:m-2 lg:max-h-[calc(100dvh-1rem)] lg:w-1/3 lg:max-w-[calc(100dvw-1rem)] xl:w-1/4"
+          class="bg-base-100/50 flex size-full flex-col justify-between overflow-hidden overflow-y-auto backdrop-blur-3xl sm:w-10/12 md:w-8/12 lg:w-1/3 2xl:w-1/4"
         >
           <div class="grid">
             <header class="flex items-center justify-between gap-4 p-4">
@@ -600,7 +716,7 @@
               <li>
                 <a
                   href="/"
-                  class="btn btn-sm btn-soft btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
+                  class="btn btn-sm btn-ghost btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
                 >
                   <i
                     data-lucide="home"
@@ -609,17 +725,18 @@
                   <span>{% trans 'Home' %}</span>
                 </a>
               </li>
-              <li>
+              {% if request.user.is_staff %}
+              <li class="sm:hidden">
                 <a
-                  href="/dashboard/"
-                  class="btn btn-sm btn-soft btn-primary md:btn-md btn-block 2xl:btn-xl justify-between"
+                  href="{% url 'wagtailadmin_home' %}"
+                  class="btn btn-sm btn-ghost btn-primary md:btn-md btn-block 2xl:btn-xl justify-between"
                 >
                   <span class="flex items-center gap-[inherit]">
                     <i
-                      data-lucide="building2"
+                      data-lucide="layout-dashboard"
                       class="size-4 md:size-6 xl:size-7 2xl:size-8"
                     ></i>
-                    <span>{% trans 'My Store' %}</span>
+                    <span>{% trans 'Dashboard' %}</span>
                   </span>
 
                   <i
@@ -628,22 +745,50 @@
                   ></i>
                 </a>
               </li>
-              <li>
+              {% endif %}
+              <li class="sm:hidden">
                 <a
-                  href="#"
-                  class="btn btn-sm btn-soft btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
+                  href="{% url 'ui:learn' %}"
+                  class="btn btn-sm btn-ghost btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
                 >
                   <i
-                    data-lucide="hand-heart"
+                    data-lucide="graduation-cap"
                     class="size-4 md:size-6 xl:size-7 2xl:size-8"
                   ></i>
-                  <span>{% trans 'Become a seller' %}</span>
+                  <span>{% trans 'My Learning' %}</span>
                 </a>
               </li>
+              {% if blog %}
+              <li class="sm:hidden">
+                <a
+                  href="{% pageurl blog %}"
+                  class="btn btn-sm btn-ghost btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
+                >
+                  <i
+                    data-lucide="scroll-text"
+                    class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                  ></i>
+                  <span>{% trans 'Blog' %}</span>
+                </a>
+              </li>
+              {% else %}
+              <li class="sm:hidden">
+                <a
+                  href="{% slugurl 'blog' %}"
+                  class="btn btn-sm btn-ghost btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
+                >
+                  <i
+                    data-lucide="scroll-text"
+                    class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                  ></i>
+                  <span>{% trans 'Blog' %}</span>
+                </a>
+              </li>
+              {% endif %}
               <li>
                 <a
                   href="{% url 'ui:about' %}"
-                  class="btn btn-sm btn-soft btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
+                  class="btn btn-sm btn-ghost btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
                 >
                   <i
                     data-lucide="info"
@@ -655,7 +800,7 @@
               <li>
                 <a
                   href="{% url 'ui:contact' %}"
-                  class="btn btn-sm btn-soft btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
+                  class="btn btn-sm btn-ghost btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
                 >
                   <i
                     data-lucide="contact"
@@ -672,7 +817,7 @@
             <li>
               <a
                 href="{% url 'ui:profile' %}"
-                class="btn btn-sm btn-soft btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
+                class="btn btn-sm btn-ghost btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
               >
                 <i
                   data-lucide="user"
@@ -698,7 +843,7 @@
             <li>
               <a
                 href="{% url 'ui:login' %}"
-                class="btn btn-sm btn-soft btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
+                class="btn btn-sm btn-ghost btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
               >
                 <i
                   data-lucide="user"
@@ -736,6 +881,26 @@
 
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
+      const pinChat = () => {
+        document.getElementById("chat-drawer").toggleAttribute("checked");
+        document
+          .getElementById("chat-container")
+          .classList.toggle("lg:drawer-open");
+        document.getElementById("chat-label").classList.toggle("hidden");
+        document.getElementById("chat-close").classList.toggle("hidden");
+        document
+          .getElementById("chat-drawer-container")
+          .classList.toggle("lg:w-1/3");
+        document
+          .getElementById("chat-drawer-container")
+          .classList.toggle("lg:w-full");
+        document
+          .getElementById("chat-drawer-container")
+          .classList.toggle("2xl:w-1/4");
+        document.getElementById("pin").classList.toggle("hidden");
+        document.getElementById("unpin").classList.toggle("hidden");
+      };
+
       lucide.createIcons();
     </script>
   </body>

@@ -79,5 +79,6 @@ question_router.register("answers", QuestionAnswers, "answer")
 
 urlpatterns = [
     path("", include(router.urls)),
+    path("/courses/<int:course_id>/x/", include(course_router.urls)),
     path("", api_router.urls),
 ]

@@ -19,7 +19,7 @@ class UserFilterMixin:
     def get_queryset(self):
         """Perform the filter"""
 
-        return super().get_queryset().filter(user_id=self.request.user.id)
+        return super().get_queryset().filter(owner_id=self.request.user.id)
 
 
 class ActionPermissionsMixin:

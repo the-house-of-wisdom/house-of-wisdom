@@ -5,12 +5,13 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from wagtail.admin.panels import FieldPanel, InlinePanel
 from wagtail.api import APIField
-from wagtail.fields import RichTextField
+from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Page
 from wagtail.search import index
 
 from how.apps.assignments import ASSIGNMENT_TYPES
 from how.apps.mixins import DateTimeMixin
+from how.cms.blocks import TextBlock
 
 
 # Create your models here.
@@ -22,9 +23,18 @@ class Assignment(DateTimeMixin, Page):
         help_text=_("Assignment type"),
         choices=ASSIGNMENT_TYPES,
     )
-    description = models.CharField(
-        max_length=256,
-        help_text=_("Assignment description"),
+    description = RichTextField(help_text=_("Assignment description"))
+    content = StreamField(
+        TextBlock(),
+        help_text=_("Assignment instructions or more info"),
+    )
+    is_graded = models.BooleanField(
+        default=True,
+        help_text=_("Designates if assignment is graded or for practice"),
+    )
+    is_auto_graded = models.BooleanField(
+        default=True,
+        help_text=_("Designates if assignment is auto graded"),
     )
     question_count = models.PositiveSmallIntegerField(
         default=10,
@@ -32,7 +42,7 @@ class Assignment(DateTimeMixin, Page):
     )
     min_percentage = models.FloatField(
         default=80.0,
-        help_text=_("Minimum percentage to pass the assignment"),
+        help_text=_("Minimum percentage to pass assignment"),
         validators=[
             validators.MinValueValidator(
                 0.0, _("Min percentage must be greater than 0")
@@ -42,21 +52,22 @@ class Assignment(DateTimeMixin, Page):
             ),
         ],
     )
-    content = RichTextField(help_text=_("Assignment instructions or more info"))
-    is_auto_graded = models.BooleanField(
-        default=True,
-        help_text=_("Designates if the assignment is auto graded"),
+    duration = models.DurationField(
+        null=True,
+        blank=True,
+        help_text=_("Designates if assignment is timed"),
     )
 
     # Dashboard UI config
     context_object_name = "assignment"
-    template = "ui/previews/assignment.html"
+    template = "ui/learn/content/assignment.html"
     content_panels = Page.content_panels + [
-        FieldPanel("type"),
+        # FieldPanel("type"),
         FieldPanel("description"),
-        FieldPanel("question_count"),
+        # FieldPanel("question_count"),
         FieldPanel("min_percentage"),
         FieldPanel("content"),
+        FieldPanel("is_graded"),
         FieldPanel("is_auto_graded"),
         InlinePanel("questions", heading="Questions", label="Question"),
     ]
@@ -84,3 +95,14 @@ class Assignment(DateTimeMixin, Page):
 
     parent_page_types = ["lessons.Lesson"]
     subpage_types = []
+
+    def get_context(self, request, *args, **kwargs):
+        """Add extra context"""
+
+        context = super().get_context(request, *args, **kwargs)
+
+        return {
+            **context,
+            "lesson": context["assignment"].get_parent(),
+            "module": context["assignment"].get_parent().get_parent(),
+        }

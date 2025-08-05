@@ -39,13 +39,14 @@ class BaseSubmissionVS(ActionPermissionsMixin, ModelViewSet):
             serializer (Serializer): The validated data
         """
 
-        graded = serializer.save(
+        submission = serializer.save(
             owner_id=self.request.user.pk,
             assignment_id=self.kwargs["assignment_id"],
-        ).calc_grade()
+        )
 
-        if graded:
-            graded.save()
+        if submission.assignment.is_auto_graded:
+            submission.grade = submission.auto_grade()
+            submission.save()
 
     @action(methods=["post"], detail=True)
     def grade(self, request: Request, pk: int) -> Response:
@@ -54,7 +55,8 @@ class BaseSubmissionVS(ActionPermissionsMixin, ModelViewSet):
         submission = self.get_object()
 
         if submission.assignment.is_auto_graded:
-            submission.calc_grade().save()
+            submission.grade = submission.auto_grade()
+            submission.save()
 
             return Response(
                 self.get_serializer()(instance=submission), status=status.HTTP_200_OK

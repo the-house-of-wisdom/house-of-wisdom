@@ -1,0 +1,74 @@
+{% extends 'ui/base.html' %}{% load i18n wagtailcore_tags wagtailimages_tags %}
+
+<!---->
+{% block title %}{{ path.title }}{% endblock %}
+
+<!---->
+{% block content %}
+<div class="container mx-auto px-4 py-20">
+  <nav class="breadcrumbs text-xs lg:text-sm">
+    <ol>
+      {% for page in path.get_ancestors %}{% if not page.is_root %}
+      <li>
+        <a href="{% pageurl page %}"> {{ page }} </a>
+      </li>
+      {% endif %}{% endfor %}
+      <li>{{ page }}</li>
+    </ol>
+  </nav>
+
+  <section class="grid gap-8">
+    <div
+      class="hero relative bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% rounded-box aspect-video"
+    >
+      <div class="hero-content grid gap-8">
+        <h1 class="text-3xl text-primary font-black lg:text-7xl">
+          {{ path.title }}
+        </h1>
+      </div>
+    </div>
+
+    <div
+      class="prose mx-auto text-inherit prose-sm lg:prose prose-video:rounded-box xl:prose-lg 2xl:prose-xl prose-headings:text-primary prose-headings:font-serif rtl:prose-headings:font-kufi prose-img:rounded-box prose-img:w-full prose-pre:bg-base-200 prose-pre:border prose-pre:border-base-300"
+    >
+      {% image path.image fill-1920x1080 %}
+
+      <h2>{{ path.headline }}</h2>
+      {{ path.description|richtext }}
+
+      <h3>{% trans 'Prerequisites' %}</h3>
+      {{ path.prerequisites|richtext }}
+
+      <h3>{% trans 'Skills you will gain' %}</h3>
+      <div class="flex flex-wrap items-center gap-4">
+        {% for skill in path.skills.all %}
+        <span
+          class="badge {% cycle 'badge-primary' 'badge-secondary' 'badge-success' 'badge-info' 'badge-warning' 'badge-error' %}"
+        >
+          {{ skill }}
+        </span>
+        {% endfor %}
+      </div>
+
+      <h3>
+        {{ path.get_children_count }} {% trans 'courses are in this course' %}
+      </h3>
+      <div class="grid gap-4">
+        {% for course in path.get_children.specific %}
+        <div class="collapse collapse-arrow bg-base-200 rounded-box shadow-xs">
+          <input id="course-{{ course.id }}" type="checkbox" class="hidden" />
+
+          <label for="course-{{ course.id }}" class="collapse-title">
+            {{ course.title }}
+          </label>
+
+          <div class="collapse-content">
+            <div>{{ course.description|richtext }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

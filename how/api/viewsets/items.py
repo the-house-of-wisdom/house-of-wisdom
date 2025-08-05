@@ -23,7 +23,7 @@ class BaseItemVS(ActionPermissionsMixin, PagesAPIViewSet):
     model = Item
     name = "items"
     permission_classes = [IsAuthenticated, IsInstructor]
-    ordering_fields = ["order", "created_at", "updated_at"]
+    ordering_fields = ["created_at", "updated_at"]
     filterset_fields = ["type"]
     action_permissions = {
         "default": permission_classes,
@@ -133,8 +133,7 @@ class ItemViewSet(UserFilterMixin, BaseItemVS):
                 "lesson": 3,
                 "title": "Understanding Variables",
                 "content": "This section explains variables in Python.",
-                "item_type": "text",
-                "order": 1
+                "item_type": "text"
             }'
     ```
 

@@ -16,7 +16,7 @@ class BaseModuleVS(ActionPermissionsMixin, PagesAPIViewSet):
     model = Module
     name = "modules"
     permission_classes = [IsAuthenticated, IsInstructor]
-    ordering_fields = ["title", "order", "created_at", "updated_at"]
+    ordering_fields = ["title", "created_at", "updated_at"]
     action_permissions = {"default": permission_classes}
 
 
@@ -157,8 +157,7 @@ class CourseModules(BaseModuleVS):
         -H "Authorization: Bearer YOUR_TOKEN_HERE" \\
         -d '{
                 "title": "Introduction to Web Development",
-                "description": "Foundational topics in HTML, CSS, and JavaScript",
-                "order": 1
+                "description": "Foundational topics in HTML, CSS, and JavaScript"
             }'
     ```
     """

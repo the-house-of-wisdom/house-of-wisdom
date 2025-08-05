@@ -18,7 +18,7 @@ class BaseAssignmentVS(ActionPermissionsMixin, PagesAPIViewSet):
     model = Assignment
     name = "assignments"
     permission_classes = [IsAuthenticated, IsInstructor]
-    ordering_fields = ["created_at", "updated_at", "order"]
+    ordering_fields = ["created_at", "updated_at"]
     filterset_fields = ["type"]
     action_permissions = {
         "default": permission_classes,

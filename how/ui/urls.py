@@ -49,13 +49,85 @@ auth_urls = [
 ]
 
 
-urlpatterns = [
-    path("", views.HomeView.as_view(), name="home"),
-    path("about/", views.HomeView.as_view(), name="about"),
-    path("contact/", views.HomeView.as_view(), name="contact"),
-    *auth_urls,
-    path("courses/", views.CourseListView.as_view(), name="courses"),
-    path("courses/<slug:slug>/", views.CourseDetailView.as_view(), name="course"),
-    path("learning-paths/", views.PathListView.as_view(), name="paths"),
-    path("learning-paths/<slug:slug>/", views.PathDetailView.as_view(), name="path"),
+urlpatterns = auth_urls + [
+    path(
+        "about/",
+        views.HomeView.as_view(),
+        name="about",
+    ),
+    path(
+        "contact/",
+        views.HomeView.as_view(),
+        name="contact",
+    ),
+    path(
+        "learn/",
+        views.LearnView.as_view(),
+        name="learn",
+    ),
+    path(
+        "learn/<slug:course>/",
+        views.CourseDetailView.as_view(),
+        name="course",
+    ),
+    path(
+        "learn/<slug:course>/grades/",
+        views.CourseGradesView.as_view(),
+        name="grades",
+    ),
+    path(
+        "learn/<slug:course>/grades/<slug:assignment>/",
+        views.AssignmentDetailView.as_view(),
+        name="assignment",
+    ),
+    path(
+        "learn/<slug:course>/grades/<slug:assignment>/submissions/<int:pk>/",
+        views.SubmissionDetailView.as_view(),
+        name="submission",
+    ),
+    path(
+        "learn/<slug:course>-<int:id>/enroll/",
+        views.EnrollmentCreateView.as_view(),
+        name="enroll",
+    ),
+    path(
+        "learn/<slug:course>-<int:id>/reviews/",
+        views.CourseReviewsView.as_view(),
+        name="reviews",
+    ),
+    path(
+        "learn/<slug:course>-<int:id>/reviews/new/",
+        views.ReviewCreateView.as_view(),
+        name="new_review",
+    ),
+    path(
+        "learn/<slug:course>-<int:id>/reviews/<int:pk>/",
+        views.ReviewUpdateView.as_view(),
+        name="update_review",
+    ),
+    path(
+        "learn/<slug:course>/posts/",
+        views.CoursePostsView.as_view(),
+        name="posts",
+    ),
+    path(
+        "learn/<slug:course>/posts/<slug:post>/",
+        views.PostDetailView.as_view(),
+        name="post",
+    ),
+    path(
+        "learn/<slug:course>/<slug:module>/",
+        views.ModuleDetailView.as_view(),
+        name="module",
+    ),
+    path(
+        "learn/<slug:course>/<slug:module>/<slug:lesson>/",
+        views.LessonDetailView.as_view(),
+        name="lesson",
+    ),
+    path(
+        "learn/<slug:course>/<slug:module>/<slug:lesson>/<slug:item>/",
+        views.ItemDetailView.as_view(),
+        name="item",
+    ),
 ]

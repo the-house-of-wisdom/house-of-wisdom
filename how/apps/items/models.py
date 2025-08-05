@@ -10,7 +10,7 @@ from wagtail.search import index
 
 from how.apps.items import ITEM_TYPES
 from how.apps.mixins import DateTimeMixin
-from how.cms.blocks import CommonContentBlock
+from how.cms.blocks import MediaBlock
 
 
 # Create your models here.
@@ -23,13 +23,13 @@ class Item(DateTimeMixin, Page):
         choices=ITEM_TYPES,
     )
     content = StreamField(
-        CommonContentBlock(),
+        MediaBlock(),
         help_text=_("Item content"),
     )
 
     # Dashboard UI config
     context_object_name = "item"
-    template = "ui/previews/item.html"
+    template = "ui/learn/content/item.html"
     content_panels = Page.content_panels + [FieldPanel("type"), FieldPanel("content")]
     page_description = _(
         "Lesson items represent smaller sections of a lesson, such as individual "
@@ -47,3 +47,14 @@ class Item(DateTimeMixin, Page):
 
     parent_page_types = ["lessons.Lesson"]
     subpage_types = []
+
+    def get_context(self, request, *args, **kwargs):
+        """Add extra context"""
+
+        context = super().get_context(request, *args, **kwargs)
+
+        return {
+            **context,
+            "lesson": context["item"].get_parent(),
+            "module": context["item"].get_parent().get_parent(),
+        }

@@ -1,0 +1,68 @@
+{% extends 'ui/learn/base.html' %}{% load i18n %}
+
+<!---->
+{% block title %}{{ block.super }} | {% trans 'Grades' %}{% endblock %}
+
+<!---->
+{% block course_title %}{{ course }}{% endblock %}
+
+<!---->
+{% block breadcrumbs %}
+<li>
+  <a href="{% url 'ui:course' course.slug %}">
+    <i data-lucide="home" class="size-4"></i>
+    <span>{% trans 'Home' %}</span>
+  </a>
+</li>
+<li>
+  <span>
+    <i data-lucide="newspaper" class="size-4"></i>
+    <span>{% trans 'Posts' %}</span>
+  </span>
+</li>
+{% endblock %}
+
+<!---->
+{% block course_content %}
+<h2 class="text-primary text-2xl lg:text-4xl">{% trans 'Posts' %}</h2>
+
+<ol class="grid grid-cols-12 gap-4">
+  {% for post in posts %}
+  <li class="col-span-12 md:col-span-6 lg:col-span-4 2xl:col-span-3">
+    <article
+      class="card card-sm bg-base-200 shadow-xs lg:card-md xl:card-lg 2xl:card-xl overflow-hidden"
+    >
+      <main class="card-body">
+        <h2 class="card-title text-primary">{{ post.title }}</h2>
+
+        <a
+          href="{% url 'ui:post' course.slug post.slug %}"
+          class="btn btn-sm btn-primary lg:btn-md xl:btn-lg 2xl:btn-xl font-semibold"
+        >
+          <span>{% trans 'Read' %}</span>
+
+          <i
+            data-lucide="chevron-right"
+            class="size-4 md:size-6 xl:size-7 2xl:size-8 rtl:rotate-180"
+          ></i>
+        </a>
+      </main>
+    </article>
+  </li>
+  {% empty %}
+  <li class="col-span-12">
+    <article
+      class="card card-sm bg-base-200 shadow-xs lg:card-md xl:card-lg 2xl:card-xl overflow-hidden"
+    >
+      <main class="card-body items-center">
+        <i data-lucide="newspaper" class="mx-auto size-1/4 text-primary"></i>
+        <h2 class="card-title text-primary">{% trans 'No posts' %}</h2>
+        <p>
+          {% trans 'Posts published by course instructor will appear here' %}
+        </p>
+      </main>
+    </article>
+  </li>
+  {% endfor %}
+</ol>
+{% endblock %}

@@ -1,0 +1,182 @@
+{% extends 'ui/learn/content/assignment.html' %}{% load i18n wagtailcore_tags %}
+
+<!---->
+{% block styles %}{{ block.super }}
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css"
+/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+<script>
+  hljs.highlightAll();
+</script>
+<style>
+  pre code.hljs {
+    padding: 0;
+    background-color: transparent;
+  }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+{% endblock %}
+
+<!---->
+{% block breadcrumbs %}{{ block.super }}
+<li>
+  <span>
+    <i data-lucide="book-check" class="size-4"></i>
+    <span>{{ submission }}</span>
+  </span>
+</li>
+{% endblock %}
+
+<!---->
+{% block i_tab %}{% endblock %}
+<!---->
+{% block s_tab %}checked{% endblock %}
+<!---->
+{% block s_toggle %}checked{% endblock %}
+<!---->
+{% block s_btn %}{% endblock %}
+
+<!---->
+{% block assignment_content %}
+<div class="carousel relative size-full">
+  {% for question in assignment.questions.all %}
+  <div class="carousel-item relative size-full flex-col overflow-y-auto pb-">
+    <span class="absolute top-0 right-4 badge badge-info">
+      {{ forloop.counter }} of {{ assignment.questions.count }}
+    </span>
+
+    <div class="flex flex-col gap-8 p-4">
+      <div
+        class="prose max-w-none prose-sm prose-video:rounded-box xl:prose-lg 2xl:prose-xl prose-headings:text-primary prose-headings:font-serif rtl:prose-headings:font-kufi prose-img:rounded-box prose-img:w-full prose-pre:bg-base-200 prose-pre:border prose-pre:border-base-300"
+      >
+        {{ question.text }}
+      </div>
+
+      <ol class="flex flex-col grow gap-4">
+        {% for answer in question.answers.all %}
+        <!---->
+        {% if answer in submission.answers.all %}
+        <li>
+          {% if answer.is_correct %}
+          <div
+            class="card card-sm text-success border-1 border-success flex-row items-center gap-4 p-4 lg:card-md xl:card-lg 2xl:card-xl"
+          >
+            {% if question.type %}
+            <input
+              disabled
+              checked
+              type="checkbox"
+              class="checkbox checkbox-sm checkbox-success lg:checkbox-md xl:checkbox-lg 2xl:checkbox-xl"
+            />
+            {% else %}
+            <input
+              disabled
+              checked
+              type="radio"
+              class="radio radio-sm radio-success lg:radio-md xl:radio-lg 2xl:radio-xl"
+            />
+            {% endif %}
+
+            <div
+              class="prose max-w-none w-full grow text-inherit prose-sm prose-video:rounded-box xl:prose-lg 2xl:prose-xl prose-headings:text-primary prose-headings:font-serif rtl:prose-headings:font-kufi prose-img:rounded-box prose-img:w-full prose-pre:bg-base-200 prose-pre:border prose-pre:border-base-300"
+            >
+              {{ answer.text }}
+            </div>
+          </div>
+          <div
+            role="alert"
+            class="alert alert-horizontal alert-success alert-soft"
+          >
+            <i
+              data-lucide="check-circle2"
+              class="size-4 md:size-6 xl:size-7 2xl:size-8"
+            ></i>
+            <strong class="sr-only">{% trans 'Correct' %}</strong>
+
+            <div
+              class="prose max-w-none w-full grow text-inherit prose-sm prose-video:rounded-box xl:prose-lg 2xl:prose-xl prose-headings:text-primary prose-headings:font-serif rtl:prose-headings:font-kufi prose-img:rounded-box prose-img:w-full prose-pre:bg-base-200 prose-pre:border prose-pre:border-base-300"
+            >
+              {{ answer.feedback|richtext }}
+            </div>
+          </div>
+          {% else %}
+          <div
+            class="card card-sm text-error border-1 border-error flex-row items-center gap-4 p-4 lg:card-md xl:card-lg 2xl:card-xl"
+          >
+            {% if question.type %}
+            <input
+              disabled
+              checked
+              type="checkbox"
+              class="checkbox checkbox-sm checkbox-error lg:checkbox-md xl:checkbox-lg 2xl:checkbox-xl"
+            />
+            {% else %}
+            <input
+              disabled
+              checked
+              type="radio"
+              class="radio radio-sm radio-error lg:radio-md xl:radio-lg 2xl:radio-xl"
+            />
+            {% endif %}
+
+            <div
+              class="prose max-w-none w-full grow text-inherit prose-sm prose-video:rounded-box xl:prose-lg 2xl:prose-xl prose-headings:text-primary prose-headings:font-serif rtl:prose-headings:font-kufi prose-img:rounded-box prose-img:w-full prose-pre:bg-base-200 prose-pre:border prose-pre:border-base-300"
+            >
+              {{ answer.text }}
+            </div>
+          </div>
+          <div
+            role="alert"
+            class="alert alert-horizontal alert-error alert-soft"
+          >
+            <i
+              data-lucide="x-circle"
+              class="size-4 md:size-6 xl:size-7 2xl:size-8"
+            ></i>
+            <strong class="sr-only">{% trans 'Incorrect' %}</strong>
+
+            <div
+              class="prose max-w-none w-full grow text-inherit prose-sm prose-video:rounded-box xl:prose-lg 2xl:prose-xl prose-headings:text-primary prose-headings:font-serif rtl:prose-headings:font-kufi prose-img:rounded-box prose-img:w-full prose-pre:bg-base-200 prose-pre:border prose-pre:border-base-300"
+            >
+              {{ answer.feedback|richtext }}
+            </div>
+          </div>
+          {% endif %}
+        </li>
+        {% else %}
+        <li>
+          <div
+            class="card card-sm text-primary border-1 border-transparent flex-row items-center gap-4 p-4 lg:card-md xl:card-lg 2xl:card-xl"
+          >
+            {% if question.type %}
+            <input
+              disabled
+              type="checkbox"
+              class="checkbox checkbox-sm checkbox-primary lg:checkbox-md xl:checkbox-lg 2xl:checkbox-xl"
+            />
+            {% else %}
+            <input
+              disabled
+              type="radio"
+              class="radio radio-sm radio-primary lg:radio-md xl:radio-lg 2xl:radio-xl"
+            />
+            {% endif %}
+
+            <div
+              class="prose max-w-none w-full grow text-inherit prose-sm prose-video:rounded-box xl:prose-lg 2xl:prose-xl prose-headings:text-primary prose-headings:font-serif rtl:prose-headings:font-kufi prose-img:rounded-box prose-img:w-full prose-pre:bg-base-200 prose-pre:border prose-pre:border-base-300"
+            >
+              {{ answer.text }}
+            </div>
+          </div>
+        </li>
+        {% endif %}
+        <!---->
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

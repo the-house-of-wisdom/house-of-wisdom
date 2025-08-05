@@ -3,22 +3,33 @@
 from django.utils.translation import gettext_lazy as _
 from wagtail import blocks
 from wagtail.documents.blocks import DocumentChooserBlock
-from wagtail.images.blocks import ImageChooserBlock
+from wagtail.embeds.blocks import EmbedBlock
+from wagtail.images.blocks import ImageBlock
 from wagtailcodeblock.blocks import CodeBlock
 
 
 # Create your blocks here.
-class TextContentBlock(blocks.StreamBlock):
+class Code(CodeBlock):
+    """Custom code block"""
+
+    class Meta:
+        icon = "code"
+        template = "ui/blocks/code.html"
+        form_classname = "code-block struct-block"
+        form_template = "wagtailcodeblock/code_block_form.html"
+
+
+class TextBlock(blocks.StreamBlock):
     """Custom StreamBlock for Text content"""
 
-    heading = blocks.CharBlock(form_classname="title", help_text=_("Heading"))
+    code = Code(help_text=_("Code"))
     paragraph = blocks.RichTextBlock(help_text=_("Rich Text"))
 
 
-class CommonContentBlock(TextContentBlock):
+class MediaBlock(TextBlock):
     """Custom StreamBlock for Text and Media content"""
 
-    code = CodeBlock(help_text=_("Code"))
-    image = ImageChooserBlock(help_text=_("Image"))
-    document = DocumentChooserBlock(help_text=_("Document"))
+    video = EmbedBlock(help_text=_("Video"))
+    image = ImageBlock(help_text=_("Image"))
     quote = blocks.BlockQuoteBlock(help_text=_("Quote"))
+    document = DocumentChooserBlock(help_text=_("Document"))

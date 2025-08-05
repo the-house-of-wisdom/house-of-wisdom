@@ -1,4 +1,4 @@
-"""Tests for how.blog.models"""
+"""Tests for how.apps.blog.models"""
 
 from django.test import TestCase
 

@@ -46,23 +46,23 @@ class LearningPath(DateTimeMixin, Page):
         db_index=True,
         help_text=_("Learning Path rating"),
     )
-    tags = ClusterTaggableManager(
+    skills = ClusterTaggableManager(
         blank=True,
         through="tags.LearningPathTag",
-        help_text=_("LearningPath tags"),
+        help_text=_("Skills will be gained after completing the learning path"),
     )
 
     # Dashboard UI config
     show_in_menus = True
     context_object_name = "path"
-    template = "ui/previews/path.html"
+    template = "ui/paths/id.html"
     content_panels = Page.content_panels + [
         FieldPanel("image"),
         FieldPanel("headline"),
         FieldPanel("description"),
         FieldPanel("prerequisites"),
         FieldPanel("duration"),
-        FieldPanel("tags"),
+        FieldPanel("skills"),
     ]
     page_description = _(
         "A learning path is a curated sequence of courses designed to guide learners through a specific subject "
@@ -73,7 +73,7 @@ class LearningPath(DateTimeMixin, Page):
     # Search fields
     search_fields = Page.search_fields + [
         index.FilterField("rating"),
-        index.FilterField("tags"),
+        index.FilterField("skills"),
         index.SearchField("headline"),
         index.SearchField("description"),
         index.SearchField("prerequisites"),
@@ -87,7 +87,7 @@ class LearningPath(DateTimeMixin, Page):
         APIField("description"),
         APIField("prerequisites"),
         APIField("duration"),
-        APIField("tags"),
+        APIField("skills"),
     ]
 
     parent_page_types = ["categories.Category"]

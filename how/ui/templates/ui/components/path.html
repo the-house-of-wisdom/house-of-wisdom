@@ -1,0 +1,56 @@
+{% load i18n wagtailcore_tags wagtailimages_tags %}
+
+<div
+  class="card card-sm lg:card-md xl:card-lg 2xl:card-xl bg-base-200 size-full shadow-sm"
+>
+  <figure class="skeleton overflow-clip">
+    {% image path.image fill-1920x1080 %}
+  </figure>
+
+  <div class="card-body gap-4">
+    <h2 class="card-title text-primary">
+      {{ path.title }}
+      <span
+        class="badge badge-sm badge-soft badge-success border-success md:badge-md lg:badge-lg 2xl:badge-xl"
+      >
+        {{ path.content_type.name|title }}
+      </span>
+    </h2>
+
+    <p>{{ path.headline }}</p>
+
+    <div class="card-actions">
+      <div
+        class="tooltip tooltip-top tooltip-primary"
+        data-tip="{% trans 'Instructor' %}"
+      >
+        <span class="badge badge-sm md:badge-md badge-primary 2xl:badge-lg">
+          <span class="sr-only">{% trans 'Instructor' %}</span>
+          <i data-lucide="graduation-cap" class="size-4 lg:size-6"></i>
+          {{ path.owner.get_full_name }}
+        </span>
+      </div>
+      <div
+        class="tooltip tooltip-top tooltip-info"
+        data-tip="{% trans 'Courses' %}"
+      >
+        <span class="badge badge-sm md:badge-md badge-info 2xl:badge-lg">
+          <span class="sr-only">{% trans 'Courses' %}</span>
+          <i data-lucide="library-square" class="size-4 lg:size-6"></i>
+          {{ path.get_children_count }}
+        </span>
+      </div>
+    </div>
+
+    <a
+      href="{% pageurl path %}"
+      class="btn btn-sm btn-primary lg:btn-md xl:btn-lg 2xl:btn-xl"
+    >
+      {% trans 'Learn more' %}
+      <i
+        data-lucide="chevron-right"
+        class="size-4 md:size-6 xl:size-7 2xl:size-8 rtl:rotate-180"
+      ></i>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+{% extends 'ui/learn/base.html' %}{% load i18n wagtailcore_tags %}
+
+<!---->
+{% block title %}{{ block.super }} | {% trans 'Grades' %}{% endblock %}
+
+<!---->
+{% block course_title %}{{ course }}{% endblock %}
+
+<!---->
+{% block breadcrumbs %}
+<li>
+  <a href="{% url 'ui:course' course.slug %}">
+    <i data-lucide="home" class="size-4"></i>
+    <span>{% trans 'Home' %}</span>
+  </a>
+</li>
+<li>
+  <span>
+    <i data-lucide="book-check" class="size-4"></i>
+    <span>{% trans 'Grades' %}</span>
+  </span>
+</li>
+{% endblock %}
+
+<!---->
+{% block course_content %}
+<h2 class="text-primary text-2xl lg:text-4xl">{% trans 'Grades' %}</h2>
+
+<div
+  class="overflow-x-auto rounded-box border border-base-content/5 bg-base-200"
+>
+  <table class="table">
+    <thead class="text-primary">
+      <tr>
+        <th>{% trans 'Assignment' %}</th>
+        <th>{% trans 'Minimum' %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for assignment in assignments %}
+      <tr>
+        <td>
+          <a
+            href="{% url 'ui:assignment' course.slug assignment.slug %}"
+            class="link link-primary font-bold"
+          >
+            {{ assignment }}
+          </a>
+        </td>
+        <td>%{{ assignment.min_percentage }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <th colspan="4">{% trans 'No assignments in this course' %}</th>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

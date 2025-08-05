@@ -1,0 +1,49 @@
+{% extends 'ui/base.html' %}{% load i18n wagtailcore_tags wagtailimages_tags %}
+
+<!---->
+{% block title %}{{ block.super }} | {{ category.title }}{% endblock %}
+
+<!---->
+{% block content %}
+<div class="container mx-auto px-4 py-20">
+  <section class="grid gap-8">
+    <div
+      class="hero bg-gradient-to-r from-emerald-500 to-sky-400 rounded-box aspect-video"
+    >
+      <div class="hero-content grid gap-8">
+        <h1 class="text-3xl text-primary font-black lg:text-7xl">
+          {{ category.title }}
+        </h1>
+
+        <div
+          class="mx-auto text-primary prose prose-sm md:processes-md prose-video:rounded-box xl:prose-lg 2xl:prose-xl prose-headings:text-primary prose-headings:font-serif rtl:prose-headings:font-kufi prose-img:rounded-box prose-img:w-full"
+        >
+          {{ category.description|richtext }}
+        </div>
+      </div>
+    </div>
+
+    <section class="grid gap-8">
+      <h1 class="text-primary text-2xl font-semibold lg:text-4xl">
+        {% trans 'Learning paths & Courses' %}
+      </h1>
+
+      <ol class="grid grid-cols-12 gap-4">
+        {% for item in category.get_children.specific %}
+        <!---->
+        {% if item.content_type.name == 'course' %}
+        <li class="col-span-12 md:col-span-6 lg:col-span-4 2xl:col-span-3">
+          {% include 'ui/components/course.html' with course=item %}
+        </li>
+        {% else %}
+        <li class="col-span-12 md:col-span-6 lg:col-span-4 2xl:col-span-3">
+          {% include 'ui/components/path.html' with path=item %}
+        </li>
+        {% endif %}
+        <!---->
+        {% endfor %}
+      </ol>
+    </section>
+  </section>
+</div>
+{% endblock %}

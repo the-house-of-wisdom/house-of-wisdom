@@ -46,41 +46,36 @@ class Course(DateTimeMixin, Page):
         blank=True,
         help_text=_("Course duration"),
     )
-    tags = models.ManyToManyField(
-        "tags.Tag",
-        blank=True,
-        help_text=_("Course tags"),
-    )
     students = models.ManyToManyField(
         User,
-        related_name="students",
+        related_name="courses",
         through="enrollments.Enrollment",
         help_text=_("Course enrollments"),
     )
-    tags = ClusterTaggableManager(
+    skills = ClusterTaggableManager(
         blank=True,
         through="tags.CourseTag",
-        help_text=_("Course tags"),
+        help_text=_("Skills will be gained after completing the course"),
     )
 
     # Dashboard UI config
     show_in_menus = True
     context_object_name = "course"
-    template = "ui/previews/course.html"
+    template = "ui/courses/id.html"
     content_panels = Page.content_panels + [
         FieldPanel("image"),
         FieldPanel("headline"),
         FieldPanel("description"),
         FieldPanel("prerequisites"),
         FieldPanel("duration"),
-        FieldPanel("tags"),
+        FieldPanel("skills"),
     ]
     page_description = _("Courses")
 
     # Search fields
     search_fields = Page.search_fields + [
         index.FilterField("rating"),
-        index.FilterField("tags"),
+        index.FilterField("skills"),
         index.SearchField("headline"),
         index.SearchField("description"),
         index.SearchField("prerequisites"),
@@ -94,7 +89,7 @@ class Course(DateTimeMixin, Page):
         APIField("description"),
         APIField("prerequisites"),
         APIField("duration"),
-        APIField("tags"),
+        APIField("skills"),
     ]
 
     parent_page_types = ["categories.Category", "paths.LearningPath"]
@@ -105,3 +100,15 @@ class Course(DateTimeMixin, Page):
         """Number of students enrolled in a course"""
 
         return self.students.count()
+
+    @property
+    def get_modules(self):
+        """Get modules of a course"""
+
+        return self.get_children().filter(content_type__model="module")
+
+    @property
+    def get_module_count(self) -> int:
+        """Number of modules of a course"""
+
+        return self.get_children().filter(content_type__model="module").count()

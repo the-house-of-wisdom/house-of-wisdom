@@ -10,8 +10,9 @@ from wagtail.models import Page
 from wagtail.search import index
 
 from how.apps.mixins import DateTimeMixin
+from how.apps.modules.models import Module
 from how.apps.posts import POST_TYPES
-from how.cms.blocks import CommonContentBlock
+from how.cms.blocks import MediaBlock
 
 # Create your models here.
 User = get_user_model()
@@ -26,13 +27,13 @@ class Post(DateTimeMixin, Page):
         choices=POST_TYPES,
     )
     content = StreamField(
-        CommonContentBlock(),
+        MediaBlock(),
         help_text=_("Post content"),
     )
 
     # Dashboard UI config
     context_object_name = "post"
-    template = "ui/previews/post.html"
+    template = "ui/learn/posts/id.html"
     content_panels = Page.content_panels + [
         FieldPanel("type"),
         FieldPanel("content"),
@@ -55,3 +56,14 @@ class Post(DateTimeMixin, Page):
 
     parent_page_types = ["courses.Course"]
     subpage_types = []
+
+    def get_context(self, request, *args, **kwargs):
+        """Add course to context"""
+
+        context = super().get_context(request, *args, **kwargs)
+
+        return {
+            **context,
+            "course": context["post"].get_parent(),
+            "modules": Module.objects.live().child_of(context["post"].get_parent()),
+        }

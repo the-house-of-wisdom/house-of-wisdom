@@ -1,4 +1,4 @@
-"""Tests for how.blog.views"""
+"""Tests for how.apps.blog.views"""
 
 from rest_framework.test import APITestCase
 

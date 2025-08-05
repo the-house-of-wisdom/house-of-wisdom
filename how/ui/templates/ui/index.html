@@ -2,264 +2,102 @@
 
 <!---->
 {% block content %}
-<section class="grid gap-8 px-4 pb-4 pt-16">
-  <div class="grid grid-cols-12 grid-rows-12 gap-4">
-    <div class="col-span-12 row-span-12 lg:col-span-8">
-      <ol class="carousel carousel-center rounded-box relative size-full">
-        <li role="heading" aria-level="{2}" class="absolute left-4 top-4 z-10">
-          <span
-            class="badge md:badge-lg lg:badge-xl badge-primary font-semibold shadow-sm"
-          >
-            {% trans 'Trending' %}
-          </span>
-        </li>
-
-        {% for product in products %}
-        <li class="carousel-item skeleton relative size-full">
-          {% image product.image fill-1920x1080 %}
-
-          <div class="absolute bottom-4 left-4">
-            <div class="flex flex-col items-center gap-1 xl:flex-row">
-              <div
-                class="tooltip tooltip-primary tooltip-top"
-                data-tip="Details"
-              >
-                <a
-                  href="{% pageurl product %}"
-                  class="badge badge-primary md:badge-lg lg:badge-xl text-shadow-lg font-bold shadow-sm"
-                >
-                  {{ product.title }}
-                </a>
-              </div>
-
-              <div
-                class="tooltip tooltip-success tooltip-open tooltip-right rtl:tooltip-left"
-                data-tip="{{ product.price }}"
-              >
-                <span
-                  class="badge badge-sm badge-primary shadow-sm md:badge-md lg:badge-lg 2xl:badge-lg"
-                >
-                  <span class="sr-only"
-                    >{% trans 'Price:' %} {{ product.price }}</span
-                  >
-                  <i data-lucide="dollar-sign" class="size-4"></i>
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <nav class="absolute bottom-4 right-4">
-            <div class="flex flex-col items-center gap-1 xl:flex-row">
-              <div
-                class="tooltip tooltip-left rtl:tooltip-right lg:tooltip-top tooltip-primary"
-                data-tip="{% trans 'Prev' %}"
-              >
-                <button
-                  class="btn btn-primary btn-soft btn-sm btn-circle lg:btn-md xl:btn-lg 2xl:btn-xl"
-                >
-                  <i
-                    data-lucide="move-left"
-                    class="size-4 lg:size-6 2xl:size-8"
-                  ></i>
-                  <span class="sr-only">{% trans 'Previous' %}</span>
-                </button>
-              </div>
-              <div
-                class="tooltip tooltip-left rtl:tooltip-right lg:tooltip-top tooltip-primary"
-                data-tip="{% trans 'Next' %}"
-              >
-                <button
-                  class="btn btn-primary btn-soft btn-sm btn-circle lg:btn-md xl:btn-lg 2xl:btn-xl"
-                >
-                  <i
-                    data-lucide="move-right"
-                    class="size-4 lg:size-6 2xl:size-8"
-                  ></i>
-                  <span class="sr-only">{% trans 'Next' %}</span>
-                </button>
-              </div>
-            </div>
-          </nav>
-        </li>
-        {% endfor %}
-      </ol>
-    </div>
-
-    <div class="col-span-12 row-span-6 lg:col-span-4">
-      <ol class="carousel carousel-center rounded-box relative size-full">
-        <li role="heading" aria-level="{2}" class="absolute left-4 top-4 z-10">
-          <span
-            class="badge md:badge-lg lg:badge-xl badge-primary font-semibold shadow-sm"
-          >
-            {% trans 'Popular' %}
-          </span>
-        </li>
-
-        {% for product in products %}
-        <li class="carousel-item skeleton relative size-full">
-          {% image product.image fill-1920x1080 %}
-
-          <div class="absolute bottom-4 left-4">
-            <div class="flex flex-col items-center gap-1 xl:flex-row">
-              <div
-                class="tooltip tooltip-primary tooltip-top"
-                data-tip="Details"
-              >
-                <a
-                  href="{% pageurl product %}"
-                  class="badge badge-primary md:badge-lg lg:badge-xl text-shadow-lg font-bold shadow-sm"
-                >
-                  {{ product.title }}
-                </a>
-              </div>
-
-              <div
-                class="tooltip tooltip-success tooltip-open tooltip-right rtl:tooltip-left"
-                data-tip="{{ product.price }}"
-              >
-                <span
-                  class="badge badge-sm badge-primary shadow-sm md:badge-md lg:badge-lg 2xl:badge-lg"
-                >
-                  <span class="sr-only"
-                    >{% trans 'Price:' %} {{ product.price }}</span
-                  >
-                  <i data-lucide="dollar-sign" class="size-4"></i>
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <nav class="absolute bottom-4 right-4">
-            <div class="flex flex-col items-center gap-1 xl:flex-row">
-              <div
-                class="tooltip tooltip-left rtl:tooltip-right lg:tooltip-top tooltip-primary"
-                data-tip="{% trans 'Prev' %}"
-              >
-                <button
-                  class="btn btn-primary btn-soft btn-sm btn-circle lg:btn-md xl:btn-lg 2xl:btn-xl"
-                >
-                  <i
-                    data-lucide="move-left"
-                    class="size-4 lg:size-6 2xl:size-8"
-                  ></i>
-                  <span class="sr-only">{% trans 'Previous' %}</span>
-                </button>
-              </div>
-              <div
-                class="tooltip tooltip-left rtl:tooltip-right lg:tooltip-top tooltip-primary"
-                data-tip="{% trans 'Next' %}"
-              >
-                <button
-                  class="btn btn-primary btn-soft btn-sm btn-circle lg:btn-md xl:btn-lg 2xl:btn-xl"
-                >
-                  <i
-                    data-lucide="move-right"
-                    class="size-4 lg:size-6 2xl:size-8"
-                  ></i>
-                  <span class="sr-only">{% trans 'Next' %}</span>
-                </button>
-              </div>
-            </div>
-          </nav>
-        </li>
-        {% endfor %}
-      </ol>
-    </div>
-
-    <div class="col-span-12 row-span-6 lg:col-span-4">
-      <ol class="carousel carousel-center rounded-box relative size-full">
-        <li role="heading" aria-level="{2}" class="absolute left-4 top-4 z-10">
-          <span
-            class="badge md:badge-lg lg:badge-xl badge-primary font-semibold shadow-sm"
-          >
-            {% trans 'Trending' %}
-          </span>
-        </li>
-
-        {% for product in products %}
-        <li class="carousel-item skeleton relative size-full">
-          {% image product.image fill-1920x1080 %}
-
-          <div class="absolute bottom-4 left-4">
-            <div class="flex flex-col items-center gap-1 xl:flex-row">
-              <div
-                class="tooltip tooltip-primary tooltip-top"
-                data-tip="Details"
-              >
-                <a
-                  href="{% pageurl product %}"
-                  class="badge badge-primary md:badge-lg lg:badge-xl text-shadow-lg font-bold shadow-sm"
-                >
-                  {{ product.title }}
-                </a>
-              </div>
-
-              <div
-                class="tooltip tooltip-success tooltip-open tooltip-right rtl:tooltip-left"
-                data-tip="{{ product.price }}"
-              >
-                <span
-                  class="badge badge-sm badge-primary shadow-sm md:badge-md lg:badge-lg 2xl:badge-lg"
-                >
-                  <span class="sr-only"
-                    >{% trans 'Price:' %} {{ product.price }}</span
-                  >
-                  <i data-lucide="dollar-sign" class="size-4"></i>
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <nav class="absolute bottom-4 right-4">
-            <div class="flex flex-col items-center gap-1 xl:flex-row">
-              <div
-                class="tooltip tooltip-left rtl:tooltip-right lg:tooltip-top tooltip-primary"
-                data-tip="{% trans 'Prev' %}"
-              >
-                <button
-                  class="btn btn-primary btn-soft btn-sm btn-circle lg:btn-md xl:btn-lg 2xl:btn-xl"
-                >
-                  <i
-                    data-lucide="move-left"
-                    class="size-4 lg:size-6 2xl:size-8"
-                  ></i>
-                  <span class="sr-only">{% trans 'Previous' %}</span>
-                </button>
-              </div>
-              <div
-                class="tooltip tooltip-left rtl:tooltip-right lg:tooltip-top tooltip-primary"
-                data-tip="{% trans 'Next' %}"
-              >
-                <button
-                  class="btn btn-primary btn-soft btn-sm btn-circle lg:btn-md xl:btn-lg 2xl:btn-xl"
-                >
-                  <i
-                    data-lucide="move-right"
-                    class="size-4 lg:size-6 2xl:size-8"
-                  ></i>
-                  <span class="sr-only">{% trans 'Next' %}</span>
-                </button>
-              </div>
-            </div>
-          </nav>
-        </li>
-        {% endfor %}
-      </ol>
-    </div>
-  </div>
-
+<div class="container mx-auto px-4 py-20">
   <section class="grid gap-8">
-    <h1 class="text-primary text-2xl font-semibold lg:text-4xl">
-      {% trans 'New products' %}
-    </h1>
+    <div
+      class="hero relative bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-50% to-emerald-500 to-90% rounded-box aspect-video"
+    >
+      <div class="hero-content flex flex-col gap-8">
+        <h1 class="text-3xl text-primary font-black lg:text-7xl">
+          {% trans 'House Of Wisdom' %}
+        </h1>
 
-    <ol class="grid grid-cols-12 gap-4">
-      {% for product in products %}
-      <li class="col-span-12 md:col-span-6 lg:col-span-4 2xl:col-span-3">
-        {% include 'ui/components/product.html' %}
-      </li>
-      {% endfor %}
-    </ol>
+        <p class="lead text-primary">
+          {% blocktrans trimmed %}Welcome to House Of Wisdom AI-powered Learning
+          Management System (LMS) designed to transform how education is
+          delivered online.{% endblocktrans %}
+        </p>
+      </div>
+    </div>
+
+    <section class="grid gap-8">
+      <h2 class="text-primary text-2xl font-semibold lg:text-4xl">
+        {% trans 'Latest learning paths' %}
+      </h2>
+
+      <ol class="grid grid-cols-12 gap-4">
+        {% for path in paths %}
+        <li class="col-span-12 md:col-span-6 lg:col-span-4">
+          {% include 'ui/components/path.html' %}
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+
+    <section class="grid gap-8">
+      <h2 class="text-primary text-2xl font-semibold lg:text-4xl">
+        {% trans 'Latest courses' %}
+      </h2>
+
+      <ol class="grid grid-cols-12 gap-4">
+        {% for course in courses %}
+        <li class="col-span-12 md:col-span-6 lg:col-span-4">
+          {% include 'ui/components/course.html' %}
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+
+    <section class="grid gap-8">
+      <h2 class="text-primary text-2xl font-semibold lg:text-4xl">
+        {% trans 'Categories' %}
+      </h2>
+
+      <ol class="grid grid-cols-12 gap-4">
+        {% for category in categories %}
+        <li class="col-span-12 md:col-span-6 lg:col-span-4">
+          {% include 'ui/components/category.html' %}
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+
+    <section class="grid gap-8">
+      <h1 class="text-primary text-2xl font-semibold lg:text-4xl">
+        {% trans 'Latest news' %}
+      </h1>
+
+      <ol class="grid grid-cols-12 gap-4">
+        {% for article in articles %}
+        <li class="col-span-12 md:col-span-6 lg:col-span-4">
+          <article
+            class="card card-sm lg:card-md xl:card-lg 2xl:card-xl bg-base-200 size-full shadow-sm"
+          >
+            <figure class="skeleton overflow-clip">
+              {% image article.image fill-1920x1080 %}
+            </figure>
+
+            <div class="card-body gap-8">
+              <h2 class="card-title text-primary">{{ article.title }}</h2>
+
+              <p>{{ article.headline }}</p>
+
+              <a
+                href="{% pageurl article %}"
+                class="btn btn-sm btn-primary lg:btn-md xl:btn-lg 2xl:btn-xl"
+              >
+                {% trans 'Read' %}
+                <i
+                  data-lucide="chevron-right"
+                  class="size-4 md:size-6 xl:size-7 2xl:size-8 rtl:rotate-180"
+                ></i>
+              </a>
+            </div>
+          </article>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
   </section>
-</section>
+</div>
 {% endblock %}

@@ -1,6 +1,6 @@
 """Data Models for how.apps.submissions"""
 
-from typing import Any, Dict, List, Optional, Self
+from typing import Optional
 
 from django.contrib.auth import get_user_model
 from django.core import validators
@@ -11,23 +11,6 @@ from how.apps.mixins import DateTimeMixin
 
 # Create your models here.
 User = get_user_model()
-
-
-def filter_answers(
-    answers: List[Dict[str, Any]], question_id: int
-) -> List[Dict[str, Any]]:
-    """
-    Filter answers by question id
-
-    Args:
-        answers (List[Dict[str, Any]]): Answers list to be filtered
-        question_id (int): Question id
-
-    Returns:
-        List[Dict[str, Any]]: Filtered questions
-    """
-
-    return list(filter(lambda answer: answer["question"] == question_id, answers))
 
 
 class Submission(DateTimeMixin, models.Model):
@@ -54,13 +37,10 @@ class Submission(DateTimeMixin, models.Model):
             validators.MaxValueValidator(100.0, "Grade must be <= 100."),
         ],
     )
-    answers = models.JSONField(
-        help_text=_("Submission answers"),
-    )
-    feedback = models.JSONField(
-        null=True,
+    answers = models.ManyToManyField(
+        "answers.Answer",
         blank=True,
-        help_text=_("Submission feedback"),
+        help_text=_("Submission answers"),
     )
     file = models.FileField(
         null=True,
@@ -82,47 +62,21 @@ class Submission(DateTimeMixin, models.Model):
     def __str__(self) -> str:
         return f"{self.assignment}: Submission {self.pk} by {self.owner}"
 
-    def calc_grade(self) -> Optional[Self]:
+    def auto_grade(self) -> Optional[float]:
         """Auto grade the submission"""
 
-        a = self.assignment
+        assignment = self.assignment
 
         # Check if the submission is auto graded
-        if not a.is_auto_graded:
+        if not assignment.is_auto_graded:
             return
 
-        feedback = [
-            {
-                # Identify questions by id
-                "question": q.id,
-                # Check if the answer for this questions is correct
-                "is_correct": [
-                    # Extract the ids of correct answers
-                    ans["id"]
-                    for ans in q.answers.filter(is_correct=True).values()
-                ]
-                # Check if the correct answers are selected
-                == filter_answers(self.answers, q.id)[0]["answers"],
-                # Generate answer feedback
-                "answers": [
-                    {
-                        "id": answer.id,
-                        "text": answer.text,
-                        "feedback": answer.feedback,
-                    }
-                    for answer in q.answers.filter(
-                        id__in=filter_answers(self.answers, q.id)[0]["answers"]
-                    )
-                ],
-            }
-            for q in a.questions.all()
-        ]
-
-        self.feedback = feedback
-        self.grade = (
-            len(list(filter(lambda q: q["is_correct"], feedback)))
-            / self.assignment.questions.count()
+        # Calculate the grade
+        return (
+            self.answers.filter(is_correct=True).count()
+            / sum(
+                q.answers.filter(is_correct=True).count()
+                for q in assignment.questions.all()
+            )
             * 100
         )
-
-        return self

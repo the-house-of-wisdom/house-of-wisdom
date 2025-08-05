@@ -1,0 +1,94 @@
+{% extends 'ui/base.html' %}{% load i18n wagtailcore_tags wagtailimages_tags %}
+
+<!---->
+{% block title %}{{ course.title }}{% endblock %}
+
+<!---->
+{% block content %}
+<div class="container mx-auto px-4 py-20">
+  <nav class="breadcrumbs text-xs lg:text-sm">
+    <ol>
+      {% for page in course.get_ancestors %}{% if not page.is_root %}
+      <li>
+        <a href="{% pageurl page %}"> {{ page }} </a>
+      </li>
+      {% endif %}{% endfor %}
+      <li>{{ page }}</li>
+    </ol>
+  </nav>
+
+  <section class="grid gap-8">
+    <div
+      class="hero relative bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-700 rounded-box aspect-video"
+    >
+      <div class="hero-content grid gap-8">
+        <h1 class="text-2xl text-primary font-black md:text-3xl lg:text-7xl">
+          {{ course.title }}
+        </h1>
+
+        {% if course in request.user.courses.all %}
+        <a
+          href="{% url 'ui:course' course.slug %}"
+          class="btn glass btn-primary lg:btn-lg 2xl:btn-xl"
+        >
+          {% trans 'Go to course' %}
+        </a>
+        {% else %}
+        <form
+          action="{% url 'ui:enroll' course.slug course.id %}"
+          method="post"
+        >
+          {% csrf_token %}
+
+          <button class="btn glass btn-primary lg:btn-lg 2xl:btn-xl">
+            {% trans 'Enroll now' %}
+          </button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+
+    <div
+      class="prose mx-auto text-inherit prose-sm lg:prose prose-video:rounded-box xl:prose-lg 2xl:prose-xl prose-headings:text-primary prose-headings:font-serif rtl:prose-headings:font-kufi prose-img:rounded-box prose-img:w-full prose-pre:bg-base-200 prose-pre:border prose-pre:border-base-300"
+    >
+      {% image course.image fill-1920x1080 %}
+
+      <h2>{{ course.headline }}</h2>
+      {{ course.description|richtext }}
+
+      <h3>{% trans 'Prerequisites' %}</h3>
+      {{ course.prerequisites|richtext }}
+
+      <h3>{% trans 'Skills you will gain' %}</h3>
+      <div class="flex flex-wrap items-center gap-4">
+        {% for skill in course.skills.all %}
+        <span
+          class="badge {% cycle 'badge-primary' 'badge-secondary' 'badge-success' 'badge-info' 'badge-warning' 'badge-error' %}"
+        >
+          {{ skill }}
+        </span>
+        {% endfor %}
+      </div>
+
+      <h3>
+        {{ course.get_module_count }} {% trans 'modules are in this course' %}
+      </h3>
+      <div class="grid gap-4">
+        {% for module in course.get_modules.specific %}
+        <div class="collapse collapse-arrow bg-base-200 rounded-box shadow-xs">
+          <input id="module-{{ module.id }}" type="checkbox" class="hidden" />
+
+          <label for="module-{{ module.id }}" class="collapse-title">
+            {{ module.title }}
+          </label>
+
+          <div class="collapse-content">
+            <div>{{ module.description|richtext }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'ui/learn/base.html' %}{% load i18n %}
+
+<!---->
+{% block title %}{{ block.super }} | {{ post.title }}{% endblock %}
+
+<!---->
+{% block styles %}{{ block.super }}
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css"
+/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+<script>
+  hljs.highlightAll();
+</script>
+<style>
+  pre code.hljs {
+    padding: 0;
+    background-color: transparent;
+  }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+{% endblock %}
+
+<!---->
+{% block breadcrumbs %}
+<li>
+  <a href="{% url 'ui:course' post.get_parent.slug %}">
+    <i data-lucide="home" class="size-4"></i>
+    <span>{% trans 'Home' %}</span>
+  </a>
+</li>
+<li>
+  <a href="{% url 'ui:posts' post.get_parent.slug %}">
+    <i data-lucide="newspaper" class="size-4"></i>
+    <span>{% trans 'Posts' %}</span>
+  </a>
+</li>
+<li>
+  <span>{{ post }}</span>
+</li>
+{% endblock %}
+
+<!---->
+{% block course_content %}
+<div
+  class="prose mx-auto prose-sm prose-video:rounded-box xl:prose-lg 2xl:prose-xl prose-headings:text-primary prose-headings:font-serif rtl:prose-headings:font-kufi prose-img:rounded-box prose-img:w-full prose-pre:bg-base-200 prose-pre:border prose-pre:border-base-300 prose-pre:bg-base-200 prose-pre:border prose-pre:border-base-300"
+>
+  <h1 class="text-primary text-2xl lg:text-4xl">{{ post.title }}</h1>
+  {{ post.content }}
+</div>
+{% endblock %}

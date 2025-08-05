@@ -18,7 +18,7 @@ class Lesson(DateTimeMixin, Page):
 
     # Dashboard UI config
     context_object_name = "lesson"
-    template = "ui/previews/lesson.html"
+    template = "ui/learn/content/lesson.html"
     content_panels = Page.content_panels + [FieldPanel("description")]
     page_description = _(
         "Lessons form the core instructional content of a module and may include "
@@ -33,3 +33,13 @@ class Lesson(DateTimeMixin, Page):
 
     parent_page_types = ["modules.Module"]
     subpage_types = ["assignments.Assignment", "items.Item"]
+
+    def get_context(self, request, *args, **kwargs):
+        """Add extra context"""
+
+        context = super().get_context(request, *args, **kwargs)
+
+        return {
+            **context,
+            "module": context["lesson"].get_parent(),
+        }

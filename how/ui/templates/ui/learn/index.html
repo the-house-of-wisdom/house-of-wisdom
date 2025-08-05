@@ -1,0 +1,145 @@
+{% extends 'ui/base.html' %}{% load i18n wagtailcore_tags wagtailimages_tags %}
+
+<!---->
+{% block title %}{{ block.super }} | {% trans 'Learn' %}{% endblock %}
+
+<!---->
+{% block content %}
+<main class="container mx-auto grid gap-8 px-4 py-20">
+  <div
+    class="hero relative bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-50% to-emerald-500 to-90% rounded-box aspect-video"
+  >
+    <div class="hero-content flex flex-col gap-8">
+      <h1 class="text-3xl text-primary font-black lg:text-7xl">
+        {% trans 'My Learning' %}
+      </h1>
+    </div>
+  </div>
+
+  <section class="tabs tabs-border">
+    <input
+      type="radio"
+      name="content"
+      class="tab text-primary"
+      aria-label="{% trans 'In Progress' %}"
+      checked
+    />
+    <div class="tab-content pt-4">
+      <ol class="grid grid-cols-12 gap-4">
+        {% for item in courses %}
+        <li class="col-span-12 md:col-span-6 lg:col-span-4 2xl:col-span-3">
+          <article
+            class="card card-sm bg-base-200 shadow-xs lg:card-md xl:card-lg 2xl:card-xl overflow-hidden"
+          >
+            <main class="card-body gap-4">
+              <h2 class="card-title text-primary">{{ item.course.title }}</h2>
+
+              <p>{{ item.course.headline }}</p>
+
+              <div
+                class="tooltip tooltip-bottom tooltip-success"
+                data-tip="{% trans 'Progress' %} {{ item.progress }}"
+              >
+                <progress
+                  value="{{ item.progress }}"
+                  class="progress progress-success"
+                ></progress>
+              </div>
+
+              <a
+                href="{% url 'ui:course' item.course.slug %}"
+                class="btn btn-sm btn-primary lg:btn-md xl:btn-lg 2xl:btn-xl font-semibold"
+              >
+                <span>{% trans 'Go to course' %}</span>
+
+                <i
+                  data-lucide="chevron-right"
+                  class="size-4 md:size-6 xl:size-7 2xl:size-8 rtl:rotate-180"
+                ></i>
+              </a>
+            </main>
+          </article>
+        </li>
+        {% empty %}
+        <li class="col-span-12">
+          <article
+            class="card card-sm bg-base-200 shadow-xs lg:card-md xl:card-lg 2xl:card-xl overflow-hidden"
+          >
+            <main class="card-body items-center">
+              <i data-lucide="book" class="mx-auto size-1/4 text-primary"></i>
+              <h2 class="card-title text-primary">{% trans 'No courses' %}</h2>
+              <p>
+                {% trans 'Your courses will appear here after enrollment' %}
+              </p>
+            </main>
+          </article>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+
+    <input
+      type="radio"
+      name="content"
+      class="tab text-success"
+      aria-label="{% trans 'Completed' %}"
+    />
+    <div class="tab-content pt-4">
+      <ol class="grid grid-cols-12 gap-4">
+        {% for item in completed_courses %}
+        <li class="col-span-12 md:col-span-6 lg:col-span-4 2xl:col-span-3">
+          <article
+            class="card card-sm bg-base-200 shadow-xs lg:card-md xl:card-lg 2xl:card-xl overflow-hidden"
+          >
+            <main class="card-body gap-4">
+              <h1 class="card-title text-primary">{{ item.course.title }}</h1>
+
+              <p>{{ item.course.headline }}</p>
+
+              <div
+                class="tooltip tooltip-bottom tooltip-success"
+                data-tip="{% trans 'Progress' %} {{ item.progress }}"
+              >
+                <progress
+                  value="{{ item.progress }}"
+                  class="progress progress-success"
+                ></progress>
+              </div>
+
+              <a
+                href="{% url 'ui:course' course.slug %}"
+                class="btn btn-sm btn-primary lg:btn-md xl:btn-lg 2xl:btn-xl font-semibold"
+              >
+                <span>{% trans 'Go to course' %}</span>
+
+                <i
+                  data-lucide="chevron-right"
+                  class="size-4 md:size-6 xl:size-7 2xl:size-8 rtl:rotate-180"
+                ></i>
+              </a>
+            </main>
+          </article>
+        </li>
+        {% empty %}
+        <li class="col-span-12">
+          <article
+            class="card card-sm bg-base-200 shadow-xs lg:card-md xl:card-lg 2xl:card-xl overflow-hidden"
+          >
+            <main class="card-body items-center">
+              <i
+                data-lucide="book-check"
+                class="mx-auto size-1/4 text-primary"
+              ></i>
+              <h2 class="card-title text-primary">
+                {% trans 'No completed courses' %}
+              </h2>
+              <p>{% trans 'Your completed courses will appear here' %}</p>
+            </main>
+          </article>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </section>
+</main>
+{% endblock %}

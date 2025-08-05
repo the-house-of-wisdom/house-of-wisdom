@@ -16,15 +16,10 @@
   --font-kufi:
     'Noto Kufi Arabic', ui-sans-serif, system-ui, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono: 'Jetbrains Mono';
 }
 
 
 @plugin "daisyui" {
-  themes: caramellatte --default, luxury --prefersdark;
-}
-
-@layer base {
-  * {
-    @apply font-sans rtl:font-kufi
-  }
+  themes: luxury --default;
 }

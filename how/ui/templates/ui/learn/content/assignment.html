@@ -1,0 +1,511 @@
+{% extends 'ui/learn/content/lesson.html' %}{% load i18n wagtailcore_tags %}
+
+<!---->
+{% block title %}{{ block.super }} | {{ assignment.title }}{% endblock %}
+
+<!---->
+{% block styles %}{{ block.super }}
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css"
+/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+<script>
+  hljs.highlightAll();
+</script>
+<style>
+  pre code.hljs {
+    padding: 0;
+    background-color: transparent;
+  }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+{% endblock %}
+
+<!---->
+{% block breadcrumbs %}
+<li>
+  <a href="{% url 'ui:course' module.get_parent.slug %}">
+    <i data-lucide="home" class="size-4"></i>
+    <span>{% trans 'Home' %}</span>
+  </a>
+</li>
+<li>
+  <a href="{% url 'ui:module' module.get_parent.slug module.slug %}">
+    <i data-lucide="book" class="size-4"></i>
+    <span>{{ module }}</span>
+  </a>
+</li>
+<li>
+  <a
+    href="{% url 'ui:lesson' module.get_parent.slug module.slug lesson.slug %}"
+  >
+    <i data-lucide="presentation" class="size-4"></i>
+    <span>{{ assignment.get_parent }}</span>
+  </a>
+</li>
+<li>
+  <span>
+    <i data-lucide="book-check" class="size-4"></i>
+    <span>{{ assignment }}</span>
+  </span>
+</li>
+{% endblock %}
+
+<!---->
+{% block course_content %}
+<div
+  class="prose mx-auto prose-sm prose-video:rounded-box xl:prose-lg 2xl:prose-xl prose-headings:text-primary prose-headings:font-serif rtl:prose-headings:font-kufi prose-img:rounded-box prose-img:w-full prose-pre:bg-base-200 prose-pre:border prose-pre:border-base-300"
+>
+  <h1>{{ assignment.title }}</h1>
+
+  {{ assignment.description|richtext }}
+</div>
+
+{% if highest_grade %}
+<div>
+  {% if highest_grade.status == 'Passed' %}
+  <div
+    class="mx-auto max-w-xl w-full alert alert-horizontal alert-success alert-soft"
+  >
+    <i
+      data-lucide="check-circle2"
+      class="size-4 md:size-6 xl:size-7 2xl:size-8"
+    ></i>
+    <p>
+      {% trans 'Congrats, your grade is' %}
+      <strong>%{{ highest_grade.grade }}</strong>
+    </p>
+
+    <div class="flex items-center gap-4">
+      <div
+        class="tooltip tooltip-success"
+        data-tip="{{ highest_grade.status }}"
+      >
+        <span class="badge badge-success m-auto font-extrabold">
+          <span class="sr-only">{{ highest_grade.grade }}</span>
+          %{{ highest_grade.grade }}
+        </span>
+      </div>
+
+      <div class="tooltip tooltip-success" data-tip="{% trans 'Details' %}">
+        <a
+          href="{% url 'ui:submission' module.get_parent.slug assignment.slug highest_grade.id %}"
+          class="btn btn-square btn-sm btn-soft btn-success"
+        >
+          <i data-lucide="info" class="size-4 md:size-6"></i>
+          <span class="sr-only">{% trans 'Details' %}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div
+    class="mx-auto max-w-xl w-full alert alert-horizontal alert-error alert-soft"
+  >
+    <i data-lucide="x-circle" class="size-4 md:size-6 xl:size-7 2xl:size-8"></i>
+    <p>{% trans 'Failed. Try again' %}</p>
+
+    <div class="flex items-center gap-4">
+      <div class="tooltip tooltip-error" data-tip="{{ highest_grade.grade }}">
+        <span class="badge badge-error m-auto font-extrabold">
+          <span class="sr-only">%{{ highest_grade.grade }}</span>
+          %{{ highest_grade.grade }}
+        </span>
+      </div>
+
+      <div class="tooltip tooltip-error" data-tip="{% trans 'Details' %}">
+        <a
+          href="{% url 'ui:submission' module.get_parent.slug assignment.slug highest_grade.id %}"
+          class="btn btn-square btn-sm btn-soft btn-error"
+        >
+          <i data-lucide="info" class="size-4 md:size-6"></i>
+          <span class="sr-only">{% trans 'Details' %}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+
+<section class="tabs tabs-sm lg:tabs-md xl:tabs-lg 2xl:tabs-xl tabs-border">
+  <input
+    {% block i_tab %}checked{% endblock %}
+    type="radio"
+    name="content"
+    class="tab text-primary"
+    aria-label="{% trans 'Instructions' %}"
+  />
+  <div class="tab-content pt-4">
+    <div
+      class="prose mx-auto prose-sm prose-video:rounded-box xl:prose-lg 2xl:prose-xl prose-headings:text-primary prose-headings:font-serif rtl:prose-headings:font-kufi prose-img:rounded-box prose-img:w-full prose-pre:bg-base-200 prose-pre:border prose-pre:border-base-300"
+    >
+      {{ assignment.content }}
+    </div>
+  </div>
+
+  <input
+    {% block s_tab %}checked{% endblock %}
+    type="radio"
+    name="content"
+    class="tab text-primary"
+    aria-label="{% trans 'My Submissions' %}"
+  />
+  <div class="tab-content pt-4">
+    <div class="drawer drawer-end">
+      <input
+        {% block s_toggle %}checked{% endblock %}
+        id="assignment"
+        type="checkbox"
+        class="drawer-toggle"
+      />
+
+      <section class="drawer-content">
+        <div class="mx-auto grid max-w-2xl gap-6 xl:max-w-3xl 2xl:max-w-4xl">
+          <div class="flex items-center justify-between gap-4">
+            <h2 class="text-primary text-xl lg:text-2xl">
+              {% trans 'Submissions' %}
+            </h2>
+
+            {% if submissions %}
+            <label
+              for="assignment"
+              class="btn btn-sm btn-primary lg:btn-md font-semibold"
+            >
+              <i
+                data-lucide="refresh-cw"
+                class="size-4 md:size-6 xl:size-7 2xl:size-8"
+              ></i>
+              {% trans 'Try again' %}
+            </label>
+            {% endif %}
+          </div>
+
+          <ol class="grid gap-6">
+            {% for submission in submissions %}
+            <!---->
+            {% if submission.status == 'Passed' %}
+            <li class="alert alert-horizontal alert-success alert-soft">
+              <i
+                data-lucide="check-circle2"
+                class="size-4 md:size-6 xl:size-7 2xl:size-8"
+              ></i>
+              <p>
+                {% trans 'Submission on' %}
+                <strong>{{ submission.created_at }}</strong>
+              </p>
+
+              <div class="flex items-center gap-4">
+                <div
+                  class="tooltip tooltip-success tooltip-open"
+                  data-tip="{{ submission.status }}"
+                >
+                  <span class="badge badge-success m-auto font-extrabold">
+                    <span class="sr-only">%{{ submission.status }}</span>
+                    %{{ submission.grade }}
+                  </span>
+                </div>
+
+                <div
+                  class="tooltip tooltip-success"
+                  data-tip="{% trans 'Details' %}"
+                >
+                  <a
+                    href="{% url 'ui:submission' module.get_parent.slug assignment.slug submission.id %}"
+                    class="btn btn-square btn-sm btn-soft btn-success"
+                  >
+                    <i data-lucide="info" class="size-4 md:size-6"></i>
+                    <span class="sr-only">{% trans 'Details' %}</span>
+                  </a>
+                </div>
+              </div>
+            </li>
+            {% elif submission.status == 'Pending' %}
+            <li class="alert alert-horizontal alert-warning alert-soft">
+              <i
+                data-lucide="triangle-alert"
+                class="size-4 md:size-6 xl:size-7 2xl:size-8"
+              ></i>
+              <p>
+                {% trans 'Submission on' %}
+                <strong>{{ submission.created_at }}</strong>
+              </p>
+
+              <div class="flex items-center gap-4">
+                <div
+                  class="tooltip tooltip-warning tooltip-left rtl:tooltip-right tooltip-open"
+                  data-tip="{{ submission.status }}"
+                >
+                  <span class="badge badge-warning m-auto font-extrabold">
+                    <span class="sr-only">{{ submission.status }}</span>
+                    {% trans 'Not graded yet' %}
+                  </span>
+                </div>
+
+                <div
+                  class="tooltip tooltip-warning"
+                  data-tip="{% trans 'Details' %}"
+                >
+                  <a
+                    href="{% url 'ui:submission' module.get_parent.slug assignment.slug submission.id %}"
+                    class="btn btn-square btn-sm btn-soft btn-warning"
+                  >
+                    <i data-lucide="info" class="size-4 md:size-6"></i>
+                    <span class="sr-only">{% trans 'Details' %}</span>
+                  </a>
+                </div>
+              </div>
+            </li>
+            {% else %}
+            <li class="alert alert-horizontal alert-error alert-soft">
+              <i
+                data-lucide="x-circle"
+                class="size-4 md:size-6 xl:size-7 2xl:size-8"
+              ></i>
+              <p>
+                {% trans 'Submission on' %}
+                <strong>{{ submission.created_at }}</strong>
+              </p>
+
+              <div class="flex items-center gap-4">
+                <div
+                  class="tooltip tooltip-error tooltip-open"
+                  data-tip="{{ submission.status }}"
+                >
+                  <span class="badge badge-error m-auto font-extrabold">
+                    <span class="sr-only">%{{ submission.status }}</span>
+                    %{{ submission.grade }}
+                  </span>
+                </div>
+
+                <div
+                  class="tooltip tooltip-error"
+                  data-tip="{% trans 'Details' %}"
+                >
+                  <a
+                    href="{% url 'ui:submission' module.get_parent.slug assignment.slug submission.id %}"
+                    class="btn btn-square btn-sm btn-soft btn-error"
+                  >
+                    <i data-lucide="info" class="size-4 md:size-6"></i>
+                    <span class="sr-only">{% trans 'Details' %}</span>
+                  </a>
+                </div>
+              </div>
+            </li>
+            {% endif %}
+            <!---->
+            {% empty %}
+            <li class="alert alert-horizontal alert-info alert-soft">
+              <i
+                data-lucide="info"
+                class="size-4 md:size-6 xl:size-7 2xl:size-8"
+              ></i>
+              <p>{% trans 'No submissions' %}</p>
+
+              <label for="assignment" class="btn btn-sm btn-info lg:btn-md">
+                {% trans 'Start assignment' %}
+              </label>
+            </li>
+            {% endfor %}
+          </ol>
+        </div>
+      </section>
+
+      <section class="drawer-side z-50 size-full">
+        <label
+          for="assignment"
+          aria-label="close sidebar"
+          class="drawer-overlay"
+        ></label>
+
+        <section
+          id="assignment-content"
+          class="border-base-100 bg-base-100/50 lg:bg-base-300/50 flex size-full flex-col justify-between border backdrop-blur-3xl lg:w-1/2 2xl:w-7/12"
+        >
+          <header
+            class="flex items-center justify-between gap-4 p-4 border-b border-base-300"
+          >
+            <h1 class="text-primary text-xl">{{ assignment.title }}</h1>
+
+            <div class="flex items-center gap-4">
+              <div
+                id="btn-fullscreen-enter"
+                onclick="toggleFullscreen()"
+                class="tooltip tooltip-bottom tooltip-primary hidden lg:flex"
+                data-tip="{% trans 'Toggle fullscreen' %}"
+              >
+                <button
+                  class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                >
+                  <i
+                    id="shrink"
+                    data-lucide="shrink"
+                    class="hidden size-4 md:size-6"
+                  ></i>
+                  <i
+                    id="expand"
+                    data-lucide="expand"
+                    class="size-4 md:size-6"
+                  ></i>
+                  <span class="sr-only">{% trans 'Toggle fullscreen' %}</span>
+                </button>
+              </div>
+
+              <div
+                class="tooltip tooltip-bottom tooltip-primary"
+                data-tip="{% trans 'Swipe left' %}"
+              >
+                <button
+                  class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                >
+                  <i
+                    data-lucide="chevron-left"
+                    class="size-4 md:size-6 rtl:rotate-180"
+                  ></i>
+                  <span class="sr-only">{% trans 'Swipe left' %}</span>
+                </button>
+              </div>
+
+              {% if assignment.duration %}
+              <div
+                class="tooltip tooltip-bottom tooltip-warning"
+                data-tip="{% trans 'Remaining time' %}"
+              >
+                <span
+                  class="badge badge-sm md:badge-md lg:badge-lg 2xl:badge-xl badge-warning"
+                >
+                  <i
+                    data-lucide="timer"
+                    class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                  ></i>
+                  <span>{{ assignment.duration }}</span>
+                </span>
+              </div>
+              {% endif %}
+
+              <div
+                class="tooltip tooltip-bottom tooltip-primary"
+                data-tip="{% trans 'Swipe right' %}"
+              >
+                <button
+                  class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                >
+                  <i
+                    data-lucide="chevron-right"
+                    class="size-4 md:size-6 rtl:rotate-180"
+                  ></i>
+                  <span class="sr-only">{% trans 'Swipe right' %}</span>
+                </button>
+              </div>
+
+              <div
+                class="tooltip tooltip-left rtl:tooltip-right hover:tooltip-error"
+                data-tip="{% trans 'Close' %}"
+              >
+                <label
+                  for="assignment"
+                  aria-label="close sidebar"
+                  class="btn btn-square btn-soft btn-sm btn-primary hover:btn-error md:btn-md 2xl:btn-lg"
+                >
+                  <i
+                    data-lucide="x"
+                    class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                  ></i>
+                  <span class="sr-only">{% trans 'Close' %}</span>
+                </label>
+              </div>
+            </div>
+          </header>
+
+          {% block assignment_content %}
+          <form id="answers" method="post" class="carousel relative size-full">
+            {% csrf_token %}
+
+            <!---->
+            {% for question in assignment.questions.all %}
+            <div
+              class="carousel-item relative size-full flex-col overflow-y-auto pb-"
+            >
+              <span class="absolute top-0 right-4 badge badge-info">
+                {{ forloop.counter }} of {{ assignment.questions.count }}
+              </span>
+
+              <div class="flex flex-col gap-8 p-4">
+                <div
+                  class="prose max-w-none prose-sm prose-video:rounded-box xl:prose-lg 2xl:prose-xl prose-headings:text-primary prose-headings:font-serif rtl:prose-headings:font-kufi prose-img:rounded-box prose-img:w-full prose-pre:bg-base-200 prose-pre:border prose-pre:border-base-300"
+                >
+                  {{ question.text }}
+                </div>
+
+                <ol class="flex flex-col grow gap-4">
+                  {% for answer in question.answers.all %}
+                  <li>
+                    <label
+                      class="card card-sm text-primary border-1 border-transparent flex-row items-center gap-4 p-4 lg:card-md xl:card-lg 2xl:card-xl hover:border-primary has-checked:border-primary"
+                    >
+                      {% if question.type %}
+                      <input
+                        required
+                        name="question-{{ question.id }}"
+                        type="checkbox"
+                        value="{{ answer.id }}"
+                        class="checkbox checkbox-sm checkbox-primary lg:checkbox-md xl:checkbox-lg 2xl:checkbox-xl"
+                      />
+                      {% else %}
+                      <input
+                        required
+                        name="question-{{ question.id }}"
+                        type="radio"
+                        value="{{ answer.id }}"
+                        class="radio radio-sm radio-primary lg:radio-md xl:radio-lg 2xl:radio-xl"
+                      />
+                      {% endif %}
+
+                      <div
+                        class="prose max-w-none w-full overflow-x-auto grow text-inherit prose-sm prose-video:rounded-box xl:prose-lg 2xl:prose-xl prose-headings:text-primary prose-headings:font-serif rtl:prose-headings:font-kufi prose-img:rounded-box prose-img:w-full prose-pre:bg-base-200 prose-pre:border prose-pre:border-base-300"
+                      >
+                        {{ answer.text }}
+                      </div>
+                    </label>
+                  </li>
+                  {% endfor %}
+
+                  <!---->
+                  {% if forloop.last %}
+                  <div
+                    class="tooltip tooltip-bottom tooltip-success"
+                    data-tip="{% trans 'Submit' %}"
+                  >
+                    <button
+                      type="submit"
+                      class="btn btn-block btn-sm btn-success md:btn-md xl:btn-lg 2xl:btn-xl"
+                    >
+                      <i data-lucide="send" class="size-4 md:size-6"></i>
+                      <span>{% trans 'Submit' %}</span>
+                    </button>
+                  </div>
+                  {% endif %}
+                </ol>
+              </div>
+            </div>
+            {% endfor %}
+          </form>
+          {% endblock %}
+        </section>
+      </section>
+    </div>
+  </div>
+</section>
+
+<script>
+  const toggleFullscreen = () => {
+    document.getElementById("assignment-content").classList.toggle("lg:w-1/2");
+    document
+      .getElementById("assignment-content")
+      .classList.toggle("2xl:w-7/12");
+    document.getElementById("shrink").classList.toggle("hidden");
+    document.getElementById("expand").classList.toggle("hidden");
+  };
+</script>
+{% endblock %}

@@ -1,4 +1,4 @@
-"""Data Models for how.blog"""
+"""Data Models for how.apps.blog"""
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -12,7 +12,7 @@ from wagtail.models import Page
 from wagtail.search import index
 
 from how.apps.mixins import DateTimeMixin
-from how.cms.blocks import CommonContentBlock
+from how.cms.blocks import MediaBlock
 
 
 # Create your models here.
@@ -20,7 +20,7 @@ class Index(DateTimeMixin, Page):
     """Blog index page"""
 
     # Dashboard UI config
-    context_object_name = "article"
+    context_object_name = "index"
     template = "ui/blog/index.html"
     page_description = _("Blog index page")
 
@@ -32,29 +32,37 @@ class Index(DateTimeMixin, Page):
 
         verbose_name = _("Blog index page")
 
+    # TODO: Override `get_context` to sort the articles
+
 
 class Article(DateTimeMixin, Page):
     """Blog articles"""
 
+    image = models.ForeignKey(
+        "wagtailimages.Image",
+        on_delete=models.PROTECT,
+        help_text=_("Article image"),
+    )
     headline = models.CharField(
         max_length=128,
         db_index=True,
-        help_text=_("Blog headline"),
+        help_text=_("Article headline"),
     )
     content = StreamField(
-        CommonContentBlock(),
-        help_text=_("Blog content"),
+        MediaBlock(),
+        help_text=_("Article content"),
     )
     tags = ClusterTaggableManager(
         blank=True,
-        through="tags.ArticleTag",
-        help_text=_("Course tags"),
+        through="blog.ArticleTag",
+        help_text=_("Article tags"),
     )
 
     # Dashboard UI config
     context_object_name = "article"
-    template = "ui/previews/article.html"
+    template = "ui/blog/article.html"
     content_panels = Page.content_panels + [
+        FieldPanel("image"),
         FieldPanel("headline"),
         FieldPanel("content"),
         FieldPanel("tags"),
@@ -71,7 +79,7 @@ class Article(DateTimeMixin, Page):
     api_fields = [APIField("headline"), APIField("content"), APIField("tags")]
 
     parent_page_types = ["blog.Index"]
-    subpage_types = ["self"]
+    subpage_types = []
 
     class Meta(Page.Meta):
         """Meta data"""

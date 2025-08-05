@@ -1,8 +1,8 @@
-"""Serializers for how.blog"""
+"""Serializers for how.apps.blog"""
 
 from rest_framework.serializers import ModelSerializer
 
-from how.blog.models import Article
+from how.apps.blog.models import Article
 
 
 # Create your serializers here.

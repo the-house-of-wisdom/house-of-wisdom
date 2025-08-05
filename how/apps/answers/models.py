@@ -5,10 +5,11 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from modelcluster.fields import ParentalKey
 from wagtail.admin.panels import FieldPanel
-from wagtail.fields import RichTextField
+from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Orderable
 
 from how.apps.mixins import DateTimeMixin
+from how.cms.blocks import TextBlock
 
 # Create your models here.
 User = get_user_model()
@@ -27,7 +28,7 @@ class Answer(DateTimeMixin, Orderable, models.Model):
         default=False,
         help_text=_("Designates if the answer is correct"),
     )
-    text = RichTextField(help_text=_("Answer text"))
+    text = StreamField(TextBlock(), help_text=_("Answer text"))
     feedback = RichTextField(help_text=_("Answer feedback to show after grading"))
 
     panels = [

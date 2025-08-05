@@ -1,0 +1,35 @@
+{% load i18n wagtailcore_tags wagtailimages_tags %}
+
+<div
+  class="card card-sm lg:card-md xl:card-lg 2xl:card-xl bg-base-200 size-full shadow-sm"
+>
+  <div class="card-body gap-4">
+    <h2 class="card-title text-primary">{{ category.title }}</h2>
+
+    <p>{{ category.description|richtext }}</p>
+
+    <div class="card-actions justify-end">
+      <div
+        class="tooltip tooltip-left tooltip-info tooltip-open rtl:tooltip-right"
+        data-tip="{% trans 'Courses' %}"
+      >
+        <span
+          class="badge badge-sm md:badge-md lg:badge-lg 2xl:badge-xl badge-info font-semibold"
+        >
+          {{ category.get_children_count }}
+        </span>
+      </div>
+    </div>
+
+    <a
+      href="{% pageurl category %}"
+      class="btn btn-sm btn-primary lg:btn-md xl:btn-lg 2xl:btn-xl"
+    >
+      {% trans 'View courses' %}
+      <i
+        data-lucide="chevron-right"
+        class="size-4 md:size-6 xl:size-7 2xl:size-8 rtl:rotate-180"
+      ></i>
+    </a>
+  </div>
+</div>

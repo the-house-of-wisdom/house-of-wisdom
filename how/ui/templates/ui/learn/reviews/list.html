@@ -1,0 +1,124 @@
+{% extends 'ui/learn/base.html' %}{% load i18n %}
+
+<!---->
+{% block title %}{{ block.super }} | {% trans 'Reviews' %}{% endblock %}
+
+<!---->
+{% block course_title %}{{ course }}{% endblock %}
+
+<!---->
+{% block breadcrumbs %}
+<li>
+  <a href="{% url 'ui:course' course.slug %}">
+    <i data-lucide="home" class="size-4"></i>
+    <span>{% trans 'Home' %}</span>
+  </a>
+</li>
+<li>
+  <span>
+    <i data-lucide="stars" class="size-4"></i>
+    <span>{% trans 'Reviews' %}</span>
+  </span>
+</li>
+{% endblock %}
+
+<!---->
+{% block course_content %}
+<div class="flex items-center justify-between">
+  <h2 class="text-primary text-2xl lg:text-4xl">{% trans 'Reviews' %}</h2>
+
+  <div
+    data-tip="{% trans 'Filters' %}"
+    class="tooltip tooltip-left rtl:tooltip-right tooltip-primary"
+  >
+    <button
+      onclick="filters.showModal()"
+      class="btn btn-square btn-primary lg:btn-lg"
+    >
+      <i data-lucide="list-filter" class="size-4 lg:size-6"></i>
+      <span class="sr-only">{% trans 'Filters' %}</span>
+    </button>
+  </div>
+</div>
+
+{% include 'ui/components/pagination.html' %}
+
+<ol class="grid grid-cols-12 gap-4">
+  {% for review in reviews %}
+  <li class="col-span-12 md:col-span-6 lg:col-span-4 2xl:col-span-3">
+    <article
+      class="card card-sm bg-base-200 shadow-xs lg:card-md xl:card-lg 2xl:card-xl overflow-hidden"
+    >
+      <main class="card-body">
+        <blockquote>
+          {{ review.comment }}
+          <cite>{{ review.user }}</cite>
+        </blockquote>
+      </main>
+      <div
+        class="flex items-center justify-between gap-4 rounded-b-box rounded-t-field p-4 bg-base-100 border border-base-200"
+      >
+        <div class="flex items-center gap-2">
+          <div className="avatar avatar-placeholder">
+            <div
+              className="bg-primary text-primary-content size-12 rounded-full"
+            >
+              <i data-lucide="user" class="size-4 lg:size-6"></i>
+            </div>
+          </div>
+          <h2 class="text-sm text-primary">{{ review.owner.get_full_name }}</h2>
+        </div>
+
+        <span class="badge badge-soft badge-success lg:badge-lg">
+          <i data-lucide="star" class="size-4 lg:size-6"></i>
+          {{ review.rating }}
+        </span>
+      </div>
+    </article>
+  </li>
+  {% empty %}
+  <li class="col-span-12">
+    <article
+      class="card card-sm bg-base-200 shadow-xs lg:card-md xl:card-lg 2xl:card-xl overflow-hidden"
+    >
+      <main class="card-body items-center">
+        <i data-lucide="newspaper" class="mx-auto size-1/4 text-primary"></i>
+        <h2 class="card-title text-primary">{% trans 'No reviews' %}</h2>
+        <p>{% trans 'Reviews created by course students will appear here' %}</p>
+      </main>
+    </article>
+  </li>
+  {% endfor %}
+</ol>
+
+<dialog id="filters" class="modal">
+  <section class="relative modal-box grid max-w-xl gap-6 bg-base-100">
+    <header class="flex items-center justify-between gap-4 text-primary">
+      <h1 class="text-lg font-semibold lg:text-2xl">{% trans 'Filters' %}</h1>
+
+      <div
+        class="tooltip tooltip-left rtl:tooltip-right tooltip-error"
+        data-tip="{% trans 'Close' %}"
+      >
+        <button
+          onclick="filters.close()"
+          class="btn btn-square btn-soft btn-primary hover:btn-error"
+        >
+          <i data-lucide="x" class="size-4 lg:size-6"></i>
+
+          <span class="sr-only">{% trans 'Close' %}</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="grid gap-8">
+      {% include 'ui/components/form.html' with method='get' csrf=False
+      form=filter.form %}
+
+      <button onclick="filters.close()" class="btn btn-primary">
+        {% trans 'Close' %}
+      </button>
+    </main>
+  </section>
+</dialog>
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends 'ui/learn/base.html' %}{% load i18n %}
+
+<!---->
+{% block title %}{{ block.super }} | {{ course }} | {% trans 'New review' %}{%
+endblock %}
+
+<!---->
+{% block course_title %}{{ course }}{% endblock %}
+
+<!---->
+{% block breadcrumbs %}
+<li>
+  <a href="{% url 'ui:course' course.slug %}">
+    <i data-lucide="home" class="size-4"></i>
+    <span>{% trans 'Home' %}</span>
+  </a>
+</li>
+<li>
+  <a href="{% url 'ui:reviews' course.slug course.id %}">
+    <i data-lucide="stars" class="size-4"></i>
+    <span>{% trans 'Reviews' %}</span>
+  </a>
+</li>
+<li>
+  <span>
+    {% if form.comment.value %}
+    <i data-lucide="pencil" class="size-4"></i>
+    <span>{% trans 'Update' %}</span>
+    {% else %}
+    <i data-lucide="plus" class="size-4"></i>
+    <span>{% trans 'New' %}</span>
+    {% endif %}
+  </span>
+</li>
+{% endblock %}
+
+<!---->
+{% block course_content %}
+<!---->
+{% if form.comment.value %}
+<h2 class="text-primary text-2xl lg:text-4xl">
+  {% trans 'Update your review' %}
+</h2>
+{% else %}
+<h2 class="text-primary text-2xl lg:text-4xl">{% trans 'New review' %}</h2>
+{% endif %}
+
+<form method="post" class="grid gap-4">
+  {% csrf_token %}
+
+  <div class="fieldset">
+    <label for="id_rating" class="fieldset-legend">{% trans 'Rating' %}</label>
+    <div class="rating rating-lg">
+      <input
+        required
+        type="radio"
+        value="0"
+        name="rating"
+        class="rating-hidden"
+      />
+      <input
+        id="value-1"
+        required
+        type="radio"
+        value="1"
+        name="rating"
+        class="mask mask-star-2 bg-base-content"
+        title="1 star"
+        aria-label="1 star"
+      />
+      <input
+        id="value-2"
+        required
+        type="radio"
+        value="2"
+        name="rating"
+        class="mask mask-star-2 bg-base-content"
+        title="2 stars"
+        aria-label="2 stars"
+      />
+      <input
+        id="value-3"
+        required
+        type="radio"
+        value="3"
+        name="rating"
+        class="mask mask-star-2 bg-base-content"
+        title="3 stars"
+        aria-label="3 stars"
+      />
+      <input
+        id="value-4"
+        required
+        type="radio"
+        value="4"
+        name="rating"
+        class="mask mask-star-2 bg-base-content"
+        title="4 stars"
+        aria-label="4 stars"
+      />
+      <input
+        id="value-5"
+        required
+        type="radio"
+        value="5"
+        name="rating"
+        class="mask mask-star-2 bg-base-content"
+        title="5 stars"
+        aria-label="5 stars"
+      />
+    </div>
+    <div class="helptext fieldset-label" id="id_rating_helptext">
+      {% trans 'Course rating' %}
+    </div>
+  </div>
+
+  <div class="fieldset">
+    <label for="id_comment" class="fieldset-legend"
+      >{% trans 'Comment' %}</label
+    >
+    <textarea
+      type="text"
+      name="comment"
+      maxlength="512"
+      required
+      aria-describedby="id_comment_helptext"
+      id="id_comment"
+      class="textarea textarea-primary w-full"
+    >
+{{ form.comment.value }}</textarea
+    >
+    <div class="helptext fieldset-label" id="id_comment_helptext">
+      {% trans 'Review comment' %}
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary lg:btn-lg">
+    {% trans 'Submit' %}
+  </button>
+</form>
+
+<script>
+  document
+    .getElementById("value-{{ form.rating.value }}")
+    .toggleAttribute("checked");
+</script>
+{% endblock %}

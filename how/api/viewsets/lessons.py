@@ -17,7 +17,7 @@ class BaseLessonVS(ActionPermissionsMixin, PagesAPIViewSet):
     model = Lesson
     name = "lessons"
     permission_classes = [IsAuthenticated, IsInstructor]
-    ordering_fields = ["title", "order", "created_at", "updated_at"]
+    ordering_fields = ["title", "created_at", "updated_at"]
     action_permissions = {
         "default": permission_classes,
         "create": permission_classes + [IsOwner],

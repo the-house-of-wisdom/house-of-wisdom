@@ -1,13 +1,15 @@
 django
+django-countries
 django-cors-headers
 django-filter
+django-phonenumber-field
 djangorestframework
-markdown
-pygments
 djoser
 drf-restwind
 huggingface-hub
+markdown
 pillow
+pygments
 python-dotenv
 wagtail
 wagtail-localize
