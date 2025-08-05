@@ -8,6 +8,7 @@ djoser
 drf-restwind
 huggingface-hub
 markdown
+phonenumbers
 pillow
 pygments
 python-dotenv
