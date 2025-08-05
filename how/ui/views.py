@@ -345,7 +345,7 @@ class ItemDetailView(LoginRequiredMixin, mixins.ItemStudentMixin, generic.Detail
 
     model = Item
     slug_url_kwarg = "item"
-    template_name = "ui/learn/content/items/item.html"
+    template_name = "ui/learn/content/item.html"
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         """Add module to context"""

@@ -20,6 +20,7 @@
       </div>
     </div>
 
+    {% if paths %}
     <section class="grid gap-8">
       <h2 class="text-primary text-2xl font-semibold lg:text-4xl">
         {% trans 'Latest learning paths' %}
@@ -33,7 +34,9 @@
         {% endfor %}
       </ol>
     </section>
+    {% endif %}
 
+    {% if courses %}
     <section class="grid gap-8">
       <h2 class="text-primary text-2xl font-semibold lg:text-4xl">
         {% trans 'Latest courses' %}
@@ -47,7 +50,9 @@
         {% endfor %}
       </ol>
     </section>
+    {% endif %}
 
+    {% if categories %}
     <section class="grid gap-8">
       <h2 class="text-primary text-2xl font-semibold lg:text-4xl">
         {% trans 'Categories' %}
@@ -61,7 +66,9 @@
         {% endfor %}
       </ol>
     </section>
+    {% endif %}
 
+    {% if articles %}
     <section class="grid gap-8">
       <h1 class="text-primary text-2xl font-semibold lg:text-4xl">
         {% trans 'Latest news' %}
@@ -98,6 +105,7 @@
         {% endfor %}
       </ol>
     </section>
+    {% endif %}
   </section>
 </div>
 {% endblock %}
