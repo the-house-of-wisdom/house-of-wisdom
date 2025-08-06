@@ -29,7 +29,10 @@ class Home(Page):
     # Dashboard UI
     template = "ui/index.html"
     context_object_name = "home"
-    content_panels = Page.content_panels + [FieldPanel("content")]
+    content_panels = Page.content_panels + [
+        FieldPanel("headline"),
+        FieldPanel("content"),
+    ]
     parent_page_types = ["wagtailcore.Page"]
     subpage_types = [
         "categories.Category",
