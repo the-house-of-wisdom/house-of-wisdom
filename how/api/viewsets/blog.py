@@ -4,8 +4,8 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from how.api.mixins import ActionPermissionsMixin
+from how.api.serializers.blog import ArticleSerializer
 from how.apps.blog.models import Article
-from how.apps.blog.serializers import ArticleSerializer
 
 
 # Create your views here.

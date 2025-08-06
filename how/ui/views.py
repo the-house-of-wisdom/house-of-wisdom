@@ -28,7 +28,6 @@ from how.apps.submissions.models import Submission
 from how.ui import mixins
 from how.ui.forms import UserCreateForm
 
-
 # Create your views here.
 User = get_user_model()
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-06 07:37+0000\n"
+"POT-Creation-Date: 2025-08-06 08:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -128,8 +128,8 @@ msgid ""
 "Categories help organize courses into thematic or subject-related groupings, "
 "making it easier for users to explore and filter available courses."
 msgstr ""
-"تساعد الفئات في تنظيم الدورات إلى مجموعات موضوعية أو متعلقة بالمجال، "
-"مما يسهل على المستخدمين استكشاف الدورات المتاحة وتصفيةها."
+"تساعد الفئات في تنظيم الدورات إلى مجموعات موضوعية أو متعلقة بالمجال، مما "
+"يسهل على المستخدمين استكشاف الدورات المتاحة وتصفيةها."
 
 #: how/apps/courses/models.py:25
 msgid "Course image"
@@ -194,7 +194,8 @@ msgstr "تحديد ما إذا كانت الدورة مكتملة أم لا"
 msgid "Headline"
 msgstr "العنوان"
 
-#: how/apps/home/models.py:26 how/apps/home/models.py:63 how/apps/home/models.py:80
+#: how/apps/home/models.py:26 how/apps/home/models.py:63
+#: how/apps/home/models.py:80
 msgid "Page content"
 msgstr "محتوى الصفحة"
 
@@ -219,8 +220,8 @@ msgid ""
 "Lesson items represent smaller sections of a lesson, such as individual text "
 "passages, videos, quizzes, or interactive activities."
 msgstr ""
-"تمثل عناصر الدرس أقسامًا أصغر من الدرس، مثل مقاطع نصية فردية أو فيديوهات "
-"أو اختبارات قصيرة أو أنشطة تفاعلية."
+"تمثل عناصر الدرس أقسامًا أصغر من الدرس، مثل مقاطع نصية فردية أو فيديوهات أو "
+"اختبارات قصيرة أو أنشطة تفاعلية."
 
 #: how/apps/lessons/models.py:17
 msgid "Lesson description"
@@ -309,10 +310,10 @@ msgid ""
 "goals. Learning paths can include prerequisites, recommended courses, and "
 "sequencing information to ensure a cohesive learning experience."
 msgstr ""
-"مسار التعلم هو تسلسل مُختار من الدورات مصمم لإرشاد المتعلمين خلال مجال "
-"موضوعي محدد أو لمساعدتهم في تحقيق أهداف مهنية معينة. يمكن أن تشمل مسارات "
-"التعلم المتطلبات المسبقة والدورات الموصى بها ومعلومات الترتيب لضمان "
-"تجربة تعليمية متماسكة."
+"مسار التعلم هو تسلسل مُختار من الدورات مصمم لإرشاد المتعلمين خلال مجال موضوعي "
+"محدد أو لمساعدتهم في تحقيق أهداف مهنية معينة. يمكن أن تشمل مسارات التعلم "
+"المتطلبات المسبقة والدورات الموصى بها ومعلومات الترتيب لضمان تجربة تعليمية "
+"متماسكة."
 
 #: how/apps/posts/models.py:26
 msgid "Post type"
@@ -431,154 +432,148 @@ msgstr "مستند"
 msgid "Tags"
 msgstr "وسوم"
 
-#: how/ui/templates/registration/base.html:4 \
-   how/ui/templates/registration/base.html:67 \
-   how/ui/templates/registration/base.html:77 \
-   how/ui/templates/registration/base.html:178 \
-   how/ui/templates/registration/base.html:205 \
-   how/ui/templates/registration/base.html:245 \
-   how/ui/templates/rest_framework/api.html:75 \
-   how/ui/templates/ui/base.html:310 \
-   how/ui/templates/ui/base.html:317 \
-   how/ui/templates/ui/base.html:432 \
-   how/ui/templates/ui/base.html:442 \
-   how/ui/templates/ui/base.html:838
+#: how/ui/templates/registration/base.html:4
+#: how/ui/templates/registration/base.html:67
+#: how/ui/templates/registration/base.html:77
+#: how/ui/templates/registration/base.html:178
+#: how/ui/templates/registration/base.html:205
+#: how/ui/templates/registration/base.html:245
+#: how/ui/templates/rest_framework/api.html:75
+#: how/ui/templates/ui/base.html:310 how/ui/templates/ui/base.html:317
+#: how/ui/templates/ui/base.html:432 how/ui/templates/ui/base.html:442
+#: how/ui/templates/ui/base.html:838
 msgid "Profile"
 msgstr "الملف الشخصي"
 
-#: how/ui/templates/registration/base.html:26 \
-   how/ui/templates/registration/base.html:37 \
-   how/ui/templates/registration/base.html:164 \
-   how/ui/templates/registration/base.html:168 \
-   how/ui/templates/registration/base.html:172 \
-   how/ui/templates/ui/base.html:111 \
-   how/ui/templates/ui/base.html:122 \
-   how/ui/templates/ui/base.html:384 \
-   how/ui/templates/ui/base.html:396 \
-   how/ui/templates/ui/learn/base.html:28 \
-   how/ui/templates/ui/learn/base.html:39 \
-   how/ui/templates/ui/learn/base.html:45 \
-   how/ui/templates/ui/learn/base.html:56 \
-   how/ui/templates/ui/learn/base.html:149 \
-   how/ui/templates/ui/learn/base.html:160
+#: how/ui/templates/registration/base.html:26
+#: how/ui/templates/registration/base.html:37
+#: how/ui/templates/registration/base.html:164
+#: how/ui/templates/registration/base.html:168
+#: how/ui/templates/registration/base.html:172
+#: how/ui/templates/ui/base.html:111 how/ui/templates/ui/base.html:122
+#: how/ui/templates/ui/base.html:384 how/ui/templates/ui/base.html:396
+#: how/ui/templates/ui/learn/base.html:28
+#: how/ui/templates/ui/learn/base.html:39
+#: how/ui/templates/ui/learn/base.html:45
+#: how/ui/templates/ui/learn/base.html:56
+#: how/ui/templates/ui/learn/base.html:149
+#: how/ui/templates/ui/learn/base.html:160
 msgid "Open drawer"
 msgstr "افتح القائمة الجانبية"
 
-#: how/ui/templates/registration/base.html:30 \
-   how/ui/templates/ui/base.html:115 \
-   how/ui/templates/ui/base.html:388 \
-   how/ui/templates/ui/base.html:543 \
-   how/ui/templates/ui/base.html:597 \
-   how/ui/templates/ui/base.html:672 \
-   how/ui/templates/ui/base.html:706 \
-   how/ui/templates/ui/learn/base.html:153
+#: how/ui/templates/registration/base.html:30 how/ui/templates/ui/base.html:115
+#: how/ui/templates/ui/base.html:388 how/ui/templates/ui/base.html:543
+#: how/ui/templates/ui/base.html:597 how/ui/templates/ui/base.html:672
+#: how/ui/templates/ui/base.html:706 how/ui/templates/ui/learn/base.html:153
 msgid "close sidebar"
 msgstr "أغلق الشريط الجانبي"
 
-#: how/ui/templates/registration/base.html:44 \
-   how/ui/templates/registration/base.html:56 \
-   how/ui/templates/registration/base.html:217 \
-   how/ui/templates/registration/logged_out.html:15 \
-   how/ui/templates/registration/logged_out.html:27 \
-   how/ui/templates/registration/login.html:15 \
-   how/ui/templates/registration/login.html:27 \
-   how/ui/templates/registration/password_reset_complete.html:15 \
-   how/ui/templates/registration/password_reset_complete.html:27
+#: how/ui/templates/registration/base.html:44
+#: how/ui/templates/registration/base.html:56
+#: how/ui/templates/registration/base.html:217
+#: how/ui/templates/registration/logged_out.html:15
+#: how/ui/templates/registration/logged_out.html:27
+#: how/ui/templates/registration/login.html:15
+#: how/ui/templates/registration/login.html:27
+#: how/ui/templates/registration/password_reset_complete.html:15
+#: how/ui/templates/registration/password_reset_complete.html:27
+#: how/ui/templates/registration/password_reset_confirm.html:15
+#: how/ui/templates/registration/password_reset_confirm.html:27
+#: how/ui/templates/registration/password_reset_done.html:15
+#: how/ui/templates/registration/password_reset_done.html:27
+#: how/ui/templates/registration/password_reset_form.html:15
+#: how/ui/templates/registration/password_reset_form.html:27
+#: how/ui/templates/registration/signup.html:15
+#: how/ui/templates/registration/signup.html:27
+#: how/ui/templates/rest_framework/api.html:4
+#: how/ui/templates/rest_framework/api.html:16
+#: how/ui/templates/rest_framework/api.html:25 how/ui/templates/ui/base.html:11
+#: how/ui/templates/ui/base.html:90 how/ui/templates/ui/base.html:103
+#: how/ui/templates/ui/base.html:404 how/ui/templates/ui/base.html:420
+#: how/ui/templates/ui/base.html:683 how/ui/templates/ui/base.html:695
+#: how/ui/templates/ui/index.html:12
 msgid "House Of Wisdom"
 msgstr "بيت الحكمة"
 
-#: how/ui/templates/registration/base.html:82 \
-   how/ui/templates/registration/base.html:92 \
-   how/ui/templates/ui/base.html:200 \
-   how/ui/templates/ui/base.html:210 \
-   how/ui/templates/ui/base.html:447 \
-   how/ui/templates/ui/base.html:458 \
-   how/ui/templates/ui/base.html:795 \
-   how/ui/templates/ui/learn/index.html:14
+#: how/ui/templates/registration/base.html:82
+#: how/ui/templates/registration/base.html:92 how/ui/templates/ui/base.html:200
+#: how/ui/templates/ui/base.html:210 how/ui/templates/ui/base.html:447
+#: how/ui/templates/ui/base.html:458 how/ui/templates/ui/base.html:795
+#: how/ui/templates/ui/learn/index.html:14
 msgid "My Learning"
 msgstr "تعليمي"
 
-#: how/ui/templates/registration/base.html:98 \
-   how/ui/templates/registration/base.html:108 \
-   how/ui/templates/registration/logged_out.html:40 \
-   how/ui/templates/registration/login.html:4 \
-   how/ui/templates/registration/login.html:34 \
-   how/ui/templates/registration/password_reset_complete.html:43 \
-   how/ui/templates/registration/password_reset_done.html:48 \
-   how/ui/templates/registration/signup.html:43 \
-   how/ui/templates/ui/base.html:351 \
-   how/ui/templates/ui/base.html:358 \
-   how/ui/templates/ui/base.html:465 \
-   how/ui/templates/ui/base.html:475 \
-   how/ui/templates/ui/base.html:864
+#: how/ui/templates/registration/base.html:98
+#: how/ui/templates/registration/base.html:108
+#: how/ui/templates/registration/logged_out.html:40
+#: how/ui/templates/registration/login.html:4
+#: how/ui/templates/registration/login.html:34
+#: how/ui/templates/registration/password_reset_complete.html:43
+#: how/ui/templates/registration/password_reset_done.html:48
+#: how/ui/templates/registration/signup.html:43
+#: how/ui/templates/ui/base.html:351 how/ui/templates/ui/base.html:358
+#: how/ui/templates/ui/base.html:465 how/ui/templates/ui/base.html:475
+#: how/ui/templates/ui/base.html:864
 msgid "Log in"
 msgstr "تسجيل الدخول"
 
-#: how/ui/templates/registration/base.html:113 \
-   how/ui/templates/registration/base.html:123 \
-   how/ui/templates/registration/logged_out.html:43 \
-   how/ui/templates/registration/login.html:62 \
-   how/ui/templates/registration/signup.html:4 \
-   how/ui/templates/registration/signup.html:34 \
-   how/ui/templates/ui/base.html:336 \
-   how/ui/templates/ui/base.html:346 \
-   how/ui/templates/ui/base.html:480 \
-   how/ui/templates/ui/base.html:490 \
-   how/ui/templates/ui/base.html:876
+#: how/ui/templates/registration/base.html:113
+#: how/ui/templates/registration/base.html:123
+#: how/ui/templates/registration/logged_out.html:43
+#: how/ui/templates/registration/login.html:62
+#: how/ui/templates/registration/signup.html:4
+#: how/ui/templates/registration/signup.html:34
+#: how/ui/templates/ui/base.html:336 how/ui/templates/ui/base.html:346
+#: how/ui/templates/ui/base.html:480 how/ui/templates/ui/base.html:490
+#: how/ui/templates/ui/base.html:876
 msgid "Sign up"
 msgstr "إنشاء حساب"
 
-#: how/ui/templates/registration/base.html:130 \
-   how/ui/templates/registration/base.html:139 \
-   how/ui/templates/ui/base.html:497 \
-   how/ui/templates/ui/base.html:506
+#: how/ui/templates/registration/base.html:130
+#: how/ui/templates/registration/base.html:139
+#: how/ui/templates/ui/base.html:497 how/ui/templates/ui/base.html:506
 msgid "Search"
 msgstr "بحث"
 
-#: how/ui/templates/registration/base.html:145 \
-   how/ui/templates/registration/base.html:155 \
-   how/ui/templates/ui/base.html:512 \
-   how/ui/templates/ui/base.html:522 \
-   how/ui/templates/ui/base.html:555 \
-   how/ui/templates/ui/base.html:562 \
-   how/ui/templates/ui/learn/base.html:86 \
-   how/ui/templates/ui/learn/base.html:96
+#: how/ui/templates/registration/base.html:145
+#: how/ui/templates/registration/base.html:155
+#: how/ui/templates/ui/base.html:512 how/ui/templates/ui/base.html:522
+#: how/ui/templates/ui/base.html:555 how/ui/templates/ui/base.html:562
+#: how/ui/templates/ui/learn/base.html:86
+#: how/ui/templates/ui/learn/base.html:96
 msgid "Al-Wazeer"
 msgstr "الوزير"
 
-#: how/ui/templates/registration/base.html:195 \
-   how/ui/templates/registration/base.html:228
+#: how/ui/templates/registration/base.html:195
+#: how/ui/templates/registration/base.html:228
 msgid "Close drawer"
 msgstr "أغلق القائمة الجانبية"
 
-#: how/ui/templates/registration/base.html:224 \
-   how/ui/templates/registration/base.html:232 \
-   how/ui/templates/ui/base.html:593 \
-   how/ui/templates/ui/base.html:604 \
-   how/ui/templates/ui/base.html:702 \
-   how/ui/templates/ui/base.html:713 \
-   how/ui/templates/ui/learn/base.html:172 \
-   how/ui/templates/ui/learn/base.html:183 \
-   how/ui/templates/ui/learn/base.html:189 \
-   how/ui/templates/ui/learn/base.html:200 \
-   how/ui/templates/ui/learn/content/assignment.html:404 \
-   how/ui/templates/ui/learn/content/assignment.html:415 \
-   how/ui/templates/ui/learn/reviews/list.html:101 \
-   how/ui/templates/ui/learn/reviews/list.html:109 \
-   how/ui/templates/ui/learn/reviews/list.html:119
+#: how/ui/templates/registration/base.html:224
+#: how/ui/templates/registration/base.html:232
+#: how/ui/templates/ui/base.html:593 how/ui/templates/ui/base.html:604
+#: how/ui/templates/ui/base.html:702 how/ui/templates/ui/base.html:713
+#: how/ui/templates/ui/learn/base.html:172
+#: how/ui/templates/ui/learn/base.html:183
+#: how/ui/templates/ui/learn/base.html:189
+#: how/ui/templates/ui/learn/base.html:200
+#: how/ui/templates/ui/learn/content/assignment.html:404
+#: how/ui/templates/ui/learn/content/assignment.html:415
+#: how/ui/templates/ui/learn/reviews/list.html:101
+#: how/ui/templates/ui/learn/reviews/list.html:109
+#: how/ui/templates/ui/learn/reviews/list.html:119
 msgid "Close"
 msgstr "إغلاق"
 
-#: how/ui/templates/registration/base.html:256 \
-   how/ui/templates/ui/base.html:183 \
-   how/ui/templates/ui/base.html:193 \
-   how/ui/templates/ui/base.html:775
+#: how/ui/templates/registration/base.html:256
+#: how/ui/templates/ui/base.html:183 how/ui/templates/ui/base.html:193
+#: how/ui/templates/ui/base.html:775
 msgid "Dashboard"
 msgstr "لوحة التحكم"
 
-#: how/ui/templates/registration/base.html:272 \
-   how/ui/templates/registration/edit.html:4 \
-   how/ui/templates/registration/edit.html:9
+#: how/ui/templates/registration/base.html:272
+#: how/ui/templates/registration/edit.html:4
+#: how/ui/templates/registration/edit.html:9
 msgid "Settings"
 msgstr "الإعدادات"
 
@@ -586,17 +581,16 @@ msgstr "الإعدادات"
 msgid "Change Password"
 msgstr "تغيير كلمة المرور"
 
-#: how/ui/templates/registration/base.html:293 \
-   how/ui/templates/registration/delete.html:4 \
-   how/ui/templates/registration/delete.html:8 \
-   how/ui/templates/registration/delete.html:14
+#: how/ui/templates/registration/base.html:293
+#: how/ui/templates/registration/delete.html:4
+#: how/ui/templates/registration/delete.html:8
+#: how/ui/templates/registration/delete.html:14
 msgid "Delete account"
 msgstr "حذف الحساب"
 
-#: how/ui/templates/registration/base.html:303 \
-   how/ui/templates/ui/base.html:322 \
-   how/ui/templates/ui/base.html:330 \
-   how/ui/templates/ui/base.html:851
+#: how/ui/templates/registration/base.html:303
+#: how/ui/templates/ui/base.html:322 how/ui/templates/ui/base.html:330
+#: how/ui/templates/ui/base.html:851
 msgid "Log out"
 msgstr "تسجيل الخروج"
 
@@ -625,25 +619,29 @@ msgid "Welcome, please login to continue."
 msgstr "مرحبًا، يرجى تسجيل الدخول للمتابعة."
 
 #: how/ui/templates/registration/login.html:46
-msgid "Your account doesn't have access to this page. To proceed, please login with an account that has access. <!---->"
-msgstr "حسابك لا يملك صلاحية الوصول إلى هذه الصفحة. للمتابعة، يرجى تسجيل الدخول بحساب لديه الصلاحية. <!---->"
+msgid ""
+"Your account doesn't have access to this page. To proceed, please login with "
+"an account that has access. <!---->"
+msgstr ""
+"حسابك لا يملك صلاحية الوصول إلى هذه الصفحة. للمتابعة، يرجى تسجيل الدخول "
+"بحساب لديه الصلاحية. <!---->"
 
-#: how/ui/templates/registration/login.html:68 \
-   how/ui/templates/registration/signup.html:49
+#: how/ui/templates/registration/login.html:68
+#: how/ui/templates/registration/signup.html:49
 msgid "Forgot password?"
 msgstr "نسيت كلمة المرور؟"
-  
+
 #: how/ui/templates/registration/password_change_done.html:4
 msgid "Password Changed"
 msgstr "تم تغيير كلمة المرور"
 
-#: how/ui/templates/registration/password_change_done.html:8 \
-   how/ui/templates/registration/password_change_form.html:8
+#: how/ui/templates/registration/password_change_done.html:8
+#: how/ui/templates/registration/password_change_form.html:8
 msgid "Password"
 msgstr "كلمة المرور"
 
-#: how/ui/templates/registration/password_change_done.html:10 \
-   how/ui/templates/registration/password_change_form.html:9
+#: how/ui/templates/registration/password_change_done.html:10
+#: how/ui/templates/registration/password_change_form.html:9
 msgid "Change"
 msgstr "تغيير"
 
@@ -672,14 +670,16 @@ msgid ""
 "Please enter your old password, for security's sake, and then enter your new "
 "password twice so we can verify you typed it in correctly."
 msgstr ""
-"الرجاء إدخال كلمة المرور القديمة لأسباب أمنية، ثم أدخل كلمة المرور الجديدة مرتين حتى نتمكن من التأكد من إدخالك لها بشكل صحيح."
+"الرجاء إدخال كلمة المرور القديمة لأسباب أمنية، ثم أدخل كلمة المرور الجديدة "
+"مرتين حتى نتمكن من التأكد من إدخالك لها بشكل صحيح."
 
 #: how/ui/templates/registration/password_reset_complete.html:4
 msgid "Password Reset"
 msgstr "إعادة تعيين كلمة المرور"
 
-#: how/ui/templates/registration/password_reset_complete.html:35 \
-   how/ui/templates/registration/password_reset_confirm.html:4
+#: how/ui/templates/registration/password_reset_complete.html:35
+#: how/ui/templates/registration/password_reset_confirm.html:4
+#: how/ui/templates/registration/password_reset_confirm.html:35
 msgid "Password Reset Confirm"
 msgstr "تأكيد إعادة تعيين كلمة المرور"
 
@@ -688,30 +688,50 @@ msgid "Your password has been set. You may go ahead and log in now."
 msgstr "تم تعيين كلمة المرور الخاصة بك. يمكنك الآن تسجيل الدخول."
 
 #: how/ui/templates/registration/password_reset_confirm.html:40
-msgid "Please enter your new password twice so we can verify you typed it in correctly."
-msgstr "يرجى إدخال كلمة المرور الجديدة مرتين حتى نتمكن من التحقق من أنك أدخلتها بشكل صحيح."
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly."
+msgstr ""
+"يرجى إدخال كلمة المرور الجديدة مرتين حتى نتمكن من التحقق من أنك أدخلتها بشكل "
+"صحيح."
 
 #: how/ui/templates/registration/password_reset_confirm.html:47
-msgid "The password reset link was invalid, possibly because it has already been used. Please request a new password reset. <!---->"
-msgstr "رابط إعادة تعيين كلمة المرور غير صالح، ربما لأنه تم استخدامه مسبقًا. يرجى طلب إعادة تعيين كلمة مرور جديدة. <!---->"
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used. Please request a new password reset. <!---->"
+msgstr ""
+"رابط إعادة تعيين كلمة المرور غير صالح، ربما لأنه تم استخدامه مسبقًا. يرجى طلب "
+"إعادة تعيين كلمة مرور جديدة. <!---->"
 
-#: how/ui/templates/registration/password_reset_done.html:4 \
-   how/ui/templates/registration/password_reset_done.html:34
+#: how/ui/templates/registration/password_reset_done.html:4
+#: how/ui/templates/registration/password_reset_done.html:34
 msgid "Password Reset Done"
 msgstr "تم الانتهاء من إعادة تعيين كلمة المرور"
 
 #: how/ui/templates/registration/password_reset_done.html:37
-msgid "We've emailed you instructions for setting your password, if an account exists with the email you entered. You should receive them shortly."
-msgstr "لقد أرسلنا إليك تعليمات لتعيين كلمة المرور عبر البريد الإلكتروني، إذا كان هناك حساب مرتبط بالبريد الذي أدخلته. ستتلقاها قريبًا."
+msgid ""
+"We've emailed you instructions for setting your password, if an account "
+"exists with the email you entered. You should receive them shortly."
+msgstr ""
+"لقد أرسلنا إليك تعليمات لتعيين كلمة المرور عبر البريد الإلكتروني، إذا كان "
+"هناك حساب مرتبط بالبريد الذي أدخلته. ستتلقاها قريبًا."
 
 #: how/ui/templates/registration/password_reset_done.html:42
-msgid "If you don't receive an email, please make sure you've entered the address you registered with, and check your spam folder."
-msgstr "إذا لم تتلقَ رسالة إلكترونية، يرجى التأكد من أنك أدخلت العنوان الذي سجلت به، وتحقق من مجلد الرسائل غير المرغوب فيها."
+msgid ""
+"If you don't receive an email, please make sure you've entered the address "
+"you registered with, and check your spam folder."
+msgstr ""
+"إذا لم تتلقَ رسالة إلكترونية، يرجى التأكد من أنك أدخلت العنوان الذي سجلت به، "
+"وتحقق من مجلد الرسائل غير المرغوب فيها."
 
 #: how/ui/templates/registration/password_reset_email.html:6
 #, python-format
-msgid "You're receiving this email because you requested a password reset for your user account at %(site_name)s."
-msgstr "أنت تتلقى هذا البريد الإلكتروني لأنك طلبت إعادة تعيين كلمة المرور لحسابك على %(site_name)s."
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+"أنت تتلقى هذا البريد الإلكتروني لأنك طلبت إعادة تعيين كلمة المرور لحسابك على "
+"%(site_name)s."
 
 #: how/ui/templates/registration/password_reset_email.html:10
 msgid "Please go to the following page and choose a new password:"
@@ -730,14 +750,18 @@ msgstr "شكرًا لاستخدامك موقعنا!"
 msgid "The %(site_name)s team"
 msgstr "فريق %(site_name)s"
 
-#: how/ui/templates/registration/password_reset_form.html:4 \
-   how/ui/templates/registration/password_reset_form.html:34
+#: how/ui/templates/registration/password_reset_form.html:4
+#: how/ui/templates/registration/password_reset_form.html:34
 msgid "Reset password"
 msgstr "إعادة تعيين كلمة المرور"
 
 #: how/ui/templates/registration/password_reset_form.html:37
-msgid "Forgotten your password? Enter your email address below, and we'll email instructions for setting a new one. <!---->"
-msgstr "نسيت كلمة المرور؟ أدخل عنوان بريدك الإلكتروني أدناه، وسنرسل لك تعليمات لتعيين واحدة جديدة. <!---->"
+msgid ""
+"Forgotten your password? Enter your email address below, and we'll email "
+"instructions for setting a new one. <!---->"
+msgstr ""
+"نسيت كلمة المرور؟ أدخل عنوان بريدك الإلكتروني أدناه، وسنرسل لك تعليمات "
+"لتعيين واحدة جديدة. <!---->"
 
 #: how/ui/templates/registration/profile.html:17
 msgid "Welcome to your Profile"
@@ -747,55 +771,58 @@ msgstr "مرحبًا بك في ملفك الشخصي"
 msgid "Welcome, please signup to continue."
 msgstr "مرحبًا، يرجى إنشاء حساب للمتابعة."
 
-#: how/ui/templates/rest_framework/api.html:40 \
-   how/ui/templates/rest_framework/api.html:44 \
-   how/ui/templates/ui/base.html:128 \
-   how/ui/templates/ui/base.html:138 \
-   how/ui/templates/ui/base.html:728 \
-   how/ui/templates/ui/learn/base.html:216
+#: how/ui/templates/rest_framework/api.html:40
+#: how/ui/templates/rest_framework/api.html:44
+#: how/ui/templates/ui/base.html:128 how/ui/templates/ui/base.html:138
+#: how/ui/templates/ui/base.html:728 how/ui/templates/ui/learn/base.html:216
+#: how/ui/templates/ui/learn/content/assignment.html:30
+#: how/ui/templates/ui/learn/content/grades.html:14
+#: how/ui/templates/ui/learn/content/item.html:30
+#: how/ui/templates/ui/learn/content/lesson.html:14
+#: how/ui/templates/ui/learn/content/lesson.html:52
+#: how/ui/templates/ui/learn/content/module.html:14
+#: how/ui/templates/ui/learn/content/module.html:46
+#: how/ui/templates/ui/learn/posts/id.html:30
+#: how/ui/templates/ui/learn/posts/list.html:14
+#: how/ui/templates/ui/learn/reviews/list.html:14
+#: how/ui/templates/ui/learn/reviews/new.html:14
 msgid "Home"
 msgstr "الرئيسية"
 
-#: how/ui/templates/rest_framework/api.html:49 \
-   how/ui/templates/rest_framework/api.html:53 \
-   how/ui/templates/ui/base.html:145 \
-   how/ui/templates/ui/base.html:155 \
-   how/ui/templates/ui/base.html:742
+#: how/ui/templates/rest_framework/api.html:49
+#: how/ui/templates/rest_framework/api.html:53
+#: how/ui/templates/ui/base.html:145 how/ui/templates/ui/base.html:155
+#: how/ui/templates/ui/base.html:742
+#: how/ui/templates/ui/categories/index.html:27
 msgid "Categories"
 msgstr "الفئات"
 
-#: how/ui/templates/rest_framework/api.html:58 \
-   how/ui/templates/rest_framework/api.html:62
+#: how/ui/templates/rest_framework/api.html:58
+#: how/ui/templates/rest_framework/api.html:62
 msgid "Articles"
 msgstr "المقالات"
 
-#: how/ui/templates/ui/base.html:15 \
-   how/ui/templates/ui/base.html:21 \
-   how/ui/templates/ui/base.html:25 \
-   how/ui/templates/ui/base.html:42 \
-   how/ui/templates/ui/base.html:46
+#: how/ui/templates/ui/base.html:15 how/ui/templates/ui/base.html:21
+#: how/ui/templates/ui/base.html:25 how/ui/templates/ui/base.html:42
+#: how/ui/templates/ui/base.html:46
 msgid "House Of Wisdom - Journalism with Certainty"
 msgstr "بيت الحكمة - صحافة مع اليقين"
 
-#: how/ui/templates/ui/base.html:164 \
-   how/ui/templates/ui/base.html:174 \
-   how/ui/templates/ui/base.html:758
+#: how/ui/templates/ui/base.html:164 how/ui/templates/ui/base.html:174
+#: how/ui/templates/ui/base.html:758
 msgid "Blog"
 msgstr "المدونة"
 
-#: how/ui/templates/ui/base.html:218 \
-   how/ui/templates/ui/base.html:227 \
-   how/ui/templates/ui/base.html:236
+#: how/ui/templates/ui/base.html:218 how/ui/templates/ui/base.html:227
+#: how/ui/templates/ui/base.html:236
 msgid "Language"
 msgstr "اللغة"
 
-#: how/ui/templates/ui/base.html:290 \
-   how/ui/templates/ui/base.html:300
+#: how/ui/templates/ui/base.html:290 how/ui/templates/ui/base.html:300
 msgid "Account"
 msgstr "الحساب"
 
-#: how/ui/templates/ui/base.html:570 \
-   how/ui/templates/ui/base.html:586
+#: how/ui/templates/ui/base.html:570 how/ui/templates/ui/base.html:586
 msgid "Un/Pin"
 msgstr "تثبيت/إلغاء تثبيت"
 
@@ -811,8 +838,7 @@ msgstr "كيف يمكنني مساعدتك اليوم؟"
 msgid "Message Al-Wazeer"
 msgstr "راسل الوزير"
 
-#: how/ui/templates/ui/base.html:645 \
-   how/ui/templates/ui/base.html:655
+#: how/ui/templates/ui/base.html:645 how/ui/templates/ui/base.html:655
 msgid "Send"
 msgstr "إرسال"
 
@@ -824,19 +850,19 @@ msgstr "من نحن"
 msgid "Contact us"
 msgstr "اتصل بنا"
 
-#: how/ui/templates/ui/blocks/code.html:9 \
-   how/ui/templates/ui/blocks/code.html:13
+#: how/ui/templates/ui/blocks/code.html:9
+#: how/ui/templates/ui/blocks/code.html:13
 msgid "Programming language"
 msgstr "لغة البرمجة"
 
-#: how/ui/templates/ui/blocks/code.html:20 \
-   how/ui/templates/ui/blocks/code.html:26
+#: how/ui/templates/ui/blocks/code.html:20
+#: how/ui/templates/ui/blocks/code.html:26
 msgid "Copy"
 msgstr "نسخ"
 
-#: how/ui/templates/ui/blog/index.html:30 \
-   how/ui/templates/ui/components/course.html:59 \
-   how/ui/templates/ui/components/path.html:49
+#: how/ui/templates/ui/blog/index.html:30
+#: how/ui/templates/ui/components/course.html:59
+#: how/ui/templates/ui/components/path.html:49
 msgid "Learn more"
 msgstr "تعرف على المزيد"
 
@@ -856,37 +882,37 @@ msgstr "مسارات التعلم والدورات"
 msgid "View courses"
 msgstr "عرض الدورات"
 
-#: how/ui/templates/ui/components/course.html:25 \
-   how/ui/templates/ui/components/course.html:28 \
-   how/ui/templates/ui/components/path.html:25 \
-   how/ui/templates/ui/components/path.html:28
+#: how/ui/templates/ui/components/course.html:25
+#: how/ui/templates/ui/components/course.html:28
+#: how/ui/templates/ui/components/path.html:25
+#: how/ui/templates/ui/components/path.html:28
 msgid "Instructor"
 msgstr "المدرب"
 
-#: how/ui/templates/ui/components/course.html:35 \
-   how/ui/templates/ui/components/course.html:38
+#: how/ui/templates/ui/components/course.html:35
+#: how/ui/templates/ui/components/course.html:38
 msgid "Students"
 msgstr "الطلاب"
 
-#: how/ui/templates/ui/components/course.html:45 \
-   how/ui/templates/ui/components/course.html:48
+#: how/ui/templates/ui/components/course.html:45
+#: how/ui/templates/ui/components/course.html:48
 msgid "Modules"
 msgstr "الوحدات"
 
-#: how/ui/templates/ui/components/form.html:24 \
-   how/ui/templates/ui/learn/content/assignment.html:478 \
-   how/ui/templates/ui/learn/content/assignment.html:485 \
-   how/ui/templates/ui/learn/reviews/new.html:137
+#: how/ui/templates/ui/components/form.html:24
+#: how/ui/templates/ui/learn/content/assignment.html:478
+#: how/ui/templates/ui/learn/content/assignment.html:485
+#: how/ui/templates/ui/learn/reviews/new.html:137
 msgid "Submit"
 msgstr "إرسال"
 
-#: how/ui/templates/ui/components/pagination.html:8 \
-   how/ui/templates/ui/components/pagination.html:15
+#: how/ui/templates/ui/components/pagination.html:8
+#: how/ui/templates/ui/components/pagination.html:15
 msgid "Previous"
 msgstr "السابق"
 
-#: how/ui/templates/ui/components/pagination.html:21 \
-   how/ui/templates/ui/components/pagination.html:24
+#: how/ui/templates/ui/components/pagination.html:21
+#: how/ui/templates/ui/components/pagination.html:24
 msgid "First"
 msgstr "الأول"
 
@@ -894,19 +920,19 @@ msgstr "الأول"
 msgid "Current"
 msgstr "الحالي"
 
-#: how/ui/templates/ui/components/pagination.html:41 \
-   how/ui/templates/ui/components/pagination.html:47
+#: how/ui/templates/ui/components/pagination.html:41
+#: how/ui/templates/ui/components/pagination.html:47
 msgid "Last"
 msgstr "الأخير"
 
-#: how/ui/templates/ui/components/pagination.html:53 \
-   how/ui/templates/ui/components/pagination.html:63
+#: how/ui/templates/ui/components/pagination.html:53
+#: how/ui/templates/ui/components/pagination.html:63
 msgid "Next"
 msgstr "التالي"
 
-#: how/ui/templates/ui/courses/id.html:34 \
-   how/ui/templates/ui/learn/index.html:53 \
-   how/ui/templates/ui/learn/index.html:113
+#: how/ui/templates/ui/courses/id.html:34
+#: how/ui/templates/ui/learn/index.html:53
+#: how/ui/templates/ui/learn/index.html:113
 msgid "Go to course"
 msgstr "الانتقال إلى الدورة"
 
@@ -914,13 +940,12 @@ msgstr "الانتقال إلى الدورة"
 msgid "Enroll now"
 msgstr "سجل الآن"
 
-#: how/ui/templates/ui/courses/id.html:59 \
-   how/ui/templates/ui/paths/id.html:39
+#: how/ui/templates/ui/courses/id.html:59
+#: how/ui/templates/ui/learn/base.html:124 how/ui/templates/ui/paths/id.html:39
 msgid "Prerequisites"
 msgstr "المتطلبات"
 
-#: how/ui/templates/ui/courses/id.html:62 \
-   how/ui/templates/ui/paths/id.html:42
+#: how/ui/templates/ui/courses/id.html:62 how/ui/templates/ui/paths/id.html:42
 msgid "Skills you will gain"
 msgstr "المهارات التي ستكتسبها"
 
@@ -933,7 +958,8 @@ msgid ""
 "Welcome to House Of Wisdom AI-powered Learning Management System (LMS) "
 "designed to transform how education is delivered online."
 msgstr ""
-"مرحبًا بك في نظام إدارة التعلم (LMS) الخاص بـ بيت الحكمة المدعوم بالذكاء الاصطناعي والمصمم لتحويل طريقة تقديم التعليم عبر الإنترنت."
+"مرحبًا بك في نظام إدارة التعلم (LMS) الخاص بـ بيت الحكمة المدعوم بالذكاء "
+"الاصطناعي والمصمم لتحويل طريقة تقديم التعليم عبر الإنترنت."
 
 #: how/ui/templates/ui/index.html:26
 msgid "Latest learning paths"
@@ -947,14 +973,14 @@ msgstr "أحدث الدورات"
 msgid "Latest news"
 msgstr "آخر الأخبار"
 
-#: how/ui/templates/ui/index.html:80 \
-   how/ui/templates/ui/learn/posts/list.html:42
+#: how/ui/templates/ui/index.html:80
+#: how/ui/templates/ui/learn/posts/list.html:42
 msgid "Read"
 msgstr "اقرأ"
 
-#: how/ui/templates/ui/learn/base.html:4 \
-   how/ui/templates/ui/learn/content/module.html:4 \
-   how/ui/templates/ui/learn/index.html:4
+#: how/ui/templates/ui/learn/base.html:4
+#: how/ui/templates/ui/learn/content/module.html:4
+#: how/ui/templates/ui/learn/index.html:4
 msgid "Learn"
 msgstr "تعلم"
 
@@ -966,18 +992,18 @@ msgstr "مرحبًا بك في"
 msgid "Course Material"
 msgstr "محتوى الدورة"
 
-#: how/ui/templates/ui/learn/base.html:281 \
-   how/ui/templates/ui/learn/content/grades.html:4 \
-   how/ui/templates/ui/learn/content/grades.html:20 \
-   how/ui/templates/ui/learn/content/grades.html:27 \
-   how/ui/templates/ui/learn/posts/list.html:4 \
-   how/ui/templates/ui/learn/posts/list.html:27
+#: how/ui/templates/ui/learn/base.html:281
+#: how/ui/templates/ui/learn/content/grades.html:4
+#: how/ui/templates/ui/learn/content/grades.html:20
+#: how/ui/templates/ui/learn/content/grades.html:27
+#: how/ui/templates/ui/learn/posts/list.html:4
 msgid "Grades"
 msgstr "الدرجات"
 
-#: how/ui/templates/ui/learn/base.html:293 \
-   how/ui/templates/ui/learn/posts/id.html:36 \
-   how/ui/templates/ui/learn/posts/list.html:20
+#: how/ui/templates/ui/learn/base.html:293
+#: how/ui/templates/ui/learn/posts/id.html:36
+#: how/ui/templates/ui/learn/posts/list.html:20
+#: how/ui/templates/ui/learn/posts/list.html:27
 msgid "Posts"
 msgstr "المنشورات"
 
@@ -989,16 +1015,16 @@ msgstr "قيّم هذه الدورة"
 msgid "Congrats, your grade is"
 msgstr "تهانينا، درجتك هي"
 
-#: how/ui/templates/ui/learn/content/assignment.html:91 \
-   how/ui/templates/ui/learn/content/assignment.html:97 \
-   how/ui/templates/ui/learn/content/assignment.html:117 \
-   how/ui/templates/ui/learn/content/assignment.html:123 \
-   how/ui/templates/ui/learn/content/assignment.html:212 \
-   how/ui/templates/ui/learn/content/assignment.html:219 \
-   how/ui/templates/ui/learn/content/assignment.html:248 \
-   how/ui/templates/ui/learn/content/assignment.html:255 \
-   how/ui/templates/ui/learn/content/assignment.html:284 \
-   how/ui/templates/ui/learn/content/assignment.html:291
+#: how/ui/templates/ui/learn/content/assignment.html:91
+#: how/ui/templates/ui/learn/content/assignment.html:97
+#: how/ui/templates/ui/learn/content/assignment.html:117
+#: how/ui/templates/ui/learn/content/assignment.html:123
+#: how/ui/templates/ui/learn/content/assignment.html:212
+#: how/ui/templates/ui/learn/content/assignment.html:219
+#: how/ui/templates/ui/learn/content/assignment.html:248
+#: how/ui/templates/ui/learn/content/assignment.html:255
+#: how/ui/templates/ui/learn/content/assignment.html:284
+#: how/ui/templates/ui/learn/content/assignment.html:291
 msgid "Details"
 msgstr "تفاصيل"
 
@@ -1022,9 +1048,9 @@ msgstr "التسليمات"
 msgid "Try again"
 msgstr "حاول مرة أخرى"
 
-#: how/ui/templates/ui/learn/content/assignment.html:195 \
-   how/ui/templates/ui/learn/content/assignment.html:231 \
-   how/ui/templates/ui/learn/content/assignment.html:267
+#: how/ui/templates/ui/learn/content/assignment.html:195
+#: how/ui/templates/ui/learn/content/assignment.html:231
+#: how/ui/templates/ui/learn/content/assignment.html:267
 msgid "Submission on"
 msgstr "تم التسليم في"
 
@@ -1040,13 +1066,13 @@ msgstr "لا توجد تسليمات"
 msgid "Start assignment"
 msgstr "ابدأ المهمة"
 
-#: how/ui/templates/ui/learn/content/assignment.html:336 \
-   how/ui/templates/ui/learn/content/assignment.html:351
+#: how/ui/templates/ui/learn/content/assignment.html:336
+#: how/ui/templates/ui/learn/content/assignment.html:351
 msgid "Toggle fullscreen"
 msgstr "تبديل وضع ملء الشاشة"
 
-#: how/ui/templates/ui/learn/content/assignment.html:357 \
-   how/ui/templates/ui/learn/content/assignment.html:366
+#: how/ui/templates/ui/learn/content/assignment.html:357
+#: how/ui/templates/ui/learn/content/assignment.html:366
 msgid "Swipe left"
 msgstr "اسحب لليسار"
 
@@ -1054,8 +1080,8 @@ msgstr "اسحب لليسار"
 msgid "Remaining time"
 msgstr "الوقت المتبقي"
 
-#: how/ui/templates/ui/learn/content/assignment.html:389 \
-   how/ui/templates/ui/learn/content/assignment.html:398
+#: how/ui/templates/ui/learn/content/assignment.html:389
+#: how/ui/templates/ui/learn/content/assignment.html:398
 msgid "Swipe right"
 msgstr "اسحب لليمين"
 
@@ -1091,8 +1117,8 @@ msgstr "خطأ"
 msgid "In Progress"
 msgstr "قيد التقدم"
 
-#: how/ui/templates/ui/learn/index.html:41 \
-   how/ui/templates/ui/learn/index.html:101
+#: how/ui/templates/ui/learn/index.html:41
+#: how/ui/templates/ui/learn/index.html:101
 msgid "Progress"
 msgstr "التقدم"
 
@@ -1124,16 +1150,16 @@ msgstr "لا توجد منشورات"
 msgid "Posts published by course instructor will appear here"
 msgstr "ستظهر هنا المنشورات التي ينشرها مدرب الدورة"
 
-#: how/ui/templates/ui/learn/reviews/list.html:4 \
-   how/ui/templates/ui/learn/reviews/list.html:20 \
-   how/ui/templates/ui/learn/reviews/list.html:28 \
-   how/ui/templates/ui/learn/reviews/new.html:20
+#: how/ui/templates/ui/learn/reviews/list.html:4
+#: how/ui/templates/ui/learn/reviews/list.html:20
+#: how/ui/templates/ui/learn/reviews/list.html:28
+#: how/ui/templates/ui/learn/reviews/new.html:20
 msgid "Reviews"
 msgstr "المراجعات"
 
-#: how/ui/templates/ui/learn/reviews/list.html:31 \
-   how/ui/templates/ui/learn/reviews/list.html:39 \
-   how/ui/templates/ui/learn/reviews/list.html:97
+#: how/ui/templates/ui/learn/reviews/list.html:31
+#: how/ui/templates/ui/learn/reviews/list.html:39
+#: how/ui/templates/ui/learn/reviews/list.html:97
 msgid "Filters"
 msgstr "الفلاتر"
 
@@ -1145,8 +1171,8 @@ msgstr "لا توجد مراجعات"
 msgid "Reviews created by course students will appear here"
 msgstr "ستظهر هنا المراجعات التي أنشأها طلاب الدورة"
 
-#: how/ui/templates/ui/learn/reviews/new.html:4 \
-   how/ui/templates/ui/learn/reviews/new.html:44
+#: how/ui/templates/ui/learn/reviews/new.html:4
+#: how/ui/templates/ui/learn/reviews/new.html:44
 msgid "New review"
 msgstr "مراجعة جديدة"
 
