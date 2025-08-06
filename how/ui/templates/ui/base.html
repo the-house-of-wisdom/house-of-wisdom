@@ -77,10 +77,9 @@
       <section id="content" class="drawer-content">
         <div
           id="main"
-          class="bg-base-300 relative h-dvh overflow-hidden p-1 lg:p-2"
+          class="bg-base-300 relative h-dvh overflow-hidden sm:p-1 lg:p-2"
         >
           <div class="flex size-full items-center gap-1">
-            <!-- Sidebar -->
             <aside class="z-50 hidden h-full p-1 sm:block">
               <nav
                 class="navbar h-full flex-col items-center justify-between gap-4 p-0"
@@ -140,6 +139,44 @@
                     </a>
                   </li>
 
+                  {% if categories %}
+                  <li
+                    class="tooltip tooltip-right rtl:tooltip-left tooltip-primary aspect-square"
+                    data-tip="{% trans 'Categories' %}"
+                  >
+                    <a
+                      href="{% pageurl categories %}"
+                      class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                    >
+                      <i
+                        data-lucide="layers"
+                        class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                      ></i>
+                      <span class="sr-only">{% trans 'Categories' %}</span>
+                    </a>
+                  </li>
+                  {% endif %}
+
+                  <!---->
+                  {% if blog %}
+                  <li
+                    class="tooltip tooltip-right rtl:tooltip-left tooltip-primary aspect-square"
+                    data-tip="{% trans 'Blog' %}"
+                  >
+                    <a
+                      href="{% pageurl blog %}"
+                      class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                    >
+                      <i
+                        data-lucide="scroll-text"
+                        class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                      ></i>
+                      <span class="sr-only">{% trans 'Blog' %}</span>
+                    </a>
+                  </li>
+                  {% endif %}
+
+                  <!---->
                   {% if request.user.is_staff %}
                   <li
                     class="tooltip tooltip-right rtl:tooltip-left tooltip-primary aspect-square"
@@ -173,40 +210,6 @@
                       <span class="sr-only">{% trans 'My Learning' %}</span>
                     </a>
                   </li>
-
-                  {% if blog %}
-                  <li
-                    class="tooltip tooltip-right rtl:tooltip-left tooltip-primary aspect-square"
-                    data-tip="{% trans 'Blog' %}"
-                  >
-                    <a
-                      href="{% pageurl blog %}"
-                      class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
-                    >
-                      <i
-                        data-lucide="scroll-text"
-                        class="size-4 md:size-6 xl:size-7 2xl:size-8"
-                      ></i>
-                      <span class="sr-only">{% trans 'Blog' %}</span>
-                    </a>
-                  </li>
-                  {% else %}
-                  <li
-                    class="tooltip tooltip-right rtl:tooltip-left tooltip-primary aspect-square"
-                    data-tip="{% trans 'Blog' %}"
-                  >
-                    <a
-                      href="{% slugurl 'blog' %}"
-                      class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
-                    >
-                      <i
-                        data-lucide="scroll-text"
-                        class="size-4 md:size-6 xl:size-7 2xl:size-8"
-                      ></i>
-                      <span class="sr-only">{% trans 'Blog' %}</span>
-                    </a>
-                  </li>
-                  {% endif %}
                 </ol>
 
                 <ol class="navbar-end w-full flex-col gap-2">
@@ -363,7 +366,7 @@
             </aside>
 
             <section
-              class="rounded-box bg-base-100 relative size-full grow overflow-hidden"
+              class="bg-base-100 relative size-full grow overflow-hidden sm:rounded-box"
             >
               <div id="chat-container" class="drawer drawer-end size-full">
                 <input id="chat-drawer" type="checkbox" class="drawer-toggle" />
@@ -725,6 +728,39 @@
                   <span>{% trans 'Home' %}</span>
                 </a>
               </li>
+
+              {% if categories %}
+              <li class="sm:hidden">
+                <a
+                  href="{% pageurl categories %}"
+                  class="btn btn-sm btn-ghost btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
+                >
+                  <i
+                    data-lucide="layers"
+                    class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                  ></i>
+                  <span>{% trans 'Categories' %}</span>
+                </a>
+              </li>
+              {% endif %}
+
+              <!---->
+              {% if blog %}
+              <li class="sm:hidden">
+                <a
+                  href="{% pageurl blog %}"
+                  class="btn btn-sm btn-ghost btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
+                >
+                  <i
+                    data-lucide="scroll-text"
+                    class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                  ></i>
+                  <span>{% trans 'Blog' %}</span>
+                </a>
+              </li>
+              {% endif %}
+              
+              <!---->
               {% if request.user.is_staff %}
               <li class="sm:hidden">
                 <a
@@ -746,6 +782,7 @@
                 </a>
               </li>
               {% endif %}
+
               <li class="sm:hidden">
                 <a
                   href="{% url 'ui:learn' %}"
@@ -758,36 +795,10 @@
                   <span>{% trans 'My Learning' %}</span>
                 </a>
               </li>
-              {% if blog %}
-              <li class="sm:hidden">
-                <a
-                  href="{% pageurl blog %}"
-                  class="btn btn-sm btn-ghost btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
-                >
-                  <i
-                    data-lucide="scroll-text"
-                    class="size-4 md:size-6 xl:size-7 2xl:size-8"
-                  ></i>
-                  <span>{% trans 'Blog' %}</span>
-                </a>
-              </li>
-              {% else %}
-              <li class="sm:hidden">
-                <a
-                  href="{% slugurl 'blog' %}"
-                  class="btn btn-sm btn-ghost btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
-                >
-                  <i
-                    data-lucide="scroll-text"
-                    class="size-4 md:size-6 xl:size-7 2xl:size-8"
-                  ></i>
-                  <span>{% trans 'Blog' %}</span>
-                </a>
-              </li>
-              {% endif %}
+
               <li>
                 <a
-                  href="{% url 'ui:about' %}"
+                  href="{% slugurl 'about-us' %}"
                   class="btn btn-sm btn-ghost btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
                 >
                   <i
@@ -797,9 +808,10 @@
                   <span>{% trans 'About us' %}</span>
                 </a>
               </li>
+
               <li>
                 <a
-                  href="{% url 'ui:contact' %}"
+                  href="{% slugurl 'contact-us' %}"
                   class="btn btn-sm btn-ghost btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
                 >
                   <i

@@ -51,16 +51,6 @@ auth_urls = [
 
 urlpatterns = auth_urls + [
     path(
-        "about/",
-        views.HomeView.as_view(),
-        name="about",
-    ),
-    path(
-        "contact/",
-        views.HomeView.as_view(),
-        name="contact",
-    ),
-    path(
         "learn/",
         views.LearnView.as_view(),
         name="learn",

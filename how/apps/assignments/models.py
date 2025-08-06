@@ -58,7 +58,6 @@ class Assignment(DateTimeMixin, Page):
         help_text=_("Designates if assignment is timed"),
     )
 
-    # Dashboard UI config
     context_object_name = "assignment"
     template = "ui/learn/content/assignment.html"
     content_panels = Page.content_panels + [
@@ -76,14 +75,12 @@ class Assignment(DateTimeMixin, Page):
         "quizzes, coding exercises, or practical applications."
     )
 
-    # Search fields
     search_fields = Page.search_fields + [
         index.FilterField("type"),
         index.FilterField("is_auto_graded"),
         index.SearchField("description"),
     ]
 
-    # API fields
     api_fields = [
         APIField("type"),
         APIField("description"),

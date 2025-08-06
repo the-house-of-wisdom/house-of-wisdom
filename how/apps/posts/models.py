@@ -31,7 +31,6 @@ class Post(DateTimeMixin, Page):
         help_text=_("Post content"),
     )
 
-    # Dashboard UI config
     context_object_name = "post"
     template = "ui/learn/posts/id.html"
     content_panels = Page.content_panels + [
@@ -45,13 +44,11 @@ class Post(DateTimeMixin, Page):
         "- Engage students by keeping them informed about course changes, deadlines, or events."
     )
 
-    # Search fields
     search_fields = Page.search_fields + [
         index.FilterField("type"),
         index.SearchField("content"),
     ]
 
-    # API fields
     api_fields = [APIField("type"), APIField("content")]
 
     parent_page_types = ["courses.Course"]

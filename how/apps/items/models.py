@@ -27,7 +27,6 @@ class Item(DateTimeMixin, Page):
         help_text=_("Item content"),
     )
 
-    # Dashboard UI config
     context_object_name = "item"
     template = "ui/learn/content/item.html"
     content_panels = Page.content_panels + [FieldPanel("type"), FieldPanel("content")]
@@ -36,13 +35,11 @@ class Item(DateTimeMixin, Page):
         "text passages, videos, quizzes, or interactive activities."
     )
 
-    # Search fields
     search_fields = Page.search_fields + [
         index.FilterField("type"),
         index.SearchField("content"),
     ]
 
-    # API fields
     api_fields = [APIField("type"), APIField("content")]
 
     parent_page_types = ["lessons.Lesson"]

@@ -52,7 +52,6 @@ class LearningPath(DateTimeMixin, Page):
         help_text=_("Skills will be gained after completing the learning path"),
     )
 
-    # Dashboard UI config
     show_in_menus = True
     context_object_name = "path"
     template = "ui/paths/id.html"
@@ -70,7 +69,6 @@ class LearningPath(DateTimeMixin, Page):
         "and sequencing information to ensure a cohesive learning experience."
     )
 
-    # Search fields
     search_fields = Page.search_fields + [
         index.FilterField("rating"),
         index.FilterField("skills"),
@@ -79,7 +77,6 @@ class LearningPath(DateTimeMixin, Page):
         index.SearchField("prerequisites"),
     ]
 
-    # API fields
     api_fields = [
         APIField("image"),
         APIField("rating"),

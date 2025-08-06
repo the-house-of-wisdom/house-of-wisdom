@@ -30,13 +30,6 @@ from how.ui.forms import UserCreateForm
 
 
 # Create your views here.
-class HomeView(generic.TemplateView):
-    """Home page"""
-
-    template_name = "ui/index.html"
-
-
-# Auth views
 User = get_user_model()
 
 

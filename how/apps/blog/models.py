@@ -19,7 +19,6 @@ from how.cms.blocks import MediaBlock
 class Index(DateTimeMixin, Page):
     """Blog index page"""
 
-    # Dashboard UI config
     context_object_name = "index"
     template = "ui/blog/index.html"
     page_description = _("Blog index page")
@@ -58,7 +57,6 @@ class Article(DateTimeMixin, Page):
         help_text=_("Article tags"),
     )
 
-    # Dashboard UI config
     context_object_name = "article"
     template = "ui/blog/article.html"
     content_panels = Page.content_panels + [
@@ -69,13 +67,11 @@ class Article(DateTimeMixin, Page):
     ]
     page_description = _("News Articles")
 
-    # Search fields
     search_fields = Page.search_fields + [
         index.SearchField("headline"),
         index.SearchField("content"),
     ]
 
-    # API fields
     api_fields = [APIField("headline"), APIField("content"), APIField("tags")]
 
     parent_page_types = ["blog.Index"]

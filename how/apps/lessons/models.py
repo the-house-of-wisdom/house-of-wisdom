@@ -16,7 +16,6 @@ class Lesson(DateTimeMixin, Page):
 
     description = RichTextField(help_text=_("Lesson description"))
 
-    # Dashboard UI config
     context_object_name = "lesson"
     template = "ui/learn/content/lesson.html"
     content_panels = Page.content_panels + [FieldPanel("description")]
@@ -25,10 +24,8 @@ class Lesson(DateTimeMixin, Page):
         "text-based materials, videos, quizzes, or interactive exercises."
     )
 
-    # Search fields
     search_fields = Page.search_fields + [index.SearchField("description")]
 
-    # API fields
     api_fields = [APIField("description")]
 
     parent_page_types = ["modules.Module"]

@@ -52,22 +52,6 @@
     </section>
     {% endif %}
 
-    {% if categories %}
-    <section class="grid gap-8">
-      <h2 class="text-primary text-2xl font-semibold lg:text-4xl">
-        {% trans 'Categories' %}
-      </h2>
-
-      <ol class="grid grid-cols-12 gap-4">
-        {% for category in categories %}
-        <li class="col-span-12 md:col-span-6 lg:col-span-4">
-          {% include 'ui/components/category.html' %}
-        </li>
-        {% endfor %}
-      </ol>
-    </section>
-    {% endif %}
-
     {% if articles %}
     <section class="grid gap-8">
       <h1 class="text-primary text-2xl font-semibold lg:text-4xl">

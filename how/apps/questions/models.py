@@ -33,7 +33,6 @@ class Question(DateTimeMixin, Orderable, ClusterableModel, models.Model):
     )
     text = StreamField(TextBlock(), help_text=_("Question text"))
 
-    # Dashboard UI config
     panels = [
         FieldPanel("type"),
         FieldPanel("text"),

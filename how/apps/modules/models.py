@@ -16,7 +16,6 @@ class Module(DateTimeMixin, Page):
 
     description = RichTextField(help_text=_("Module description"))
 
-    # Dashboard UI config
     context_object_name = "module"
     template = "ui/learn/content/module.html"
     content_panels = Page.content_panels + [FieldPanel("description")]
@@ -25,12 +24,10 @@ class Module(DateTimeMixin, Page):
         "contain lessons, resources, and assessments."
     )
 
-    # Search fields
     search_fields = Page.search_fields + [
         index.SearchField("description"),
     ]
 
-    # API fields
     api_fields = [APIField("description")]
 
     parent_page_types = ["courses.Course"]

@@ -58,7 +58,6 @@ class Course(DateTimeMixin, Page):
         help_text=_("Skills will be gained after completing the course"),
     )
 
-    # Dashboard UI config
     show_in_menus = True
     context_object_name = "course"
     template = "ui/courses/id.html"
@@ -72,7 +71,6 @@ class Course(DateTimeMixin, Page):
     ]
     page_description = _("Courses")
 
-    # Search fields
     search_fields = Page.search_fields + [
         index.FilterField("rating"),
         index.FilterField("skills"),
@@ -81,7 +79,6 @@ class Course(DateTimeMixin, Page):
         index.SearchField("prerequisites"),
     ]
 
-    # API fields
     api_fields = [
         APIField("image"),
         APIField("rating"),
