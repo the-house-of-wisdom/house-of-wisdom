@@ -1,7 +1,41 @@
 {% extends 'ui/base.html' %}{% load i18n wagtailcore_tags wagtailimages_tags %}
 
 <!---->
-{% block title %}{{ path.title }}{% endblock %}
+{% block title %}{{ block.super }} | {{ path.title }}{% endblock %}
+
+<!---->
+{% block meta %}
+<meta
+  name="description"
+  content="{% trans 'House Of Wisdom' %} | {{ path.title }}"
+/>
+<meta property="og:url" content="{{ request.build_absolute_uri }}" />
+<meta property="og:type" content="website" />
+<meta
+  property="og:title"
+  content="{% trans 'House Of Wisdom' %} | {{ path.title }}"
+/>
+<meta
+  property="og:description"
+  content="{% trans 'House Of Wisdom' %} | {{ path.title }}"
+/>
+<meta property="og:image" content="{{ path.image.file.url }}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:domain" content="{{ request.build_absolute_uri }}" />
+<meta property="twitter:url" content="{{ request.build_absolute_uri }}" />
+<meta
+  name="twitter:title"
+  content="{% trans 'House Of Wisdom' %} | {{ path.title }}"
+/>
+<meta
+  name="twitter:description"
+  content="{% trans 'House Of Wisdom' %} | {{ path.title }}"
+/>
+<meta name="twitter:image" content="{{ path.image.file.url }}" />
+{% endblock %}
 
 <!---->
 {% block content %}

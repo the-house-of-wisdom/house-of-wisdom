@@ -12,17 +12,17 @@
     {% block meta %}
     <meta
       name="description"
-      content="{% trans 'House Of Wisdom - Journalism with Certainty' %}"
+      content="{% trans 'House Of Wisdom - AI-powered Learning Management System (LMS) designed to transform how education is delivered online.' %}"
     />
     <meta property="og:url" content="https://almatjar.pythonanywhere.com" />
     <meta property="og:type" content="website" />
     <meta
       property="og:title"
-      content="{% trans 'House Of Wisdom - Journalism with Certainty' %}"
+      content="{% trans 'House Of Wisdom - AI-powered Learning Management System (LMS) designed to transform how education is delivered online.' %}"
     />
     <meta
       property="og:description"
-      content="{% trans 'House Of Wisdom - Journalism with Certainty' %}"
+      content="{% trans 'House Of Wisdom - AI-powered Learning Management System (LMS) designed to transform how education is delivered online.' %}"
     />
     <meta
       property="og:image"
@@ -39,17 +39,20 @@
     />
     <meta
       name="twitter:title"
-      content="{% trans 'House Of Wisdom - Journalism with Certainty' %}"
+      content="{% trans 'House Of Wisdom - AI-powered Learning Management System (LMS) designed to transform how education is delivered online.' %}"
     />
     <meta
       name="twitter:description"
-      content="{% trans 'House Of Wisdom - Journalism with Certainty' %}"
+      content="{% trans 'House Of Wisdom - AI-powered Learning Management System (LMS) designed to transform how education is delivered online.' %}"
     />
     <meta
       name="twitter:image"
       content="https://almatjar.pythonanywhere.com/banner.png"
     />
-    {% endblock %} {% block styles %}
+    {% endblock %}
+
+    <!---->
+    {% block styles %}
     <link
       href="{% static 'ui/css/styles.css' %}"
       rel="stylesheet"
@@ -60,7 +63,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&family=Noto+Naskh+Arabic:wght@400..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
       rel="stylesheet"
     />
     {% endblock %}
@@ -155,6 +158,22 @@
                       <span class="sr-only">{% trans 'Categories' %}</span>
                     </a>
                   </li>
+                  {% else %}
+                  <li
+                    class="tooltip tooltip-right rtl:tooltip-left tooltip-primary aspect-square"
+                    data-tip="{% trans 'Categories' %}"
+                  >
+                    <a
+                      href="{% slugurl 'categories' %}"
+                      class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                    >
+                      <i
+                        data-lucide="layers"
+                        class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                      ></i>
+                      <span class="sr-only">{% trans 'Categories' %}</span>
+                    </a>
+                  </li>
                   {% endif %}
 
                   <!---->
@@ -165,6 +184,22 @@
                   >
                     <a
                       href="{% pageurl blog %}"
+                      class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
+                    >
+                      <i
+                        data-lucide="scroll-text"
+                        class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                      ></i>
+                      <span class="sr-only">{% trans 'Blog' %}</span>
+                    </a>
+                  </li>
+                  {% else %}
+                  <li
+                    class="tooltip tooltip-right rtl:tooltip-left tooltip-primary aspect-square"
+                    data-tip="{% trans 'Blog' %}"
+                  >
+                    <a
+                      href="{% slugurl 'blog' %}"
                       class="btn btn-square btn-soft btn-sm btn-primary md:btn-md 2xl:btn-lg"
                     >
                       <i
@@ -742,6 +777,19 @@
                   <span>{% trans 'Categories' %}</span>
                 </a>
               </li>
+              {% else %}
+              <li class="sm:hidden">
+                <a
+                  href="{% slugurl 'categories' %}"
+                  class="btn btn-sm btn-ghost btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
+                >
+                  <i
+                    data-lucide="layers"
+                    class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                  ></i>
+                  <span>{% trans 'Categories' %}</span>
+                </a>
+              </li>
               {% endif %}
 
               <!---->
@@ -758,8 +806,21 @@
                   <span>{% trans 'Blog' %}</span>
                 </a>
               </li>
+              {% else %}
+              <li class="sm:hidden">
+                <a
+                  href="{% slugurl 'blog' %}"
+                  class="btn btn-sm btn-ghost btn-primary md:btn-md btn-block 2xl:btn-xl justify-start"
+                >
+                  <i
+                    data-lucide="scroll-text"
+                    class="size-4 md:size-6 xl:size-7 2xl:size-8"
+                  ></i>
+                  <span>{% trans 'Blog' %}</span>
+                </a>
+              </li>
               {% endif %}
-              
+
               <!---->
               {% if request.user.is_staff %}
               <li class="sm:hidden">

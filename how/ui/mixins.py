@@ -6,6 +6,9 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.forms import BaseModelForm
 from django.http import HttpResponse
 
+from how.apps.courses.models import Course
+from how.apps.enrollments.models import Enrollment
+
 
 # Create your mixins here.
 class AdminUserMixin(UserPassesTestMixin):
@@ -22,60 +25,27 @@ class AccountOwnerMixin(UserPassesTestMixin):
         return self.request.user == self.get_object()
 
 
-class StudentMixin(UserPassesTestMixin):
+class CourseAccessMixin(UserPassesTestMixin):
     """Check if the user is enrolled in the course or owner of the course"""
-
-    def get_course(self):
-        """Return the course"""
-
-        return self.get_object()
 
     def test_func(self) -> Optional[bool]:
         """Check fn"""
 
-        course = self.get_course()
+        try:
+            course = Course.objects.get(slug=self.kwargs["course"])
+            is_owner = self.request.user == course.owner
+            is_enrolled = (
+                Enrollment.objects.get(
+                    course=course,
+                    owner=self.request.user,
+                )
+                is not None
+            )
 
-        return self.request.user == course.owner or course.students.contains(
-            self.request.user
-        )
+            return is_owner or is_enrolled
 
-
-class ModuleStudentMixin(StudentMixin):
-    """Check if the user is enrolled in the course or owner of the course"""
-
-    def get_course(self):
-        """Return the course"""
-
-        return self.get_object().get_parent().specific
-
-
-class LessonStudentMixin(StudentMixin):
-    """Check if the user is enrolled in the course or owner of the course"""
-
-    def get_course(self):
-        """Return the course"""
-
-        return self.get_object().get_parent().get_parent().specific
-
-
-class ItemStudentMixin(StudentMixin):
-    """Check if the user is enrolled in the course or owner of the course"""
-
-    def get_course(self):
-        """Return the course"""
-
-        return self.get_object().get_parent().get_parent().get_parent().specific
-
-
-class SubmissionStudentMixin(StudentMixin):
-    """Check if the user is enrolled in the course or owner of the course"""
-
-    def get_course(self):
-        """Return the course"""
-
-        return (
-            self.get_object().assignment.get_parent().get_parent().get_parent().specific
-        )
+        except (Course.DoesNotExist, Enrollment.DoesNotExist):
+            return False
 
 
 class ObjectOwnerMixin:

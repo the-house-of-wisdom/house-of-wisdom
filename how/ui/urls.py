@@ -71,6 +71,11 @@ urlpatterns = auth_urls + [
         name="assignment",
     ),
     path(
+        "learn/<slug:course>/grades/<slug:assignment>/submit/",
+        views.SubmissionCreateView.as_view(),
+        name="submit",
+    ),
+    path(
         "learn/<slug:course>/grades/<slug:assignment>/submissions/<int:pk>/",
         views.SubmissionDetailView.as_view(),
         name="submission",

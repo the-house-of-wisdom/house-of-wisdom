@@ -95,7 +95,11 @@ class LearnView(LoginRequiredMixin, generic.TemplateView):
         }
 
 
-class CourseDetailView(LoginRequiredMixin, mixins.StudentMixin, generic.DetailView):
+class CourseDetailView(
+    LoginRequiredMixin,
+    mixins.CourseAccessMixin,
+    generic.DetailView,
+):
     """Course details"""
 
     model = Course
@@ -129,7 +133,10 @@ class CourseGradesView(CourseDetailView):
 
 
 class CourseReviewsView(
-    LoginRequiredMixin, mixins.StudentMixin, FilterView, generic.ListView
+    LoginRequiredMixin,
+    mixins.CourseAccessMixin,
+    FilterView,
+    generic.ListView,
 ):
     """Course reviews list"""
 
@@ -162,7 +169,10 @@ class CourseReviewsView(
 
 
 class ReviewCreateView(
-    LoginRequiredMixin, mixins.StudentMixin, SuccessMessageMixin, generic.CreateView
+    LoginRequiredMixin,
+    mixins.CourseAccessMixin,
+    SuccessMessageMixin,
+    generic.CreateView,
 ):
     """Create reviews"""
 
@@ -217,7 +227,7 @@ class ReviewCreateView(
 
 class ReviewUpdateView(
     LoginRequiredMixin,
-    mixins.StudentMixin,
+    mixins.CourseAccessMixin,
     SuccessMessageMixin,
     mixins.OwnerFilterMixin,
     generic.UpdateView,
@@ -258,6 +268,15 @@ class EnrollmentCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.Crea
     template_name = "ui/courses/id.html"
     success_message = _("Thanks for enrolling in this course")
 
+    def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+
+        if Enrollment.objects.filter(
+            owner=self.request.user, course__slug=self.kwargs["course"]
+        ):
+            pass
+
+        return super().post(request, *args, **kwargs)
+
     def get_success_url(self) -> str:
         return reverse_lazy("ui:course", args=[self.kwargs["course"]])
 
@@ -285,7 +304,9 @@ class CoursePostsView(CourseDetailView):
 
 
 class ModuleDetailView(
-    LoginRequiredMixin, mixins.ModuleStudentMixin, generic.DetailView
+    LoginRequiredMixin,
+    mixins.CourseAccessMixin,
+    generic.DetailView,
 ):
     """Module details"""
 
@@ -294,7 +315,7 @@ class ModuleDetailView(
     template_name = "ui/learn/content/module.html"
 
 
-class PostDetailView(LoginRequiredMixin, mixins.ModuleStudentMixin, generic.DetailView):
+class PostDetailView(LoginRequiredMixin, mixins.CourseAccessMixin, generic.DetailView):
     """Post details"""
 
     model = Post
@@ -313,7 +334,9 @@ class PostDetailView(LoginRequiredMixin, mixins.ModuleStudentMixin, generic.Deta
 
 
 class LessonDetailView(
-    LoginRequiredMixin, mixins.LessonStudentMixin, generic.DetailView
+    LoginRequiredMixin,
+    mixins.CourseAccessMixin,
+    generic.DetailView,
 ):
     """Lesson details"""
 
@@ -332,7 +355,7 @@ class LessonDetailView(
         }
 
 
-class ItemDetailView(LoginRequiredMixin, mixins.ItemStudentMixin, generic.DetailView):
+class ItemDetailView(LoginRequiredMixin, mixins.CourseAccessMixin, generic.DetailView):
     """Item details"""
 
     model = Item
@@ -358,43 +381,6 @@ class AssignmentDetailView(ItemDetailView):
     slug_url_kwarg = "assignment"
     template_name = "ui/learn/content/assignment.html"
 
-    def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        """Create and grade submissions
-
-        Args:
-            request (HttpRequest): Current request
-
-        Returns:
-            HttpResponse: Generated response
-        """
-
-        # Get assignment
-        assignment = self.get_object()
-
-        submission = assignment.submissions.create(owner=request.user)
-        submission.answers.set(
-            list(
-                flatten(
-                    [
-                        [int(i) for i in a[-1]]
-                        for a in list(
-                            filter(
-                                lambda i: i[0].startswith("question-"),
-                                request.POST.lists(),
-                            )
-                        )
-                    ]
-                )
-            )
-        )
-
-        submission.grade = submission.auto_grade()
-        submission.save()
-
-        messages.success(request, _("Your assignment submitted successfully"))
-
-        return redirect(request.path)
-
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         """Add submission to context"""
 
@@ -412,8 +398,78 @@ class AssignmentDetailView(ItemDetailView):
         }
 
 
+class SubmissionCreateView(
+    LoginRequiredMixin,
+    mixins.CourseAccessMixin,
+    SuccessMessageMixin,
+    generic.CreateView,
+):
+    """Submission create view"""
+
+    model = Submission
+    fields = []
+    template_name = "ui/learn/content/assignment.html"
+    success_message = _("Your assignment submitted successfully")
+
+    def form_valid(self, form: BaseForm) -> HttpResponse:
+        """Create submission"""
+
+        submission = form.save(commit=False)
+        submission.owner = self.request.user
+
+        try:
+            submission.assignment = Assignment.objects.get(
+                slug=self.kwargs["assignment"]
+            )
+            submission.save()
+            submission.answers.set(
+                list(
+                    flatten(
+                        [
+                            [int(i) for i in a[-1]]
+                            for a in list(
+                                filter(
+                                    lambda i: i[0].startswith("question-"),
+                                    self.request.POST.lists(),
+                                )
+                            )
+                        ]
+                    )
+                )
+            )
+            submission.grade = submission.auto_grade()
+            self.submission = submission
+
+        except (Assignment.DoesNotExist, ValueError):
+            return super().form_valid(form)
+
+        return super().form_valid(form)
+
+    def get_success_url(self) -> str:
+        return reverse_lazy(
+            "ui:submission",
+            args=[self.kwargs["course"], self.kwargs["assignment"], self.submission.id],
+        )
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        """Add extra context"""
+
+        context = super().get_context_data(**kwargs)
+        assignment = context[self.slug_url_kwarg].assignment
+
+        return {
+            **context,
+            "assignment": assignment,
+            "lesson": assignment.get_parent(),
+            "module": assignment.get_parent().get_parent(),
+            "submissions": [context[self.slug_url_kwarg]],
+        }
+
+
 class SubmissionDetailView(
-    LoginRequiredMixin, mixins.SubmissionStudentMixin, generic.DetailView
+    LoginRequiredMixin,
+    mixins.CourseAccessMixin,
+    generic.DetailView,
 ):
     """Submission details"""
 

@@ -12,14 +12,13 @@
           {{ home.title }}
         </h1>
 
-        <p class="lead text-primary">
-          {{ home.headline }}
-        </p>
+        <p class="lead text-primary">{{ home.headline }}</p>
       </div>
     </div>
 
     <div
-      class="max-w-none prose prose-sm md:processes-md prose-video:rounded-box xl:prose-lg 2xl:prose-xl prose-headings:text-primary prose-headings:font-serif rtl:prose-headings:font-kufi prose-img:rounded-box prose-img:w-full">
+      class="max-w-none prose prose-sm md:processes-md prose-video:rounded-box xl:prose-lg 2xl:prose-xl prose-headings:text-primary prose-headings:font-serif rtl:prose-headings:font-kufi prose-img:rounded-box prose-img:w-full"
+    >
       {{ home.content }}
     </div>
 
@@ -38,7 +37,8 @@
       </ol>
     </section>
     {% endif %}
-
+    
+    <!---->
     {% if courses %}
     <section class="grid gap-8">
       <h2 class="text-primary text-2xl font-semibold lg:text-4xl">
@@ -54,7 +54,8 @@
       </ol>
     </section>
     {% endif %}
-
+    
+    <!---->
     {% if articles %}
     <section class="grid gap-8">
       <h1 class="text-primary text-2xl font-semibold lg:text-4xl">

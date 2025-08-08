@@ -146,7 +146,7 @@
   </div>
 
   <input
-    {% block s_tab %}checked{% endblock %}
+    {% block s_tab %}{% endblock %}
     type="radio"
     name="content"
     class="tab text-primary"
@@ -155,7 +155,7 @@
   <div class="tab-content pt-4">
     <div class="drawer drawer-end">
       <input
-        {% block s_toggle %}checked{% endblock %}
+        {% block s_toggle %}{% endblock %}
         id="assignment"
         type="checkbox"
         class="drawer-toggle"
@@ -419,7 +419,12 @@
           </header>
 
           {% block assignment_content %}
-          <form id="answers" method="post" class="carousel relative size-full">
+          <form
+            id="answers"
+            method="post"
+            action="{% url 'ui:submit' module.get_parent.slug assignment.slug %}"
+            class="carousel relative size-full"
+          >
             {% csrf_token %}
 
             <!---->

@@ -805,7 +805,7 @@ msgstr "المقالات"
 #: how/ui/templates/ui/base.html:15 how/ui/templates/ui/base.html:21
 #: how/ui/templates/ui/base.html:25 how/ui/templates/ui/base.html:42
 #: how/ui/templates/ui/base.html:46
-msgid "House Of Wisdom - Journalism with Certainty"
+msgid "House Of Wisdom - AI-powered Learning Management System (LMS) designed to transform how education is delivered online."
 msgstr "بيت الحكمة - صحافة مع اليقين"
 
 #: how/ui/templates/ui/base.html:164 how/ui/templates/ui/base.html:174

@@ -4,6 +4,40 @@
 {% block title %}{{ block.super }} | {{ article.get_parent }} | {{ article }}{% endblock %}
 
 <!---->
+{% block meta %}
+<meta
+  name="description"
+  content="{% trans 'House Of Wisdom' %} | {% trans 'Blog' %} | {{ article.title }}"
+/>
+<meta property="og:url" content="{{ request.build_absolute_uri }}" />
+<meta property="og:type" content="website" />
+<meta
+  property="og:title"
+  content="{% trans 'House Of Wisdom' %} | {% trans 'Blog' %} | {{ article.title }}"
+/>
+<meta
+  property="og:description"
+  content="{% trans 'House Of Wisdom' %} | {% trans 'Blog' %} | {{ article.title }}"
+/>
+<meta property="og:image" content="{{ article.image.file.url }}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:domain" content="{{ request.build_absolute_uri }}" />
+<meta property="twitter:url" content="{{ request.build_absolute_uri }}" />
+<meta
+  name="twitter:title"
+  content="{% trans 'House Of Wisdom' %} | {% trans 'Blog' %} | {{ article.title }}"
+/>
+<meta
+  name="twitter:description"
+  content="{% trans 'House Of Wisdom' %} | {% trans 'Blog' %} | {{ article.title }}"
+/>
+<meta name="twitter:image" content="{{ article.image.file.url }}" />
+{% endblock %}
+
+<!---->
 {% block styles %}{{ block.super }}
 <link
   rel="stylesheet"
