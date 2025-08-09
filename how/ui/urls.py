@@ -81,22 +81,22 @@ urlpatterns = auth_urls + [
         name="submission",
     ),
     path(
-        "learn/<slug:course>-<int:id>/enroll/",
+        "learn/<slug:course>/enroll/",
         views.EnrollmentCreateView.as_view(),
         name="enroll",
     ),
     path(
-        "learn/<slug:course>-<int:id>/reviews/",
+        "learn/<slug:course>/reviews/",
         views.CourseReviewsView.as_view(),
         name="reviews",
     ),
     path(
-        "learn/<slug:course>-<int:id>/reviews/new/",
+        "learn/<slug:course>/reviews/new/",
         views.ReviewCreateView.as_view(),
         name="new_review",
     ),
     path(
-        "learn/<slug:course>-<int:id>/reviews/<int:pk>/",
+        "learn/<slug:course>/reviews/<int:pk>/",
         views.ReviewUpdateView.as_view(),
         name="update_review",
     ),

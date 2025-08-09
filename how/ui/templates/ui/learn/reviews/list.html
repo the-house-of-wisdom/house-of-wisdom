@@ -112,8 +112,7 @@
     </header>
 
     <main class="grid gap-8">
-      {% include 'ui/components/form.html' with method='get' csrf=False
-      form=filter.form %}
+      {% include 'ui/components/form.html' with method='get' csrf=False form=filter.form %}
 
       <button onclick="filters.close()" class="btn btn-primary">
         {% trans 'Close' %}

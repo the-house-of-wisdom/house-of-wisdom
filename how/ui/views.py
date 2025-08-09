@@ -146,26 +146,27 @@ class CourseReviewsView(
     filterset_fields = ["rating", "sentiment"]
     template_name = "ui/learn/reviews/list.html"
 
-    def get_course(self):
-        return Course.objects.get(pk=self.kwargs["id"])
-
     def get_queryset(self) -> QuerySet[Any]:
         """Filter queryset by course"""
 
-        return super().get_queryset().filter(course=self.kwargs["id"])
+        return super().get_queryset().filter(course__slug=self.kwargs["course"])
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         """Add course and modules to context"""
 
         context = super().get_context_data(**kwargs)
-        course = Course.objects.get(pk=self.kwargs["id"])
-        self.course = course
 
-        return {
-            **context,
-            "course": course,
-            "modules": Module.objects.live().child_of(course),
-        }
+        try:
+            course = Course.objects.get(slug=self.kwargs["course"])
+
+            return {
+                **context,
+                "course": course,
+                "modules": Module.objects.live().child_of(course),
+            }
+
+        except Course.DoesNotExist:
+            return context
 
 
 class ReviewCreateView(
@@ -182,45 +183,53 @@ class ReviewCreateView(
     success_message = _("Thanks for reviewing this course")
 
     def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        """Check if review by user exists to redirect to review update view"""
 
-        reviews = Review.objects.filter(owner=request.user, course_id=self.kwargs["id"])
-
-        if reviews.exists():
+        try:
+            review = Review.objects.get(
+                owner=request.user, course__slug=self.kwargs["course"]
+            )
             return redirect(
                 reverse_lazy(
-                    "ui:update_review",
-                    args=[self.kwargs["course"], self.kwargs["id"], reviews.first().pk],
+                    "ui:update_review", args=[self.kwargs["course"], review.pk]
                 )
             )
 
-        return super().get(request, *args, **kwargs)
-
-    def get_course(self):
-        return Course.objects.get(pk=self.kwargs["id"])
+        except Review.DoesNotExist:
+            return super().get(request, *args, **kwargs)
 
     def get_success_url(self) -> str:
-        return reverse_lazy(
-            "ui:reviews", args=[self.kwargs["course"], self.kwargs["id"]]
-        )
+        return reverse_lazy("ui:reviews", args=[self.kwargs["course"]])
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         """Add course and modules to context"""
 
         context = super().get_context_data(**kwargs)
-        course = Course.objects.get(pk=self.kwargs["id"])
 
-        return {
-            **context,
-            "course": course,
-            "modules": Module.objects.live().child_of(course),
-        }
+        try:
+            course = Course.objects.get(slug=self.kwargs["course"])
+
+            return {
+                **context,
+                "course": course,
+                "modules": Module.objects.live().child_of(course),
+            }
+
+        except Course.DoesNotExist:
+            return context
 
     def form_valid(self, form: BaseForm) -> HttpResponse:
         """Add owner and course to review"""
 
         review = form.save(commit=False)
         review.owner = self.request.user
-        review.course_id = self.kwargs["id"]
+
+        try:
+            review.course = Course.objects.get(slug=self.kwargs["course"])
+
+        except Course.DoesNotExist:
+            messages.error(self.request, _("Course does not exists"))
+            return redirect(reverse_lazy("ui:learn"))
 
         return super().form_valid(form)
 
@@ -239,25 +248,25 @@ class ReviewUpdateView(
     template_name = "ui/learn/reviews/new.html"
     success_message = _("Review updated successfully")
 
-    def get_course(self):
-        return Course.objects.get(pk=self.kwargs["id"])
-
     def get_success_url(self) -> str:
-        return reverse_lazy(
-            "ui:reviews", args=[self.kwargs["course"], self.kwargs["id"]]
-        )
+        return reverse_lazy("ui:reviews", args=[self.kwargs["course"]])
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         """Add course and modules to context"""
 
         context = super().get_context_data(**kwargs)
-        course = Course.objects.get(pk=self.kwargs["id"])
 
-        return {
-            **context,
-            "course": course,
-            "modules": Module.objects.live().child_of(course),
-        }
+        try:
+            course = Course.objects.get(slug=self.kwargs["course"])
+
+            return {
+                **context,
+                "course": course,
+                "modules": Module.objects.live().child_of(course),
+            }
+
+        except Course.DoesNotExist:
+            return context
 
 
 class EnrollmentCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
@@ -268,14 +277,31 @@ class EnrollmentCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.Crea
     template_name = "ui/courses/id.html"
     success_message = _("Thanks for enrolling in this course")
 
+    def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        """Redirect to course detail page"""
+
+        try:
+            course = Course.objects.get(slug=self.kwargs["course"])
+            return redirect(course.get_url(request))
+
+        except Course.DoesNotExist:
+            return redirect(reverse_lazy("ui:learn"))
+
     def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        """Check if user is enrolled in course to redirect to course page"""
 
-        if Enrollment.objects.filter(
-            owner=self.request.user, course__slug=self.kwargs["course"]
-        ):
-            pass
+        try:
+            _enrollment = Enrollment.objects.get(
+                owner=self.request.user,
+                course__slug=self.kwargs["course"],
+            )
 
-        return super().post(request, *args, **kwargs)
+            messages.info(request, _("You are enrolled in this course"))
+
+            return redirect(reverse_lazy("ui:course", args=[self.kwargs["course"]]))
+
+        except Enrollment.DoesNotExist:
+            return super().post(request, *args, **kwargs)
 
     def get_success_url(self) -> str:
         return reverse_lazy("ui:course", args=[self.kwargs["course"]])

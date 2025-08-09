@@ -69,7 +69,7 @@
         </a>
         {% else %}
         <form
-          action="{% url 'ui:enroll' course.slug course.id %}"
+          action="{% url 'ui:enroll' course.slug %}"
           method="post"
         >
           {% csrf_token %}
